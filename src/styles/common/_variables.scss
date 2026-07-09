@@ -1,0 +1,49 @@
+// Colors
+$primary: #39ff14;
+$primary-dark: #095300;
+$secondary: #00e5ff;
+$tertiary: #ff00ff;
+$success: #2ecc71;
+$warning: #f39c12;
+$danger: #e74c3c;
+$neutral: #121212;
+$dark: #2d3436;
+$gray: #636e72;
+$light-gray: #dfe6e9;
+$bg: #f8f9fa;
+$white: #ffffff;
+
+// Typography
+$font-family:
+  "Inter",
+  -apple-system,
+  BlinkMacSystemFont,
+  sans-serif;
+$font-size-base: 1rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.5rem;
+$font-size-2xl: 2rem;
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-2xl: 3rem;
+
+// Borders
+$border-radius: 12px;
+$border-radius-sm: 6px;
+
+// Shadows
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+$shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
