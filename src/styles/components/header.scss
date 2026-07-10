@@ -4,11 +4,13 @@
   left: 0;
   width: calc(100% - 2rem);
   @include flex-between;
-  padding: 1rem;
+  padding: 0 1rem;
+  background-color: $neutral;
   .header-logo {
     font-size: 1.5rem;
     color: $primary;
-    font-weight: bold;
+    font-weight: 400;
+    margin-bottom: 0;
     strong {
       margin-left: 0.4rem;
     }
