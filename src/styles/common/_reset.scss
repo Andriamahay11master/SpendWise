@@ -28,8 +28,7 @@ body {
 img,
 picture,
 video,
-canvas,
-svg {
+canvas {
   display: block;
   max-width: 100%;
 }
@@ -72,4 +71,10 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+/* 12. Remove active link outlines */
+a:active,
+a:focus {
+  outline: none;
 }
