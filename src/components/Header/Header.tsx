@@ -10,7 +10,9 @@ const Header = () => {
         </p>
       </div>
       <div className="header-col">
-        <a href="/profil">Profil</a>
+        <a href="/profil" className="header-link">
+          <img src="src/assets/profile.png" alt="Profile" />
+        </a>
       </div>
     </header>
   );
