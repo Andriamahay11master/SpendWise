@@ -21,7 +21,7 @@ const Menu = () => {
           </a>
         </li>
         <li>
-          <a href="/add" className="menu-link">
+          <a href="/add" className="menu-link link-add">
             <IoAddCircle />
             <span>Add</span>
           </a>

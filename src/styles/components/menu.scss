@@ -4,21 +4,50 @@
   left: 0;
   width: 100%;
   background: $dark;
-  padding: 1rem 0;
+  padding: 0.7rem;
   ul {
     @include flex-center;
-    gap: 2rem;
+    gap: 1.3rem;
   }
-  a {
+  svg {
+    font-size: 1.5rem;
+    @include max(375px) {
+      font-size: 1.2rem;
+    }
+  }
+  .menu-link {
     @include flex-column;
     text-decoration: none;
     color: $light-gray;
     transition: all 0.3s ease-in-out;
+    position: relative;
+    @include max(375px) {
+      font-size: 0.8rem;
+    }
     &:hover {
       color: $primary;
     }
-  }
-  svg {
-    font-size: 1.5rem;
+    &.active {
+      color: $primary;
+    }
+    &.link-add {
+      color: $primary;
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      span {
+        display: none;
+      }
+      @include max(375px) {
+        top: -1.2rem;
+      }
+      svg {
+        font-size: 3.5rem;
+        @include max(375px) {
+          font-size: 3rem;
+        }
+      }
+    }
   }
 }
