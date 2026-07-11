@@ -9,31 +9,31 @@ const Menu = () => {
     <div className="menu-block">
       <ul>
         <li>
-          <a href="/">
+          <a href="/" className="menu-link active">
             <IoHome />
             <span>Home</span>
           </a>
         </li>
         <li>
-          <a href="/analytics">
+          <a href="/analytics" className="menu-link">
             <IoAnalytics />
             <span>Analytics</span>
           </a>
         </li>
         <li>
-          <a href="/add">
+          <a href="/add" className="menu-link">
             <IoAddCircle />
             <span>Add</span>
           </a>
         </li>
         <li>
-          <a href="/categories">
+          <a href="/categories" className="menu-link">
             <MdOutlineCategory />
             <span>Categories</span>
           </a>
         </li>
         <li>
-          <a href="/profile">
+          <a href="/profile" className="menu-link">
             <FiUser />
             <span>Profile</span>
           </a>

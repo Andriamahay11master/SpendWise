@@ -1,0 +1,24 @@
+.menu-block {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: $dark;
+  padding: 1rem 0;
+  ul {
+    @include flex-center;
+    gap: 2rem;
+  }
+  a {
+    @include flex-column;
+    text-decoration: none;
+    color: $light-gray;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      color: $primary;
+    }
+  }
+  svg {
+    font-size: 1.5rem;
+  }
+}
