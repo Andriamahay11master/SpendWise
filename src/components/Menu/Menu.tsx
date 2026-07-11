@@ -4,6 +4,7 @@ import { IoHome } from "react-icons/io5";
 import { IoAnalytics } from "react-icons/io5";
 import { MdOutlineCategory } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   const menuItems = [
@@ -25,14 +26,14 @@ const Menu = () => {
       <ul>
         {menuItems.map((item, index) => (
           <li key={index}>
-            <a
-              href={item.link}
+            <Link
+              to={item.link}
               className={`menu-link ${activeItem === item.name ? "active" : ""} ${item.name === "Add" ? "link-add" : ""}`}
               onClick={() => handleItemClick(item.name)}
             >
               {item.icon}
               <span>{item.name}</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
