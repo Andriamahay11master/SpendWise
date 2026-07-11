@@ -5,39 +5,28 @@ import { MdOutlineCategory } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
 
 const Menu = () => {
+  const menuItems = [
+    { name: "Home", icon: <IoHome />, link: "/" },
+    { name: "Analytics", icon: <IoAnalytics />, link: "/analytics" },
+    { name: "Add", icon: <IoAddCircle />, link: "/add" },
+    { name: "Categories", icon: <MdOutlineCategory />, link: "/categories" },
+    { name: "Profile", icon: <FiUser />, link: "/profile" },
+  ];
+
   return (
     <div className="menu-block">
       <ul>
-        <li>
-          <a href="/" className="menu-link active">
-            <IoHome />
-            <span>Home</span>
-          </a>
-        </li>
-        <li>
-          <a href="/analytics" className="menu-link">
-            <IoAnalytics />
-            <span>Analytics</span>
-          </a>
-        </li>
-        <li>
-          <a href="/add" className="menu-link link-add">
-            <IoAddCircle />
-            <span>Add</span>
-          </a>
-        </li>
-        <li>
-          <a href="/categories" className="menu-link">
-            <MdOutlineCategory />
-            <span>Categories</span>
-          </a>
-        </li>
-        <li>
-          <a href="/profile" className="menu-link">
-            <FiUser />
-            <span>Profile</span>
-          </a>
-        </li>
+        {menuItems.map((item, index) => (
+          <li key={index}>
+            <a
+              href={item.link}
+              className={`menu-link ${item.name === "Home" ? "active" : ""} ${item.name === "Add" ? "link-add" : ""}`}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );
