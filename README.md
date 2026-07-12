@@ -67,15 +67,21 @@ cd expense-tracker
 
 # Navigate to frontend directory (from root)
 
+```bash
 cd ../frontend
+```
 
 # Install dependencies
 
+```bash
 npm install
+```
 
 # Copy environment variables
 
+```bash
 cp .env.example .env
+```
 
 # Update .env with your backend API URL
 
@@ -85,15 +91,21 @@ cp .env.example .env
 
 # Navigate to backend directory
 
+```bash
 cd backend
+```
 
 # Install dependencies
 
+```bash
 npm install
+```
 
 # Copy environment variables
 
+```bash
 cp .env.example .env
+```
 
 # Update .env with your Neon PostgreSQL database URL
 
@@ -101,12 +113,18 @@ cp .env.example .env
 
 # Run Prisma migrations
 
+```bash
 npx prisma migrate dev --name init
+```
 
 # Generate Prisma client
 
+```bash
 npx prisma generate
+```
 
 # Seed default categories (optional)
 
+```bash
 npm run db:seed
+```
