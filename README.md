@@ -45,6 +45,34 @@ A modern, full-stack expense management application built with React, Vite, Node
 - **Zod** - Schema Validation
 - **CORS** - Cross-Origin Resource Sharing
 
+# Navigate to backend directory
+
+cd backend
+
+# Install dependencies
+
+npm install
+
+# Copy environment variables
+
+cp .env.example .env
+
+# Update .env with your Neon PostgreSQL database URL
+
+# DATABASE_URL="postgresql://username:password@host/database?sslmode=require"
+
+# Run Prisma migrations
+
+npx prisma migrate dev --name init
+
+# Generate Prisma client
+
+npx prisma generate
+
+# Seed default categories (optional)
+
+npm run db:seed
+
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
