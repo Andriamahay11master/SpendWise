@@ -45,6 +45,44 @@ A modern, full-stack expense management application built with React, Vite, Node
 - **Zod** - Schema Validation
 - **CORS** - Cross-Origin Resource Sharing
 
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (v16 or higher)
+- **npm** or **yarn**
+- **Git**
+- **Neon PostgreSQL Account** (free tier available at [neon.tech](https://neon.tech))
+
+## 🔧 Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/expense-tracker.git
+cd expense-tracker
+```
+
+### 2. Front
+
+# Navigate to frontend directory (from root)
+
+cd ../frontend
+
+# Install dependencies
+
+npm install
+
+# Copy environment variables
+
+cp .env.example .env
+
+# Update .env with your backend API URL
+
+# VITE_API_URL=http://localhost:5000/api
+
+### 3. Backend
+
 # Navigate to backend directory
 
 cd backend
@@ -72,21 +110,3 @@ npx prisma generate
 # Seed default categories (optional)
 
 npm run db:seed
-
-## 📋 Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- **Node.js** (v16 or higher)
-- **npm** or **yarn**
-- **Git**
-- **Neon PostgreSQL Account** (free tier available at [neon.tech](https://neon.tech))
-
-## 🔧 Installation
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/expense-tracker.git
-cd expense-tracker
-```
