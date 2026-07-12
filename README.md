@@ -1,75 +1,64 @@
-# React + TypeScript + Vite
+# 💰 Expense Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, full-stack expense management application built with React, Vite, Node.js, and Neon PostgreSQL. Track your spending, visualize expenses by category, and manage your finances with ease.
 
-Currently, two official plugins are available:
+![Expense Tracker Dashboard](https://via.placeholder.com/1200x600/6C63FF/FFFFFF?text=Expense+Tracker+Dashboard)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+### Core Functionality
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 📊 **Interactive Dashboard** - Real-time spending overview with key metrics
+- 📝 **Expense Management** - Create, read, update, and delete expenses
+- 🏷️ **Category System** - Custom categories with automatic expense organization
+- 📈 **Visual Analytics** - Spending breakdown by category with beautiful charts
+- 🔍 **Smart Filtering** - Filter expenses by category, date range, and search terms
+- 💾 **Cloud Storage** - All data persisted in Neon PostgreSQL database
+- 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
 
-## Expanding the ESLint configuration
+### Technical Highlights
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ⚡ **Vite.js** - Lightning-fast development and build times
+- 🎨 **Sass** - Modular, maintainable styles with variables and mixins
+- 🗄️ **Prisma ORM** - Type-safe database operations with PostgreSQL
+- 🔄 **Real-time Updates** - Auto-refreshing data with React Context
+- 🛡️ **Input Validation** - Zod schema validation on backend
+- 📦 **RESTful API** - Clean, well-structured API endpoints
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Frontend
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **React 18** - UI Library
+- **Vite** - Build Tool
+- **Sass** - CSS Preprocessor
+- **React Context** - State Management
+- **date-fns** - Date Utilities
+- **React Icons** - Icon Library
 
-```
+### Backend
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Node.js** - Runtime Environment
+- **Express** - Web Framework
+- **Prisma** - ORM
+- **PostgreSQL (Neon)** - Database
+- **Zod** - Schema Validation
+- **CORS** - Cross-Origin Resource Sharing
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📋 Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Before you begin, ensure you have the following installed:
 
+- **Node.js** (v16 or higher)
+- **npm** or **yarn**
+- **Git**
+- **Neon PostgreSQL Account** (free tier available at [neon.tech](https://neon.tech))
+
+## 🔧 Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/expense-tracker.git
+cd expense-tracker
 ```
