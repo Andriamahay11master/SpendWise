@@ -33,6 +33,7 @@ const DashboardCard = ({
         {typeCard === 2 ? (
           <div className="dashboard-progress-info">
             <p className="dashboard-limit">
+              limit:
               {currency}
               {limit?.toFixed(2)}
             </p>
