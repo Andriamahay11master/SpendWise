@@ -1,7 +1,10 @@
+import DashboardCard from "./DashboardCard";
+
 const Dashboard = () => {
   return (
-    <div className="dashboard">
-      <h1>Dashboard</h1>
+    <div className="dashboard-block">
+      <DashboardCard />
+      <DashboardCard />
     </div>
   );
 };
