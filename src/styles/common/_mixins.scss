@@ -74,3 +74,8 @@
     @content;
   }
 }
+
+@mixin text-light-grey {
+  color: $light-gray;
+  font-weight: 600;
+}
