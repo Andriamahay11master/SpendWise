@@ -1,2 +1,18 @@
+.dashboard-block {
+  padding: 0rem 0.7rem;
+}
 .dashboard-card {
+  position: relative;
+  z-index: 2;
+  border-radius: $border-radius;
+  border: 1px solid rgba($dark, 0.6);
+  margin-bottom: 0.7rem;
+  background-color: rgba($dark, 0.3);
+  padding: 1rem;
+  .dashboard-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+  }
 }
