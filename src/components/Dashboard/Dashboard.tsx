@@ -27,6 +27,8 @@ const Dashboard = () => {
       {cardData.map((data, index) => (
         <DashboardCard key={index} {...data} />
       ))}
+      <h2 className="title-h2">Budget Overview</h2>
+      <div className="dashboard-category"></div>
     </div>
   );
 };

@@ -10,6 +10,12 @@ h1 {
   color: $white;
 }
 
+.title-h2 {
+  font-size: $font-size-xl;
+  @include text-light-grey;
+  margin-bottom: 1rem;
+}
+
 .main-content {
   margin-top: 5rem;
 }
