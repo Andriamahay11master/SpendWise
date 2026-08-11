@@ -79,3 +79,10 @@
   color: $light-gray;
   font-weight: 600;
 }
+
+@mixin pos-50-abs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

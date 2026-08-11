@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: auto;
 }
 
 .circular-progress svg {
@@ -11,7 +12,7 @@
 .progress-bg,
 .progress-bar {
   fill: none;
-  stroke-width: 7;
+  stroke-width: 8;
 }
 
 .progress-bg {
@@ -19,12 +20,13 @@
 }
 
 .progress-bar {
-  stroke-linecap: round;
+  stroke-linecap: square;
 
   transition: stroke-dashoffset 0.5s ease;
 }
 
 .progress-text {
+  display: none;
   fill: $gray;
   font-size: 1.2rem;
   font-weight: 600;

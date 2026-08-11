@@ -5,7 +5,7 @@ interface CircularProgressProps {
 }
 export default function CircularProgress({
   value = 0,
-  size = 100,
+  size = 90,
   color = "#39ff14",
 }: CircularProgressProps) {
   const radius = 50;

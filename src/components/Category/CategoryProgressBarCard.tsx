@@ -24,8 +24,8 @@ const CategoryProgressBarCard = ({
             value={(budgetSpent / budgetMax) * 100}
             color={color}
           />
+          {iconCategory}
         </div>
-        {iconCategory}
       </div>
       <div className="category-progress-bar-card-bottom">
         <p className="category-progress-bar-card-name">{nameCategory}</p>

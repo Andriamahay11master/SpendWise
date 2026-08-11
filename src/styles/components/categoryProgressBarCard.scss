@@ -1,0 +1,27 @@
+.category-progress-bar-card {
+  padding: 1rem 0.5rem;
+  border-radius: $border-radius;
+  border: 1px solid rgba($dark, 0.6);
+  background-color: rgba($dark, 0.3);
+  text-align: center;
+  .category-progress-bar-card-top {
+    margin-bottom: 1rem;
+  }
+  .category-progress-bar {
+    position: relative;
+    & > svg {
+      width: 1.8rem;
+      height: 1.8rem;
+      @include pos-50-abs;
+    }
+  }
+  .category-progress-bar-card-bottom {
+    p {
+      @include text-light-grey;
+      font-size: 0.8rem;
+    }
+    .category-progress-bar-card-budget {
+      font-size: 0.7rem;
+    }
+  }
+}
