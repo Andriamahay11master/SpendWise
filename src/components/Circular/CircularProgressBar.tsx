@@ -1,4 +1,13 @@
-export default function CircularProgress({ value = 0, size = 150 }) {
+interface CircularProgressProps {
+  value?: number;
+  size?: number;
+  color?: string;
+}
+export default function CircularProgress({
+  value = 0,
+  size = 100,
+  color = "#39ff14",
+}: CircularProgressProps) {
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
 
@@ -28,6 +37,7 @@ export default function CircularProgress({ value = 0, size = 150 }) {
           style={{
             strokeDasharray: circumference,
             strokeDashoffset: offset,
+            stroke: color,
           }}
         />
 

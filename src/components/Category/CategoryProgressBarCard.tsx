@@ -6,6 +6,7 @@ interface CategoryProgressBarCardProps {
   budgetSpent: number;
   budgetMax: number;
   currency?: string;
+  color: string;
 }
 const CategoryProgressBarCard = ({
   nameCategory,
@@ -13,12 +14,16 @@ const CategoryProgressBarCard = ({
   budgetSpent,
   budgetMax,
   currency = "$",
+  color,
 }: CategoryProgressBarCardProps) => {
   return (
     <div className="category-progress-bar-card">
       <div className="category-progress-bar-card-top">
         <div className="category-progress-bar">
-          <CircularProgress value={(budgetSpent / budgetMax) * 100} />
+          <CircularProgress
+            value={(budgetSpent / budgetMax) * 100}
+            color={color}
+          />
         </div>
         {iconCategory}
       </div>

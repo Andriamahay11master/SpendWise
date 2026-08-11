@@ -33,18 +33,21 @@ const Dashboard = () => {
       iconCategory: <IoFastFood />,
       budgetSpent: 220,
       budgetMax: 500,
+      color: "#24d0fb",
     },
     {
       nameCategory: "Entertainment",
       iconCategory: <GiPartyPopper />,
       budgetSpent: 150,
       budgetMax: 400,
+      color: "#f5a623",
     },
     {
       nameCategory: "Transportation",
       iconCategory: <MdEmojiTransportation />,
       budgetSpent: 100,
       budgetMax: 250,
+      color: "#f54e42",
     },
   ];
   return (
