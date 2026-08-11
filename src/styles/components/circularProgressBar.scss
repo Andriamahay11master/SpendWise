@@ -1,0 +1,39 @@
+.circular-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress svg {
+  transform: rotate(-90deg);
+}
+
+.progress-bg,
+.progress-bar {
+  fill: none;
+  stroke-width: 10;
+}
+
+.progress-bg {
+  stroke: #e5e7eb;
+}
+
+.progress-bar {
+  stroke: #2563eb;
+  stroke-linecap: round;
+
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-text {
+  fill: #111827;
+  font-size: 18px;
+  font-weight: 600;
+
+  text-anchor: middle;
+  dominant-baseline: middle;
+
+  /* Undo the SVG rotation */
+  transform: rotate(90deg);
+  transform-origin: 60px 60px;
+}

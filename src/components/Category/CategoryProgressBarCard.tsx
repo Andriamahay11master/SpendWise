@@ -1,3 +1,5 @@
+import CircularProgress from "../Circular/CircularProgressBar";
+
 interface CategoryProgressBarCardProps {
   nameCategory: string;
   iconCategory: React.ReactNode;
@@ -16,10 +18,7 @@ const CategoryProgressBarCard = ({
     <div className="category-progress-bar-card">
       <div className="category-progress-bar-card-top">
         <div className="category-progress-bar">
-          <div
-            className="category-progress-bar-fill"
-            style={{ width: `${(budgetSpent / budgetMax) * 100}%` }}
-          ></div>
+          <CircularProgress value={(budgetSpent / budgetMax) * 100} />
         </div>
         {iconCategory}
       </div>
