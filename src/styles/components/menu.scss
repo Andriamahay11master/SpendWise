@@ -5,6 +5,7 @@
   width: 100%;
   background: $dark;
   padding: 0.7rem;
+  z-index: 100;
   ul {
     @include flex-center;
     gap: 1.3rem;

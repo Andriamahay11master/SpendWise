@@ -1,8 +1,12 @@
+import React, { type ReactElement } from "react";
 import CircularProgress from "../Circular/CircularProgressBar";
 
+interface CategoryIconProps {
+  color?: string;
+}
 interface CategoryProgressBarCardProps {
   nameCategory: string;
-  iconCategory: React.ReactNode;
+  iconCategory: ReactElement<CategoryIconProps>;
   budgetSpent: number;
   budgetMax: number;
   currency?: string;
@@ -24,7 +28,7 @@ const CategoryProgressBarCard = ({
             value={(budgetSpent / budgetMax) * 100}
             color={color}
           />
-          {iconCategory}
+          {React.cloneElement(iconCategory, { color })}
         </div>
       </div>
       <div className="category-progress-bar-card-bottom">
