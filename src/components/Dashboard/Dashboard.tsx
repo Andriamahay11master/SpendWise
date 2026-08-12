@@ -4,6 +4,7 @@ import { IoFastFood } from "react-icons/io5";
 import { GiPartyPopper } from "react-icons/gi";
 import { MdEmojiTransportation } from "react-icons/md";
 import CategoryProgressBarCard from "../Category/CategoryProgressBarCard";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const cardData = [
@@ -60,6 +61,12 @@ const Dashboard = () => {
         {categoryData.map((data, index) => (
           <CategoryProgressBarCard key={index} {...data} />
         ))}
+      </div>
+      <div className="dashboard-transaction">
+        <div className="dashboard-transaction-top">
+          <h2 className="title-h2">Recent transactions</h2>
+          <Link to="/transactions">View All Transactions</Link>
+        </div>
       </div>
     </div>
   );
