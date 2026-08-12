@@ -61,3 +61,17 @@
 .dashboard-category {
   @include grid-50;
 }
+.dashboard-transaction {
+  margin-top: 1rem;
+  &-top {
+    @include flex-between;
+  }
+  a {
+    text-decoration: none;
+    @include text-light-grey;
+    font-size: 0.8rem;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
