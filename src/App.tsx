@@ -51,6 +51,14 @@ function App() {
             </MainPage>
           }
         />
+        <Route
+          path="/transactions"
+          element={
+            <MainPage>
+              <Dashboard />
+            </MainPage>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
