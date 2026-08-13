@@ -5,6 +5,7 @@ import { GiPartyPopper } from "react-icons/gi";
 import { MdEmojiTransportation } from "react-icons/md";
 import CategoryProgressBarCard from "../Category/CategoryProgressBarCard";
 import { Link } from "react-router-dom";
+import ExpensesCard from "../Expenses/ExpensesCard";
 
 const Dashboard = () => {
   const cardData = [
@@ -51,6 +52,36 @@ const Dashboard = () => {
       color: "#f54e42",
     },
   ];
+
+  const dataLastTransactions = [
+    {
+      id: "1",
+      icon: <IoFastFood />,
+      description: "Grocery Shopping",
+      valueCategory: "Food",
+      colorCategory: "#24d0fb",
+      dateExpense: "2023-07-15",
+      montant: 75.5,
+    },
+    {
+      id: "2",
+      icon: <GiPartyPopper />,
+      description: "Movie Night",
+      valueCategory: "Entertainment",
+      colorCategory: "#f5a623",
+      dateExpense: "2023-07-14",
+      montant: 30.0,
+    },
+    {
+      id: "3",
+      icon: <MdEmojiTransportation />,
+      description: "Gas Refill",
+      valueCategory: "Transportation",
+      colorCategory: "#f54e42",
+      dateExpense: "2023-07-13",
+      montant: 50.0,
+    },
+  ];
   return (
     <div className="dashboard-block">
       {cardData.map((data, index) => (
@@ -67,7 +98,11 @@ const Dashboard = () => {
           <h2 className="title-h2">Recent Transactions</h2>
           <Link to="/transactions">View All</Link>
         </div>
-        <div className="dashboard-transaction-bottom"></div>
+        <div className="dashboard-transaction-bottom">
+          {dataLastTransactions.map((data, index) => (
+            <ExpensesCard key={index} {...data} />
+          ))}
+        </div>
       </div>
     </div>
   );
