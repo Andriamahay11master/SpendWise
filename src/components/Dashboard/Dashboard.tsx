@@ -64,9 +64,10 @@ const Dashboard = () => {
       </div>
       <div className="dashboard-transaction">
         <div className="dashboard-transaction-top">
-          <h2 className="title-h2">Recent transactions</h2>
-          <Link to="/transactions">View All Transactions</Link>
+          <h2 className="title-h2">Recent Transactions</h2>
+          <Link to="/transactions">View All</Link>
         </div>
+        <div className="dashboard-transaction-bottom"></div>
       </div>
     </div>
   );
