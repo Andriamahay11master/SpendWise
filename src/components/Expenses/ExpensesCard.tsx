@@ -17,10 +17,16 @@ const ExpensesCard = ({
       <div className="expenses-card-left">
         <div className="expenses-card-icon">{icon}</div>
         <div className="expenses-card-info">
-          <p className="expenses-card-description">{description}</p>
-          <p className="expenses-card-value">{valueCategory}</p>
-          <p className="expenses-card-date">{dateExpense}</p>
-          <p className="expenses-card-amount">${montant.toFixed(2)}</p>
+          <div className="expenses-card-col">
+            <p className="expenses-card-description">{description}</p>
+            <p className="expenses-card-info">
+              {valueCategory}
+              <strong>{dateExpense}</strong>
+            </p>
+          </div>
+          <div className="expenses-card-col">
+            <p className="expenses-card-amount">${montant.toFixed(2)}</p>
+          </div>
         </div>
       </div>
     </div>
