@@ -1,11 +1,44 @@
 .expenses-card {
+  text-decoration: none;
   @include flex-start;
   margin-bottom: 1rem;
   border-radius: $border-radius;
   border: 1px solid rgba($dark, 0.6);
   padding: 1rem;
-  gap: 0.5rem;
+  gap: 0.8rem;
+  &-icon {
+    @include flex-center;
+    padding: 0.7rem;
+    border-radius: $border-radius-sm;
+    background-color: rgba($dark, 0.6);
+  }
+  svg {
+    font-size: 1.2rem;
+  }
   .expenses-card-info {
-    @include flex-start;
+    width: 100%;
+    @include flex-start-between;
+    @include text-light-grey;
+  }
+  .expenses-card-info-plus {
+    font-size: 0.7rem;
+    strong {
+      margin-left: 1.5rem;
+      position: relative;
+      &::before {
+        content: "";
+        background-color: $light-gray;
+        width: 0.4rem;
+        height: 0.4rem;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: -1rem;
+        transform: translateY(calc(-50%));
+      }
+    }
+  }
+  .expenses-card-amount {
+    font-size: $font-size-lg;
   }
 }

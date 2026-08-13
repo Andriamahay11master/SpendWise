@@ -10,6 +10,7 @@ interface ExpensesCardProps {
   valueCategory: string;
   colorCategory: string;
   dateExpense: string;
+  currency: string;
   montant: number;
 }
 const ExpensesCard = ({
@@ -19,6 +20,7 @@ const ExpensesCard = ({
   valueCategory,
   colorCategory,
   dateExpense,
+  currency = "$",
   montant,
 }: ExpensesCardProps) => {
   return (
@@ -29,13 +31,16 @@ const ExpensesCard = ({
       <div className="expenses-card-info">
         <div className="expenses-card-col">
           <p className="expenses-card-description">{description}</p>
-          <p className="expenses-card-info">
+          <p className="expenses-card-info-plus">
             {valueCategory}
             <strong>{dateExpense}</strong>
           </p>
         </div>
         <div className="expenses-card-col">
-          <p className="expenses-card-amount">${montant.toFixed(2)}</p>
+          <p className="expenses-card-amount">
+            {currency}
+            {montant.toFixed(2)}
+          </p>
         </div>
       </div>
     </Link>
