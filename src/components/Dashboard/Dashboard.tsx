@@ -86,7 +86,7 @@ const Dashboard = () => {
     },
   ];
   return (
-    <div className="dashboard-block">
+    <div className="main-block">
       {cardData.map((data, index) => (
         <DashboardCard key={index} {...data} />
       ))}

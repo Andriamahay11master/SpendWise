@@ -1,6 +1,6 @@
 const ExpensesList = ({}) => {
   return (
-    <div className="expenses-list">
+    <div className="main-block">
       <h1>Expenses List</h1>
     </div>
   );

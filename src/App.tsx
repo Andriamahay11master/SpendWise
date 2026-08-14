@@ -6,6 +6,8 @@ import Analytics from "./components/Analytics/Analytics";
 import ExpensesForm from "./components/Expenses/ExpensesForm";
 import CategoryList from "./components/Category/CategoryList";
 import Profile from "./components/Profile/Profile";
+import MainPageTransaction from "./pages/MainPageTransaction";
+import ExpensesList from "./components/Expenses/ExpensesList";
 
 function App() {
   return (
@@ -54,9 +56,9 @@ function App() {
         <Route
           path="/transactions"
           element={
-            <MainPage>
-              <Dashboard />
-            </MainPage>
+            <MainPageTransaction>
+              <ExpensesList />
+            </MainPageTransaction>
           }
         />
       </Routes>

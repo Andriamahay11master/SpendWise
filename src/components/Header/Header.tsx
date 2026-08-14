@@ -14,16 +14,10 @@ const Header = ({
   return (
     <header className="header-block">
       <div className="header-col">
-        {type === "transaction" ? (
-          <Link to="/dashboard" className="header-logo">
-            {icon}
-          </Link>
-        ) : (
-          <Link to="/" className="header-logo">
-            {icon}
-            <strong>{title}</strong>
-          </Link>
-        )}
+        <Link to="/" className="header-logo">
+          {icon}
+          {type === "default" && <strong>{title}</strong>}
+        </Link>
       </div>
       <div className="header-col">
         <Link to="/profile" className="header-link">
