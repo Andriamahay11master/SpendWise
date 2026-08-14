@@ -1,12 +1,19 @@
 import { GiTakeMyMoney } from "react-icons/gi";
 
-const Header = () => {
+interface HeaderProps {
+  icon?: React.ReactNode;
+  title?: string;
+}
+const Header = ({
+  icon = <GiTakeMyMoney size={30} />,
+  title = "SpendWise",
+}: HeaderProps) => {
   return (
     <header className="header-block">
       <div className="header-col">
         <p className="header-logo">
-          <GiTakeMyMoney size={30} />
-          <strong>SpendWise</strong>
+          {icon}
+          <strong>{title}</strong>
         </p>
       </div>
       <div className="header-col">
