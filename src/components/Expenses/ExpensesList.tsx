@@ -51,7 +51,6 @@ const ExpensesList = ({}) => {
   return (
     <div className="main-block">
       <div className="expenses-filter">
-        <label htmlFor="filter">Filter by date:</label>
         <CiSearch />
         <input
           type="search"
