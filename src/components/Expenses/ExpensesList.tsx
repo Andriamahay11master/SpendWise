@@ -78,16 +78,20 @@ const ExpensesList = ({}) => {
   };
 
   useEffect(() => {
-    const filteredExpenses = dataExpenses.filter((expense) => {
-      const expenseDate = new Date(expense.dateExpense);
-      const searchDate = new Date(dateSearch);
-      return (
-        expenseDate.getFullYear() === searchDate.getFullYear() &&
-        expenseDate.getMonth() === searchDate.getMonth() &&
-        expenseDate.getDate() === searchDate.getDate()
-      );
-    });
-    setDataExpenses(filteredExpenses);
+    if (dateSearch === "") {
+      setDataExpenses(dataExp);
+    } else {
+      const filteredExpenses = dataExp.filter((expense) => {
+        const expenseDate = new Date(expense.dateExpense);
+        const searchDate = new Date(dateSearch);
+        return (
+          expenseDate.getFullYear() === searchDate.getFullYear() &&
+          expenseDate.getMonth() === searchDate.getMonth() &&
+          expenseDate.getDate() === searchDate.getDate()
+        );
+      });
+      setDataExpenses(filteredExpenses);
+    }
   }, [dateSearch]);
 
   return (
@@ -95,7 +99,7 @@ const ExpensesList = ({}) => {
       <div className="expenses-filter">
         <CiSearch />
         <input
-          type="search"
+          type="date"
           id="filter"
           name="filter"
           placeholder="Search by year, month, day"
@@ -152,6 +156,17 @@ const ExpensesList = ({}) => {
                 expenseDate.getFullYear() === yesterday.getFullYear())
             )
           ) {
+            return <ExpensesCard key={expense.id} {...expense} />;
+          }
+        })}
+      </div>
+      <div className="expenses-group">
+        <h3 className="title-h3">older</h3>
+        {dataExpenses.map((expense) => {
+          const expenseDate = new Date(expense.dateExpense);
+          const startOfMonth = new Date(dateToday);
+          startOfMonth.setDate(1);
+          if (expenseDate < startOfMonth) {
             return <ExpensesCard key={expense.id} {...expense} />;
           }
         })}
