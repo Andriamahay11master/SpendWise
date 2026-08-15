@@ -3,10 +3,11 @@ import { IoFastFood } from "react-icons/io5";
 import { MdEmojiTransportation } from "react-icons/md";
 import ExpensesCard from "./ExpensesCard";
 import { CiSearch } from "react-icons/ci";
+import React, { useEffect } from "react";
 
 const ExpensesList = ({}) => {
   const dateToday = new Date();
-  const dataExpenses = [
+  const dataExp = [
     {
       id: "1",
       icon: <IoFastFood />,
@@ -47,7 +48,48 @@ const ExpensesList = ({}) => {
       dateExpense: "2026-08-10",
       montant: 50.0,
     },
+    {
+      id: "5",
+      icon: <IoFastFood />,
+      description: "Grocery Shopping",
+      valueCategory: "Food",
+      colorCategory: "#24d0fb",
+      currency: "$",
+      dateExpense: "2025-08-15",
+      montant: 75.5,
+    },
+    {
+      id: "6",
+      icon: <GiPartyPopper />,
+      description: "Movie Night",
+      valueCategory: "Entertainment",
+      colorCategory: "#f5a623",
+      currency: "$",
+      dateExpense: "2025-08-14",
+      montant: 30.0,
+    },
   ];
+  const [dateSearch, setDateSearch] = React.useState(
+    dateToday.toISOString().split("T")[0],
+  );
+  const [dataExpenses, setDataExpenses] = React.useState(dataExp);
+  const onChangeDateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    const filteredExpenses = dataExpenses.filter((expense) => {
+      const expenseDate = new Date(expense.dateExpense);
+      const searchDate = new Date(dateSearch);
+      return (
+        expenseDate.getFullYear() === searchDate.getFullYear() &&
+        expenseDate.getMonth() === searchDate.getMonth() &&
+        expenseDate.getDate() === searchDate.getDate()
+      );
+    });
+    setDataExpenses(filteredExpenses);
+  }, [dateSearch]);
+
   return (
     <div className="main-block">
       <div className="expenses-filter">
@@ -56,7 +98,9 @@ const ExpensesList = ({}) => {
           type="search"
           id="filter"
           name="filter"
-          placeholder="Search by date"
+          placeholder="Search by year, month, day"
+          value={dateSearch}
+          onChange={onChangeDateSearch}
         />
       </div>
       <div className="expenses-group">
