@@ -2,6 +2,7 @@ import { GiPartyPopper } from "react-icons/gi";
 import { IoFastFood } from "react-icons/io5";
 import { MdEmojiTransportation } from "react-icons/md";
 import ExpensesCard from "./ExpensesCard";
+import { CiSearch } from "react-icons/ci";
 
 const ExpensesList = ({}) => {
   const dateToday = new Date();
@@ -49,6 +50,16 @@ const ExpensesList = ({}) => {
   ];
   return (
     <div className="main-block">
+      <div className="expenses-filter">
+        <label htmlFor="filter">Filter by date:</label>
+        <CiSearch />
+        <input
+          type="search"
+          id="filter"
+          name="filter"
+          placeholder="Search by date"
+        />
+      </div>
       <div className="expenses-group">
         <h3 className="title-h3">today</h3>
         {dataExpenses.map((expense) => {
