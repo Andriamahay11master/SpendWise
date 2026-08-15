@@ -78,12 +78,26 @@ const ExpensesList = ({}) => {
         })}
       </div>
       <div className="expenses-group">
-        <h3 className="title-h3">this week</h3>
+        <h3 className="title-h3">this month</h3>
         {dataExpenses.map((expense) => {
           const expenseDate = new Date(expense.dateExpense);
-          const startOfWeek = new Date(dateToday);
-          startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
-          if (expenseDate >= startOfWeek) {
+          // Exclude list of expenses that are already displayed in "today" and "yesterday"
+          const yesterday = new Date(dateToday);
+          yesterday.setDate(yesterday.getDate() - 1);
+          const startOfMonth = new Date(dateToday);
+          startOfMonth.setDate(1);
+          if (
+            expenseDate >= startOfMonth &&
+            expenseDate <= dateToday &&
+            !(
+              (expenseDate.getDate() === dateToday.getDate() &&
+                expenseDate.getMonth() === dateToday.getMonth() &&
+                expenseDate.getFullYear() === dateToday.getFullYear()) ||
+              (expenseDate.getDate() === yesterday.getDate() &&
+                expenseDate.getMonth() === yesterday.getMonth() &&
+                expenseDate.getFullYear() === yesterday.getFullYear())
+            )
+          ) {
             return <ExpensesCard key={expense.id} {...expense} />;
           }
         })}
