@@ -1,6 +1,7 @@
 import { GiPartyPopper } from "react-icons/gi";
 import { IoFastFood } from "react-icons/io5";
 import { MdEmojiTransportation } from "react-icons/md";
+import ExpensesCard from "./ExpensesCard";
 
 const ExpensesList = ({}) => {
   const dateToday = new Date();
@@ -50,12 +51,42 @@ const ExpensesList = ({}) => {
     <div className="main-block">
       <div className="expenses-group">
         <h3 className="title-h3">today</h3>
+        {dataExpenses.map((expense) => {
+          const expenseDate = new Date(expense.dateExpense);
+          if (
+            expenseDate.getDate() === dateToday.getDate() &&
+            expenseDate.getMonth() === dateToday.getMonth() &&
+            expenseDate.getFullYear() === dateToday.getFullYear()
+          ) {
+            return <ExpensesCard key={expense.id} {...expense} />;
+          }
+        })}
       </div>
       <div className="expenses-group">
         <h3 className="title-h3">yesterday</h3>
+        {dataExpenses.map((expense) => {
+          const expenseDate = new Date(expense.dateExpense);
+          const yesterday = new Date(dateToday);
+          yesterday.setDate(yesterday.getDate() - 1);
+          if (
+            expenseDate.getDate() === yesterday.getDate() &&
+            expenseDate.getMonth() === yesterday.getMonth() &&
+            expenseDate.getFullYear() === yesterday.getFullYear()
+          ) {
+            return <ExpensesCard key={expense.id} {...expense} />;
+          }
+        })}
       </div>
       <div className="expenses-group">
         <h3 className="title-h3">this week</h3>
+        {dataExpenses.map((expense) => {
+          const expenseDate = new Date(expense.dateExpense);
+          const startOfWeek = new Date(dateToday);
+          startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+          if (expenseDate >= startOfWeek) {
+            return <ExpensesCard key={expense.id} {...expense} />;
+          }
+        })}
       </div>
     </div>
   );
