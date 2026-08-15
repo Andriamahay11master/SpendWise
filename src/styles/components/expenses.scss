@@ -73,3 +73,11 @@
     text-transform: uppercase;
   }
 }
+
+.no-expenses {
+  p {
+    @include text-light-grey;
+    font-size: $font-size-sm;
+    text-align: center;
+  }
+}
