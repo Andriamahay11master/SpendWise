@@ -16,6 +16,13 @@ h1 {
   margin-bottom: 1rem;
 }
 
+.title-h3 {
+  font-size: $font-size-sm;
+  @include text-light-grey;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1rem;
+}
+
 .main-content {
   margin: 5rem 0;
 }
