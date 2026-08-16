@@ -6,7 +6,7 @@ import Analytics from "./components/Analytics/Analytics";
 import ExpensesForm from "./components/Expenses/ExpensesForm";
 import CategoryList from "./components/Category/CategoryList";
 import Profile from "./components/Profile/Profile";
-import MainPageTransaction from "./pages/MainPageTransaction";
+import MainPageGabarit from "./pages/MainPageGabarit";
 import ExpensesList from "./components/Expenses/ExpensesList";
 import CategoryForm from "./components/Category/CategoryForm";
 
@@ -65,9 +65,9 @@ function App() {
         <Route
           path="/transactions"
           element={
-            <MainPageTransaction>
+            <MainPageGabarit>
               <ExpensesList />
-            </MainPageTransaction>
+            </MainPageGabarit>
           }
         />
       </Routes>
