@@ -1,9 +1,31 @@
 const CategoryForm = () => {
   return (
-    <div className="category-form">
+    <div className="main-block">
       <form>
-        <input type="text" placeholder="Category Name" />
-        <button type="submit">Add Category</button>
+        <div className="form-group">
+          <label htmlFor="categoryName">Category Name:</label>
+          <input id="categoryName" type="text" placeholder="Category Name" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="selectIcon">Select Icon:</label>
+          <input id="selectIcon" type="text" placeholder="Select Icon" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="selectColor">Select Color:</label>
+          <input id="selectColor" type="color" placeholder="Select Color" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="budget">Monthly Budget Limit:</label>
+          <input id="budget" type="text" placeholder="Monthly Budget Limit" />
+        </div>
+        <div className="form-group form-button">
+          <button type="submit" className="btn btn-primary">
+            <span className="circle" aria-hidden="true">
+              <span className="icon arrow"></span>
+            </span>
+            <span className="button-text">Add Category</span>
+          </button>
+        </div>
       </form>
     </div>
   );
