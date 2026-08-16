@@ -10,4 +10,25 @@ input {
     outline: none;
     border-color: $primary;
   }
+  &[type="color"] {
+    height: 2rem;
+    width: 2rem;
+    padding: 0.1rem;
+  }
+}
+
+label {
+  display: block;
+  @include text-light-grey;
+  margin-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  &.form-button {
+    padding-top: 1rem;
+    .btn {
+      width: 100%;
+    }
+  }
 }

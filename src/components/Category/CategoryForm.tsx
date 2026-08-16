@@ -1,3 +1,4 @@
+import { CiCirclePlus } from "react-icons/ci";
 const CategoryForm = () => {
   return (
     <div className="main-block">
@@ -20,9 +21,7 @@ const CategoryForm = () => {
         </div>
         <div className="form-group form-button">
           <button type="submit" className="btn btn-primary">
-            <span className="circle" aria-hidden="true">
-              <span className="icon arrow"></span>
-            </span>
+            <CiCirclePlus />
             <span className="button-text">Add Category</span>
           </button>
         </div>
