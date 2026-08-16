@@ -10,6 +10,8 @@ import MainPageGabarit from "./pages/MainPageGabarit";
 import ExpensesList from "./components/Expenses/ExpensesList";
 import CategoryForm from "./components/Category/CategoryForm";
 
+import { GoArrowLeft } from "react-icons/go";
+import { FaAngleLeft } from "react-icons/fa6";
 function App() {
   return (
     <BrowserRouter>
@@ -49,9 +51,12 @@ function App() {
         <Route
           path="/addCategory"
           element={
-            <MainPage>
+            <MainPageGabarit
+              icon={<FaAngleLeft size={30} />}
+              title="Add Category"
+            >
               <CategoryForm />
-            </MainPage>
+            </MainPageGabarit>
           }
         />
         <Route
@@ -65,7 +70,10 @@ function App() {
         <Route
           path="/transactions"
           element={
-            <MainPageGabarit>
+            <MainPageGabarit
+              icon={<GoArrowLeft size={30} />}
+              title="Transactions"
+            >
               <ExpensesList />
             </MainPageGabarit>
           }
