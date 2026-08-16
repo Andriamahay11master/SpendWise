@@ -8,6 +8,7 @@ import CategoryList from "./components/Category/CategoryList";
 import Profile from "./components/Profile/Profile";
 import MainPageTransaction from "./pages/MainPageTransaction";
 import ExpensesList from "./components/Expenses/ExpensesList";
+import CategoryForm from "./components/Category/CategoryForm";
 
 function App() {
   return (
@@ -42,6 +43,14 @@ function App() {
           element={
             <MainPage>
               <CategoryList />
+            </MainPage>
+          }
+        />
+        <Route
+          path="/addCategory"
+          element={
+            <MainPage>
+              <CategoryForm />
             </MainPage>
           }
         />
