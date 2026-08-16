@@ -1,5 +1,14 @@
+import React from "react";
 import { CiCirclePlus } from "react-icons/ci";
 const CategoryForm = () => {
+  const [valueRange, setValueRange] = React.useState(0);
+  const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(event.target.value);
+    setValueRange(newValue);
+    // Update CSS variable for gradient background
+    const percent = (newValue / 1000) * 100;
+    event.target.style.setProperty("--value", `${percent}%`);
+  };
   return (
     <div className="main-block">
       <form>
@@ -18,7 +27,7 @@ const CategoryForm = () => {
         <div className="form-group form-range">
           <div className="form-group-top">
             <label htmlFor="budget">Monthly Budget Limit:</label>
-            <span className="currentRangeValue">$10</span>
+            <span className="currentRangeValue">${valueRange}</span>
           </div>
           <input
             id="budget"
@@ -26,7 +35,9 @@ const CategoryForm = () => {
             placeholder="Monthly Budget Limit"
             min="0"
             max="1000"
-            step="10"
+            step="50"
+            value={valueRange}
+            onChange={handleRangeChange}
           />
           <div className="range-intervalle-value">
             <p className="range-value">0</p>

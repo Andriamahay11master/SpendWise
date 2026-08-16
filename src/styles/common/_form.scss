@@ -36,8 +36,25 @@ input {
       height: 0.6rem;
       color: transparent;
       cursor: pointer;
-      background-color: rgba($dark, 0.6);
+      background: linear-gradient(
+        to right,
+        $primary 0%,
+        $primary var(--value, 0%),
+        rgba($dark, 0.6) var(--value, 0%),
+        rgba($dark, 0.6) 100%
+      );
       border-color: transparent;
+      border-radius: $border-radius-sm;
+    }
+    &::-moz-range-progress {
+      background-color: $primary;
+    }
+    &::-moz-range-track {
+      background-color: rgba($dark, 0.6);
+    }
+    &:focus {
+      outline: none;
+      border: none;
     }
   }
 }
