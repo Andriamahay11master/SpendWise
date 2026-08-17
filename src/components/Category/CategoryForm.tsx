@@ -21,33 +21,37 @@ const CategoryForm = () => {
 
   const dataIcon = [
     {
+      name: "IoFastFood",
       icon: <IoFastFood />,
     },
     {
+      name: "GiPartyPopper",
       icon: <GiPartyPopper />,
     },
     {
+      name: "MdEmojiTransportation",
       icon: <MdEmojiTransportation />,
     },
     {
+      name: "MdOutlineHealthAndSafety",
       icon: <MdOutlineHealthAndSafety />,
     },
     {
+      name: "TiShoppingCart",
       icon: <TiShoppingCart />,
     },
     {
+      name: "CiMobile4",
       icon: <CiMobile4 />,
     },
     {
+      name: "CiPlane",
       icon: <CiPlane />,
     },
   ];
 
-  const selectIcon = () => {
-    const inputElement = document.getElementById(
-      "selectIcon",
-    ) as HTMLInputElement;
-    inputElement.value = "";
+  const selectIcon = (nameIcon: string) => {
+    setIcon(nameIcon);
   };
   return (
     <div className="main-block">
@@ -66,7 +70,21 @@ const CategoryForm = () => {
           </div>
           <div className="list-icon">
             {dataIcon.map((item, index) => (
-              <div className="icon-item" key={index} onClick={selectIcon}>
+              <div
+                className={
+                  icon === item.name ? "icon-item selected" : "icon-item"
+                }
+                key={index}
+                onClick={() => selectIcon(item.name)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    selectIcon(item.name);
+                  }
+                }}
+              >
                 {item.icon}
               </div>
             ))}

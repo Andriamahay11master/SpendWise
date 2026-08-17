@@ -13,5 +13,9 @@
   &-primary {
     background-color: $primary;
     color: $neutral;
+    &:hover {
+      background-color: $primary-dark;
+      color: $white;
+    }
   }
 }
