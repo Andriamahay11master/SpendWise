@@ -10,6 +10,7 @@ import { CiPlane } from "react-icons/ci";
 
 const CategoryForm = () => {
   const [valueRange, setValueRange] = React.useState(0);
+  const [icon, setIcon] = React.useState("IoFastFood");
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
     setValueRange(newValue);
@@ -41,6 +42,13 @@ const CategoryForm = () => {
       icon: <CiPlane />,
     },
   ];
+
+  const selectIcon = () => {
+    const inputElement = document.getElementById(
+      "selectIcon",
+    ) as HTMLInputElement;
+    inputElement.value = "";
+  };
   return (
     <div className="main-block">
       <form>
@@ -48,12 +56,17 @@ const CategoryForm = () => {
           <label htmlFor="categoryName">Category Name:</label>
           <input id="categoryName" type="text" placeholder="Category Name" />
         </div>
-        <div className="form-group">
-          <label htmlFor="selectIcon">Select Icon:</label>
-          <input id="selectIcon" type="text" placeholder="Select Icon" />
+        <div className="form-group form-icon">
+          <div className="form-group-top">
+            <label htmlFor="selectIcon">Select Icon:</label>
+            <div className="form-icon-value">
+              <span>selected:</span>
+              <input id="selectIcon" type="text" value={icon} readOnly />
+            </div>
+          </div>
           <div className="list-icon">
             {dataIcon.map((item, index) => (
-              <div className="icon-item" key={index}>
+              <div className="icon-item" key={index} onClick={selectIcon}>
                 {item.icon}
               </div>
             ))}

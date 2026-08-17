@@ -84,6 +84,25 @@ label {
       @include text-light-grey;
     }
   }
+  &.form-icon {
+    .form-icon-value {
+      span {
+        font-size: 0.8rem;
+        color: $primary;
+        text-transform: uppercase;
+        margin-right: 0.1rem;
+      }
+    }
+    input {
+      background: transparent;
+      border: none;
+      max-width: 6rem;
+      padding: 0;
+      color: $primary;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+  }
 }
 
 .range-intervalle-value {
