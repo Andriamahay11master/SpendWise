@@ -1,5 +1,13 @@
 import React from "react";
 import { CiCirclePlus } from "react-icons/ci";
+import { IoFastFood } from "react-icons/io5";
+import { GiPartyPopper } from "react-icons/gi";
+import { MdEmojiTransportation } from "react-icons/md";
+import { MdOutlineHealthAndSafety } from "react-icons/md";
+import { TiShoppingCart } from "react-icons/ti";
+import { CiMobile4 } from "react-icons/ci";
+import { CiPlane } from "react-icons/ci";
+
 const CategoryForm = () => {
   const [valueRange, setValueRange] = React.useState(0);
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -9,6 +17,30 @@ const CategoryForm = () => {
     const percent = (newValue / 1000) * 100;
     event.target.style.setProperty("--value", `${percent}%`);
   };
+
+  const dataIcon = [
+    {
+      icon: <IoFastFood />,
+    },
+    {
+      icon: <GiPartyPopper />,
+    },
+    {
+      icon: <MdEmojiTransportation />,
+    },
+    {
+      icon: <MdOutlineHealthAndSafety />,
+    },
+    {
+      icon: <TiShoppingCart />,
+    },
+    {
+      icon: <CiMobile4 />,
+    },
+    {
+      icon: <CiPlane />,
+    },
+  ];
   return (
     <div className="main-block">
       <form>
@@ -19,6 +51,13 @@ const CategoryForm = () => {
         <div className="form-group">
           <label htmlFor="selectIcon">Select Icon:</label>
           <input id="selectIcon" type="text" placeholder="Select Icon" />
+          <div className="list-icon">
+            {dataIcon.map((item, index) => (
+              <div className="icon-item" key={index}>
+                {item.icon}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="form-group">
           <label htmlFor="selectColor">Select Color:</label>
