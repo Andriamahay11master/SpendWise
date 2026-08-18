@@ -48,7 +48,7 @@ const ExpensesForm = () => {
         <div className="form-group form-amount">
           <label htmlFor="amount">Amount</label>
           <input
-            type="text"
+            type="number"
             name="amount"
             id="amount"
             placeholder="0.00"
@@ -101,7 +101,7 @@ const ExpensesForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group form-submit">
+        <div className="form-group form-button">
           <button type="submit" className="btn btn-primary">
             <span>Save Transaction</span> <GoArrowRight />
           </button>

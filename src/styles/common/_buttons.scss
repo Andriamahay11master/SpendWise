@@ -8,7 +8,7 @@
   @include flex-center;
   svg {
     font-size: $font-size-lg;
-    margin-right: 0.2rem;
+    margin: 0 0.2rem;
   }
   &-primary {
     background-color: $primary;
