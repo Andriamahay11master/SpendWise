@@ -4,7 +4,7 @@ import { MdEmojiTransportation } from "react-icons/md";
 import { GoArrowRight } from "react-icons/go";
 import { Link } from "react-router";
 import { useState } from "react";
-import React from "react";
+import React, { type SubmitEvent } from "react";
 
 const ExpensesForm = () => {
   const dataCategory = [
@@ -28,7 +28,7 @@ const ExpensesForm = () => {
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
-    date: "",
+    dateE: "",
     notes: "",
   });
 
@@ -42,9 +42,14 @@ const ExpensesForm = () => {
   const handleCategorySelect = (categoryName: string) => {
     setFormData((prev) => ({ ...prev, category: categoryName }));
   };
+
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+  };
   return (
     <div className="main-block">
-      <form className="form-expense">
+      <form className="form-expense" onSubmit={handleSubmit}>
         <div className="form-group form-amount">
           <label htmlFor="amount">Amount</label>
           <input
@@ -88,7 +93,13 @@ const ExpensesForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="dateE">Date</label>
-          <input type="date" name="dateE" id="dateE" value={formData.date} />
+          <input
+            type="date"
+            name="dateE"
+            id="dateE"
+            value={formData.dateE}
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="notes">Notes</label>
