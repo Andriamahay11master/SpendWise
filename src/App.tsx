@@ -33,7 +33,7 @@ function App() {
           }
         />
         <Route
-          path="/add"
+          path="/addExpense"
           element={
             <MainPage>
               <ExpensesForm />

@@ -10,7 +10,7 @@ const Menu = () => {
   const menuItems = [
     { name: "Home", icon: <IoHome />, link: "/" },
     { name: "Analytics", icon: <IoAnalytics />, link: "/analytics" },
-    { name: "Add", icon: <IoAddCircle />, link: "/add" },
+    { name: "Add", icon: <IoAddCircle />, link: "/addExpense" },
     { name: "Categories", icon: <MdOutlineCategory />, link: "/categories" },
     { name: "Profile", icon: <FiUser />, link: "/profile" },
   ];
