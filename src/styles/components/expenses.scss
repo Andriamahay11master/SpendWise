@@ -55,7 +55,6 @@
     font-size: $font-size-lg;
   }
 }
-
 .expenses-filter {
   margin: 1rem 0;
   position: relative;
@@ -76,7 +75,6 @@
     text-transform: uppercase;
   }
 }
-
 .no-expenses {
   p {
     @include text-light-grey;
