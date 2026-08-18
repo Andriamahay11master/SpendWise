@@ -39,7 +39,7 @@ const ExpensesForm = () => {
   return (
     <div className="main-block">
       <form className="form-expense">
-        <div className="form-group">
+        <div className="form-group form-amount">
           <label htmlFor="amount">Amount</label>
           <input
             type="text"
@@ -50,7 +50,7 @@ const ExpensesForm = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group fomr-category">
+        <div className="form-group form-category">
           <div className="form-group-top">
             <label htmlFor="category">Category</label>
             <input
@@ -65,7 +65,12 @@ const ExpensesForm = () => {
           <div className="form-category-list">
             {dataCategory.map((data, index) => (
               <div className="category-item" key={index}>
-                <div className="category-icon">{data.iconCategory}</div>
+                <div
+                  className="category-icon"
+                  style={{ backgroundColor: `rgba(${data.color}, 0.6)` }}
+                >
+                  {data.iconCategory}
+                </div>
                 <p className="category-name">{data.nameCategory}</p>
               </div>
             ))}

@@ -144,4 +144,41 @@ label {
 }
 
 .form-expense {
+  .form-amount {
+    text-align: center;
+    label {
+      text-transform: uppercase;
+    }
+    input {
+      border: none;
+      text-align: center;
+      font-size: $font-size-lg;
+      color: $primary;
+      font-weight: 500;
+    }
+  }
+  .form-category {
+    a {
+      @include text-light-grey;
+    }
+    .form-category-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0.5rem;
+    }
+    .category-item {
+      text-align: center;
+      padding: 1rem;
+      border-radius: $border-radius-sm;
+      background: rgba($dark, 0.6);
+      @include text-light-grey;
+      .category-icon {
+        width: 4rem;
+        height: 4rem;
+        @include flex-center;
+        border-radius: 50%;
+        font-size: $font-size-xl;
+      }
+    }
+  }
 }
