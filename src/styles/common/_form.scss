@@ -165,19 +165,50 @@ label {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 0.5rem;
+      @include max(375px) {
+        @include flex-start;
+        grid-gap: 1rem;
+        flex-wrap: wrap;
+      }
     }
     .category-item {
       text-align: center;
+      @include flex-column;
       padding: 1rem;
       border-radius: $border-radius-sm;
-      background: rgba($dark, 0.6);
+      background: rgba($dark, 0.3);
       @include text-light-grey;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      @include max(375px) {
+        width: calc(50% - 0.5rem);
+      }
+      &:hover {
+        background: rgba($dark, 0.6);
+        .category-icon {
+          transform: scale(1.05);
+        }
+      }
+
+      &.active {
+        background: rgba($dark, 1);
+        border-color: $primary;
+      }
+
       .category-icon {
-        width: 4rem;
-        height: 4rem;
+        width: 3.7rem;
+        height: 3.7rem;
         @include flex-center;
         border-radius: 50%;
-        font-size: $font-size-xl;
+        font-size: $font-size-2xl;
+        background-color: rgba($dark, 0.7);
+        transition: transform 0.4s ease-in-out;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 0.8rem;
       }
     }
   }

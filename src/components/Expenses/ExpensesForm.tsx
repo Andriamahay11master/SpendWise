@@ -4,23 +4,24 @@ import { MdEmojiTransportation } from "react-icons/md";
 import { GoArrowRight } from "react-icons/go";
 import { Link } from "react-router";
 import { useState } from "react";
+import React from "react";
 
 const ExpensesForm = () => {
   const dataCategory = [
     {
       nameCategory: "Food",
       iconCategory: <IoFastFood />,
-      color: "#24d0fb",
+      color: "36, 208, 251",
     },
     {
       nameCategory: "Entertainment",
       iconCategory: <GiPartyPopper />,
-      color: "#f5a623",
+      color: "245, 166, 35",
     },
     {
       nameCategory: "Transportation",
       iconCategory: <MdEmojiTransportation />,
-      color: "#f54e42",
+      color: "245, 78, 66",
     },
   ];
 
@@ -35,6 +36,11 @@ const ExpensesForm = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handler for category selection
+  const handleCategorySelect = (categoryName: string) => {
+    setFormData((prev) => ({ ...prev, category: categoryName }));
   };
   return (
     <div className="main-block">
@@ -64,12 +70,16 @@ const ExpensesForm = () => {
           </div>
           <div className="form-category-list">
             {dataCategory.map((data, index) => (
-              <div className="category-item" key={index}>
+              <div
+                className={`category-item ${formData.category === data.nameCategory ? "active" : ""}`}
+                key={index}
+                onClick={() => handleCategorySelect(data.nameCategory)}
+              >
                 <div
                   className="category-icon"
-                  style={{ backgroundColor: `rgba(${data.color}, 0.6)` }}
+                  style={{ backgroundColor: `rgba(${data.color}, 0.1)` }}
                 >
-                  {data.iconCategory}
+                  {React.cloneElement(data.iconCategory, { color: data.color })}
                 </div>
                 <p className="category-name">{data.nameCategory}</p>
               </div>
