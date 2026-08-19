@@ -24,7 +24,7 @@ const CategoryCard = ({
     <div className="category-card">
       <div className="category-top">
         <div className="category-col">
-          <div className="cateogry-icon">
+          <div className="category-icon">
             {React.cloneElement(iconCategory, { color })}
           </div>
           <p className="category-name">{nameCategory}</p>

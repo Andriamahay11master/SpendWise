@@ -1,0 +1,35 @@
+//category card
+.category-card {
+  padding: 1rem;
+  border-radius: $border-radius;
+  border: 1px solid rgba($dark, 0.6);
+  background-color: rgba($dark, 0.3);
+  text-align: center;
+  @include text-light-grey;
+  margin-bottom: 1rem;
+  .category-top {
+    margin-bottom: 0.3rem;
+    @include flex-between;
+  }
+  .category-col {
+    @include flex-start;
+    gap: 0.5rem;
+  }
+  .category-info {
+    @include flex-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+  .category-name {
+    font-size: $font-size-lg;
+  }
+  .category-icon {
+    @include flex-center;
+    padding: 0.7rem;
+    border-radius: $border-radius-sm;
+    background-color: rgba($dark, 0.6);
+    svg {
+      font-size: 1.2rem;
+    }
+  }
+}
