@@ -29,7 +29,19 @@
     border-radius: $border-radius-sm;
     background-color: rgba($dark, 0.6);
     svg {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
+  }
+}
+
+//page list categories
+.category-list-block {
+  padding-bottom: 3rem;
+  .category-list {
+    margin-top: 1rem;
+  }
+  .btn-primary {
+    text-transform: uppercase;
+    text-decoration: none;
   }
 }
