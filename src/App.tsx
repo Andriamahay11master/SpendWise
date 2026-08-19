@@ -41,7 +41,7 @@ function App() {
           }
         />
         <Route
-          path="/categories"
+          path="/listCategories"
           element={
             <MainPage>
               <CategoryList />

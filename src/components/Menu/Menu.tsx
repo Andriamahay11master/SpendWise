@@ -11,7 +11,11 @@ const Menu = () => {
     { name: "Home", icon: <IoHome />, link: "/" },
     { name: "Analytics", icon: <IoAnalytics />, link: "/analytics" },
     { name: "Add", icon: <IoAddCircle />, link: "/addExpense" },
-    { name: "Categories", icon: <MdOutlineCategory />, link: "/categories" },
+    {
+      name: "Categories",
+      icon: <MdOutlineCategory />,
+      link: "/listCategories",
+    },
     { name: "Profile", icon: <FiUser />, link: "/profile" },
   ];
 
