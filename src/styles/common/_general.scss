@@ -29,4 +29,8 @@ h1 {
 
 .main-block {
   padding: 0rem 0.7rem;
+  .page-desc {
+    @include text-light-grey;
+    font-size: 0.9rem;
+  }
 }
