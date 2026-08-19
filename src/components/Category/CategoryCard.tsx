@@ -20,6 +20,11 @@ const CategoryCard = ({
   currency = "$",
   color,
 }: CategoryCardProps) => {
+  const [budget, setBudget] = React.useState(budgetSpent);
+  const changeBudget = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(event.target.value);
+    setBudget(newValue);
+  };
   return (
     <div className="category-card">
       <div className="category-top">
@@ -32,7 +37,7 @@ const CategoryCard = ({
         <div className="category-col">
           <p className="category-amount" style={{ color: color }}>
             {currency}
-            {budgetSpent.toFixed(2)}
+            {budget.toFixed(2)}
           </p>
         </div>
       </div>
@@ -41,15 +46,16 @@ const CategoryCard = ({
           <p>Limit allocation</p>
           <p className="category-percentage status" style={{ color: color }}>
             {" "}
-            {((budgetSpent / budgetMax) * 100).toFixed(2)}% of income
+            {((budget / budgetMax) * 100).toFixed(2)}% of income
           </p>
         </div>
         <div className="category-range">
           <input
             type="range"
             min="0"
-            max="1000"
-            value={(budgetSpent / budgetMax) * 100}
+            max={budgetMax}
+            value={budget}
+            onChange={changeBudget}
           />
         </div>
       </div>
