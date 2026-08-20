@@ -63,7 +63,11 @@ function App() {
           path="/profile"
           element={
             <MainPage>
-              <Profile image="" name="" email="" />
+              <Profile
+                image="/user.png"
+                name="Name user"
+                email="user@email.com"
+              />
             </MainPage>
           }
         />
