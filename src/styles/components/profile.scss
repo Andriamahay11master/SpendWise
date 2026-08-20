@@ -1,0 +1,25 @@
+.profile-block {
+  padding: 1rem 0;
+  @include text-light-grey;
+  text-align: center;
+  .profil-top {
+    @include flex-column;
+  }
+  .profil-img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: 3px solid $primary;
+    margin-bottom: 1rem;
+  }
+  .profil-name {
+    font-size: $font-size-lg;
+    margin-bottom: 0.2rem;
+    text-transform: capitalize;
+  }
+  .profil-email {
+    font-size: $font-size-sm;
+    font-weight: 300;
+    font-style: italic;
+  }
+}
