@@ -59,5 +59,71 @@
     .setting-name {
       font-size: $font-size-sm;
     }
+    .dropdown-language {
+      position: relative;
+      min-width: 4rem;
+
+      &:hover .dropdown-list,
+      &:focus-within .dropdown-list {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+    }
+    .dropdown-language-value {
+      @include flex-between;
+      gap: 0.75rem;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid rgba($light-gray, 0.25);
+      border-radius: $border-radius-sm;
+      color: $white;
+      font-size: $font-size-sm;
+      cursor: pointer;
+
+      &::after {
+        content: "";
+        width: 0.45rem;
+        height: 0.45rem;
+        border-right: 2px solid $primary;
+        border-bottom: 2px solid $primary;
+        transform: rotate(45deg) translateY(-2px);
+      }
+
+      &:hover {
+        border-color: $primary;
+      }
+    }
+    .dropdown-list {
+      position: absolute;
+      z-index: 2;
+      top: calc(100% + 0.35rem);
+      right: 0;
+      min-width: 100%;
+      margin: 0;
+      padding: 0.35rem;
+      list-style: none;
+      background-color: $dark;
+      border: 1px solid rgba($light-gray, 0.2);
+      border-radius: $border-radius-sm;
+      box-shadow: $shadow-lg;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-0.35rem);
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    }
+    .dropdown-item {
+      padding: 0.55rem 0.75rem;
+      border-radius: $border-radius-sm;
+      color: $light-gray;
+      font-size: $font-size-sm;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($primary, 0.15);
+        color: $primary;
+      }
+    }
   }
 }
