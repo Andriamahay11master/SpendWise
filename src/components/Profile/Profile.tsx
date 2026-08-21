@@ -27,7 +27,12 @@ const Profile = ({ image, name, email }: ProfileProps) => {
               </div>
               <p className="setting-name">Dark Mode</p>
             </div>
-            <div className="profil-col"></div>
+            <div className="profil-col">
+              <label className="switch">
+                <input type="checkbox" id="dark-mode-toggle" />
+                <span className="slider"></span>
+              </label>
+            </div>
           </div>
           <div className="profil-setting-item">
             <div className="profil-col">
@@ -36,7 +41,16 @@ const Profile = ({ image, name, email }: ProfileProps) => {
               </div>
               <p className="setting-name">Language</p>
             </div>
-            <div className="profil-col"></div>
+            <div className="profil-col">
+              <div className="dropdown-language">
+                <span className="dropdown-language-value">EN</span>
+                <ul className="dropdown-list">
+                  <li className="dropdown-item">FR</li>
+                  <li className="dropdown-item">EN</li>
+                  <li className="dropdown-item">ES</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
