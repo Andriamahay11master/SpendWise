@@ -1,9 +1,9 @@
 .profile-block {
   padding: 1rem 0;
   @include text-light-grey;
-  text-align: center;
   .profil-top {
     @include flex-column;
+    text-align: center;
   }
   .profil-img {
     width: 6rem;
@@ -21,5 +21,40 @@
     font-size: $font-size-sm;
     font-weight: 300;
     font-style: italic;
+  }
+  .profil-bottom {
+    padding: 2rem;
+  }
+  .profil-setting {
+    .title-h3 {
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .profil-setting-item {
+      @include flex-between;
+      padding: 1rem 1.5rem;
+      background-color: rgba($dark, 0.3);
+      border: 1px solid rgba($dark, 0.3);
+      &:first-of-type {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+      }
+      &:last-of-type {
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+    .profil-col {
+      @include flex-start;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .setting-icon {
+      @include flex-center;
+      border-radius: $border-radius-sm;
+      background-color: rgba($dark, 0.8);
+      padding: 0.8rem;
+      font-size: 1.3rem;
+    }
   }
 }
