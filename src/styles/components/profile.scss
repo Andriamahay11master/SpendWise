@@ -23,7 +23,7 @@
     font-style: italic;
   }
   .profil-bottom {
-    padding: 2rem;
+    padding: 1.5rem;
   }
   .profil-setting {
     .title-h3 {
@@ -55,6 +55,9 @@
       background-color: rgba($dark, 0.8);
       padding: 0.8rem;
       font-size: 1.3rem;
+    }
+    .setting-name {
+      font-size: $font-size-sm;
     }
   }
 }
