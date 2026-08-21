@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { LuMoon } from "react-icons/lu";
 import { MdOutlineLanguage } from "react-icons/md";
 interface ProfileProps {
@@ -6,6 +7,12 @@ interface ProfileProps {
   email: string;
 }
 const Profile = ({ image, name, email }: ProfileProps) => {
+  const dataLang = ["FR", "EN", "ES"];
+  const [language, setLanguage] = useState("EN");
+
+  const handleChangeLanguage = (lang: string) => {
+    setLanguage(lang);
+  };
   return (
     <div className="main-block profile-block">
       <div className="profil-top">
@@ -43,11 +50,17 @@ const Profile = ({ image, name, email }: ProfileProps) => {
             </div>
             <div className="profil-col">
               <div className="dropdown-language">
-                <span className="dropdown-language-value">EN</span>
+                <span className="dropdown-language-value">{language}</span>
                 <ul className="dropdown-list">
-                  <li className="dropdown-item">FR</li>
-                  <li className="dropdown-item">EN</li>
-                  <li className="dropdown-item">ES</li>
+                  {dataLang.map((lang, index) => (
+                    <li
+                      key={lang + index}
+                      className="dropdown-item"
+                      onClick={() => handleChangeLanguage(lang)}
+                    >
+                      {lang}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
