@@ -25,11 +25,11 @@
   .profil-bottom {
     padding: 1.5rem;
   }
+  .title-h3 {
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
   .profil-setting {
-    .title-h3 {
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
     .profil-setting-item {
       @include flex-between;
       padding: 1rem 1.5rem;

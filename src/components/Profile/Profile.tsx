@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { FaArrowRight } from "react-icons/fa6";
 import { LuMoon } from "react-icons/lu";
 import { MdOutlineLanguage } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
+import { Link } from "react-router";
 interface ProfileProps {
   image: string;
   name: string;
@@ -25,6 +28,23 @@ const Profile = ({ image, name, email }: ProfileProps) => {
         </div>
       </div>
       <div className="profil-bottom">
+        <div className="profil-item">
+          <h3 className="title-h3">personal information</h3>
+          <Link to={`/profil/${name}`} className="profil-setting-item">
+            <div className="profil-col">
+              <div className="setting-icon">
+                <FaRegUser />
+              </div>
+              <p className="setting-name">Personal information</p>
+            </div>
+            <div className="profil-col">
+              <FaArrowRight />
+            </div>
+          </Link>
+        </div>
+        <div className="profil-item">
+          <h3 className="title-h3">security</h3>
+        </div>
         <div className="profil-setting">
           <h3 className="title-h3">preferences</h3>
           <div className="profil-setting-item">
