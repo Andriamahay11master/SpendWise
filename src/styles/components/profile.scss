@@ -30,11 +30,16 @@
     margin-bottom: 1rem;
   }
   .profil-setting {
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
     .profil-setting-item {
       @include flex-between;
       padding: 1rem 1.5rem;
       background-color: rgba($dark, 0.3);
       border: 1px solid rgba($dark, 0.3);
+      text-decoration: none;
+      @include text-light-grey;
       &:first-of-type {
         border-top-left-radius: $border-radius;
         border-top-right-radius: $border-radius;
@@ -42,6 +47,13 @@
       &:last-of-type {
         border-bottom-left-radius: $border-radius;
         border-bottom-right-radius: $border-radius;
+      }
+    }
+    a.profil-setting-item {
+      transition: all 0.4s ease-in-out;
+      &:hover {
+        color: $primary;
+        transition: all 0.4s ease-in-out;
       }
     }
     .profil-col {
@@ -55,6 +67,12 @@
       background-color: rgba($dark, 0.8);
       padding: 0.8rem;
       font-size: 1.3rem;
+      &.user {
+        color: $primary;
+      }
+      &.security {
+        color: $secondary;
+      }
     }
     .setting-name {
       font-size: $font-size-sm;

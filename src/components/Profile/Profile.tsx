@@ -33,7 +33,7 @@ const Profile = ({ image, name, email }: ProfileProps) => {
           <h3 className="title-h3">personal information</h3>
           <Link to={`/profil/info/${name}`} className="profil-setting-item">
             <div className="profil-col">
-              <div className="setting-icon">
+              <div className="setting-icon user">
                 <FaRegUser />
               </div>
               <p className="setting-name">Personal information</p>
@@ -47,7 +47,7 @@ const Profile = ({ image, name, email }: ProfileProps) => {
           <h3 className="title-h3">security</h3>
           <Link to={`/profil/password/${name}`} className="profil-setting-item">
             <div className="profil-col">
-              <div className="setting-icon">
+              <div className="setting-icon security">
                 <CiLock />
               </div>
               <p className="setting-name">Change Password</p>
