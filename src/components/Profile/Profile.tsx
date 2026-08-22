@@ -3,6 +3,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { LuMoon } from "react-icons/lu";
 import { MdOutlineLanguage } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
+import { CiLock } from "react-icons/ci";
 import { Link } from "react-router";
 interface ProfileProps {
   image: string;
@@ -28,9 +29,9 @@ const Profile = ({ image, name, email }: ProfileProps) => {
         </div>
       </div>
       <div className="profil-bottom">
-        <div className="profil-item">
+        <div className="profil-setting">
           <h3 className="title-h3">personal information</h3>
-          <Link to={`/profil/${name}`} className="profil-setting-item">
+          <Link to={`/profil/info/${name}`} className="profil-setting-item">
             <div className="profil-col">
               <div className="setting-icon">
                 <FaRegUser />
@@ -42,8 +43,19 @@ const Profile = ({ image, name, email }: ProfileProps) => {
             </div>
           </Link>
         </div>
-        <div className="profil-item">
+        <div className="profil-setting">
           <h3 className="title-h3">security</h3>
+          <Link to={`/profil/password/${name}`} className="profil-setting-item">
+            <div className="profil-col">
+              <div className="setting-icon">
+                <CiLock />
+              </div>
+              <p className="setting-name">Change Password</p>
+            </div>
+            <div className="profil-col">
+              <FaArrowRight />
+            </div>
+          </Link>
         </div>
         <div className="profil-setting">
           <h3 className="title-h3">preferences</h3>
