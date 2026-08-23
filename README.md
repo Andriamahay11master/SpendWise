@@ -1,130 +1,79 @@
-# 💰 Expense Tracker
+# SpendWise
 
-A modern, full-stack expense management application built with React, Vite, Node.js, and Neon PostgreSQL. Track your spending, visualize expenses by category, and manage your finances with ease.
+SpendWise is a focused expense-tracking interface for understanding daily spending at a glance. The current build is a Vite-powered React prototype with a dashboard, transaction flow, category budgets, and profile navigation.
 
-![Expense Tracker Dashboard](https://via.placeholder.com/1200x600/6C63FF/FFFFFF?text=Expense+Tracker+Dashboard)
+## What is included
 
-## ✨ Features
+- **Dashboard**: total balance, monthly spending, budget progress, and recent transactions.
+- **Transactions**: browse expenses grouped by today, yesterday, this month, or older; filter by date.
+- **Add expense**: enter an amount, choose a category, set a date, and add a note.
+- **Categories**: review category budgets and open the form for a new category.
+- **Analytics**: dedicated route ready for the analytics view.
+- **Profile**: profile area available from the header and bottom navigation.
+- **Responsive layout**: shared header, navigation, forms, cards, and Sass styling for smaller screens.
 
-### Core Functionality
+## Tech stack
 
-- 📊 **Interactive Dashboard** - Real-time spending overview with key metrics
-- 📝 **Expense Management** - Create, read, update, and delete expenses
-- 🏷️ **Category System** - Custom categories with automatic expense organization
-- 📈 **Visual Analytics** - Spending breakdown by category with beautiful charts
-- 🔍 **Smart Filtering** - Filter expenses by category, date range, and search terms
-- 💾 **Cloud Storage** - All data persisted in Neon PostgreSQL database
-- 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
+- React 19 and TypeScript
+- Vite
+- React Router
+- Sass modules and shared Sass variables
+- React Icons
+- React Hook Form and TanStack Query dependencies for upcoming data flows
 
-### Technical Highlights
+## Getting started
 
-- ⚡ **Vite.js** - Lightning-fast development and build times
-- 🎨 **Sass** - Modular, maintainable styles with variables and mixins
-- 🗄️ **Prisma ORM** - Type-safe database operations with PostgreSQL
-- 🔄 **Real-time Updates** - Auto-refreshing data with React Context
-- 🛡️ **Input Validation** - Zod schema validation on backend
-- 📦 **RESTful API** - Clean, well-structured API endpoints
+### Prerequisites
 
-## 🚀 Tech Stack
+- Node.js and npm
 
-### Frontend
-
-- **React 18** - UI Library
-- **Vite** - Build Tool
-- **Sass** - CSS Preprocessor
-- **React Context** - State Management
-- **date-fns** - Date Utilities
-- **React Icons** - Icon Library
-
-### Backend
-
-- **Node.js** - Runtime Environment
-- **Express** - Web Framework
-- **Prisma** - ORM
-- **PostgreSQL (Neon)** - Database
-- **Zod** - Schema Validation
-- **CORS** - Cross-Origin Resource Sharing
-
-## 📋 Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- **Node.js** (v16 or higher)
-- **npm** or **yarn**
-- **Git**
-- **Neon PostgreSQL Account** (free tier available at [neon.tech](https://neon.tech))
-
-## 🔧 Installation
-
-### 1. Clone the Repository
+### Install and run
 
 ```bash
-git clone https://github.com/yourusername/expense-tracker.git
-cd expense-tracker
-```
-
-### 2. Front
-
-# Navigate to frontend directory (from root)
-
-```bash
-cd ../frontend
-```
-
-# Install dependencies
-
-```bash
+git clone <repository-url>
+cd SpendWise
 npm install
+npm run dev
 ```
 
-# Copy environment variables
+Vite will print the local development URL in the terminal, normally `http://localhost:5173`.
 
-```bash
-cp .env.example .env
+## Available scripts
+
+| Script            | Purpose                                  |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Start the Vite development server        |
+| `npm run build`   | Type-check and create a production build |
+| `npm run lint`    | Run ESLint                               |
+| `npm run preview` | Serve the production build locally       |
+
+## Main routes
+
+| Route             | View          |
+| ----------------- | ------------- |
+| `/`               | Dashboard     |
+| `/analytics`      | Analytics     |
+| `/addExpense`     | Add expense   |
+| `/transactions`   | Transactions  |
+| `/listCategories` | Category list |
+| `/addCategory`    | Add category  |
+| `/profile`        | Profile       |
+
+## Project structure
+
+```text
+src/
+├── components/       # Dashboard, expenses, categories, analytics, and navigation UI
+├── pages/             # Shared page layouts and route shells
+├── styles/            # Shared Sass variables, mixins, and component styles
+├── App.tsx            # Application routes
+└── main.tsx           # React entry point
 ```
 
-# Update .env with your backend API URL
+## Current status
 
-# VITE_API_URL=http://localhost:5000/api
+The front end currently uses local sample data so the screens can be explored without an API or database. Submitting the expense and category forms is wired to the UI, but persistence and backend validation are not implemented yet. The analytics route is present as a view placeholder and is ready for its chart content.
 
-### 3. Backend
+## Development notes
 
-# Navigate to backend directory
-
-```bash
-cd backend
-```
-
-# Install dependencies
-
-```bash
-npm install
-```
-
-# Copy environment variables
-
-```bash
-cp .env.example .env
-```
-
-# Update .env with your Neon PostgreSQL database URL
-
-# DATABASE_URL="postgresql://username:password@host/database?sslmode=require"
-
-# Run Prisma migrations
-
-```bash
-npx prisma migrate dev --name init
-```
-
-# Generate Prisma client
-
-```bash
-npx prisma generate
-```
-
-# Seed default categories (optional)
-
-```bash
-npm run db:seed
-```
+When adding a new view, register its route in `src/App.tsx`, reuse the shared layout components in `src/pages`, and keep page-specific styles near their owning component. Run `npm run lint` and `npm run build` before opening a pull request.
