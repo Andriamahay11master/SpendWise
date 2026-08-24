@@ -18,4 +18,16 @@
       color: $white;
     }
   }
+  &-filter {
+    background: transparent;
+    color: $light-gray;
+    &:hover {
+      background: $success;
+      color: $dark;
+    }
+    &.active {
+      background: $success;
+      color: $dark;
+    }
+  }
 }
