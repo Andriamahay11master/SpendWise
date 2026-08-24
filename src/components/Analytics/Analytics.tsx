@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const Analytics = () => {
   const dataFilter = ["Week", "Month", "Year"];
@@ -34,14 +41,14 @@ const Analytics = () => {
         })}
       </div>
       <div className="filter-donut">
-        <div className="camembert">
-          <PieChart width={400} height={400}>
+        <ResponsiveContainer width="100%" aspect={1}>
+          <PieChart>
             <Pie
               data={data}
-              cx={175}
-              cy={175}
-              innerRadius={60} // Makes it a donut chart (optional)
-              outerRadius={100}
+              cx={"50%"}
+              cy={"45%"}
+              innerRadius={"30%"} // Makes it a donut chart (optional)
+              outerRadius={"55%"}
               fill="#8884d8"
               dataKey="value"
               label
@@ -56,7 +63,7 @@ const Analytics = () => {
             <Tooltip />
             <Legend />
           </PieChart>
-        </div>
+        </ResponsiveContainer>
       </div>
     </div>
   );
