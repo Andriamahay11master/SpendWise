@@ -14,8 +14,8 @@ const Analytics = () => {
               key={index}
               className={
                 stateButton === item
-                  ? "filter-analytics-item active"
-                  : "filter-analytics-item"
+                  ? "btn btn-filter active"
+                  : "btn btn-filter"
               }
               onClick={() => setStateButton(item)}
             >

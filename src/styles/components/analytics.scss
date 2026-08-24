@@ -1,0 +1,11 @@
+.page-analytics {
+  .title-h3 {
+    text-transform: uppercase;
+    color: $primary;
+    margin-bottom: 0.5rem;
+    font-size: $font-size-sm;
+  }
+  .filter-analytics {
+    @include flex-start;
+  }
+}
