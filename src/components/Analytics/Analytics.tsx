@@ -14,6 +14,7 @@ import {
 const Analytics = () => {
   const dataFilter = ["Week", "Month", "Year"];
   const [stateButton, setStateButton] = useState("Week");
+  const [currency, setCurrency] = useState("$");
 
   const data = [
     { name: "Transport", value: 325 },
@@ -117,11 +118,12 @@ const Analytics = () => {
                           {item.nameCategory}
                         </p>
                         <p className="category-analytics-item-nb-transactions">
-                          {item.nbTransaction}
+                          {item.nbTransaction} transactions
                         </p>
                       </div>
                       <div className="category-analytics-item-info-col">
                         <p className="category-analytics-item-budget">
+                          {currency}
                           {item.budgetSpent.toFixed(2)}
                         </p>
                         <p className="category-analytics-item-percentage">

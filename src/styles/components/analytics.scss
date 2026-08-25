@@ -36,6 +36,7 @@
   }
 
   .category-analytics {
+    margin-top: 1rem;
     background: rgba($dark, 0.3);
     padding: 1.5rem 1rem;
     border-radius: $border-radius;
@@ -49,12 +50,56 @@
     .category-analytics-item {
       padding: 1rem;
       @include text-light-grey;
+      margin-bottom: 0.5rem;
+      &-name,
+      &-budget {
+        margin-bottom: 0.1rem;
+      }
+      &-nb-transactions {
+        font-size: $font-size-sm;
+        font-style: italic;
+        font-weight: 200;
+      }
+      &-percentage {
+        font-size: $font-size-sm;
+        color: $primary;
+        font-weight: 600;
+      }
+    }
+    .category-analytics-item-icon {
+      @include flex-center;
+      padding: 0.7rem;
+      border-radius: $border-radius-sm;
+      background-color: rgba($dark, 0.6);
+      font-size: $font-size-lg;
     }
     .category-analytics-top {
       @include flex-start;
+      align-items: center;
+      gap: 0.8rem;
+      width: 100%;
+      &-col {
+        &:last-of-type {
+          width: 100%;
+        }
+      }
     }
     .category-analytics-item-info {
       @include flex-between;
+      width: 100%;
+    }
+    .category-analytics-bottom {
+      padding-top: 0.7rem;
+      .progressBar {
+        background: rgba($dark, 0.3);
+        border-radius: $border-radius-sm;
+        width: 100%;
+        height: 0.5rem;
+        &-fill {
+          border-radius: $border-radius-sm;
+          height: 100%;
+        }
+      }
     }
   }
 }
