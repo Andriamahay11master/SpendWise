@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { GiPartyPopper } from "react-icons/gi";
+import { GoArrowRight } from "react-icons/go";
 import { IoFastFood } from "react-icons/io5";
 import { MdEmojiTransportation } from "react-icons/md";
+import { Link } from "react-router";
 import {
   PieChart,
   Pie,
@@ -150,6 +152,10 @@ const Analytics = () => {
               </div>
             );
           })}
+
+          <Link to="/categoryReport" className="btn btn-gray">
+            View Detail Report <GoArrowRight />
+          </Link>
         </div>
       </div>
     </div>

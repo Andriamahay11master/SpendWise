@@ -6,6 +6,7 @@
   transition: all 0.3s ease-in-out;
   text-align: center;
   @include flex-center;
+  text-decoration: none;
   svg {
     font-size: $font-size-lg;
     margin: 0 0.2rem;
@@ -28,6 +29,14 @@
     &.active {
       background: $success;
       color: $dark;
+    }
+  }
+  &-gray {
+    background: rgba($gray, 0.8);
+    color: $light-gray;
+    &:hover {
+      background: $gray;
+      color: $light-gray;
     }
   }
 }
