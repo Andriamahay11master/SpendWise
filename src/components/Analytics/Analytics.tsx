@@ -1,4 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { GiPartyPopper } from "react-icons/gi";
+import { IoFastFood } from "react-icons/io5";
+import { MdEmojiTransportation } from "react-icons/md";
 import {
   PieChart,
   Pie,
@@ -18,7 +21,32 @@ const Analytics = () => {
     { name: "Entertainment", value: 350 },
   ];
 
+  const categoryData = [
+    {
+      nameCategory: "Food",
+      iconCategory: <IoFastFood />,
+      budgetSpent: 220,
+      budgetMax: 500,
+      color: "#24d0fb",
+    },
+    {
+      nameCategory: "Entertainment",
+      iconCategory: <GiPartyPopper />,
+      budgetSpent: 150,
+      budgetMax: 400,
+      color: "#f5a623",
+    },
+    {
+      nameCategory: "Transportation",
+      iconCategory: <MdEmojiTransportation />,
+      budgetSpent: 100,
+      budgetMax: 250,
+      color: "#f54e42",
+    },
+  ];
+
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+
   return (
     <div className="main-block page-analytics">
       <h3 className="title-h3">financial insights</h3>
@@ -64,6 +92,28 @@ const Analytics = () => {
             <Legend />
           </PieChart>
         </ResponsiveContainer>
+      </div>
+      <div className="category-analytics">
+        <h3 className="title-h3">Category details</h3>
+        <div className="category-analytics-list">
+          {categoryData.map((item, index) => {
+            return (
+              <div className="category-analytics-item" key={index}>
+                <div className="category-analytics-item-icon">
+                  {React.cloneElement(item.iconCategory, { color: item.color })}
+                </div>
+                <div className="category-analytics-item-info">
+                  <p className="category-analytics-item-name">
+                    {item.nameCategory}
+                  </p>
+                  <p className="category-analytics-item-budget">
+                    {item.budgetSpent.toFixed(2)}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
