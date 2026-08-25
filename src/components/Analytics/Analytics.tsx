@@ -28,6 +28,7 @@ const Analytics = () => {
       budgetSpent: 220,
       budgetMax: 500,
       color: "#24d0fb",
+      nbTransaction: 15,
     },
     {
       nameCategory: "Entertainment",
@@ -35,6 +36,7 @@ const Analytics = () => {
       budgetSpent: 150,
       budgetMax: 400,
       color: "#f5a623",
+      nbTransaction: 20,
     },
     {
       nameCategory: "Transportation",
@@ -42,6 +44,7 @@ const Analytics = () => {
       budgetSpent: 100,
       budgetMax: 250,
       color: "#f54e42",
+      nbTransaction: 10,
     },
   ];
 
@@ -99,16 +102,48 @@ const Analytics = () => {
           {categoryData.map((item, index) => {
             return (
               <div className="category-analytics-item" key={index}>
-                <div className="category-analytics-item-icon">
-                  {React.cloneElement(item.iconCategory, { color: item.color })}
+                <div className="category-analytics-top">
+                  <div className="category-analytics-top-col">
+                    <div className="category-analytics-item-icon">
+                      {React.cloneElement(item.iconCategory, {
+                        color: item.color,
+                      })}
+                    </div>
+                  </div>
+                  <div className="category-analytics-top-col">
+                    <div className="category-analytics-item-info">
+                      <div className="category-analytics-item-info-col">
+                        <p className="category-analytics-item-name">
+                          {item.nameCategory}
+                        </p>
+                        <p className="category-analytics-item-nb-transactions">
+                          {item.nbTransaction}
+                        </p>
+                      </div>
+                      <div className="category-analytics-item-info-col">
+                        <p className="category-analytics-item-budget">
+                          {item.budgetSpent.toFixed(2)}
+                        </p>
+                        <p className="category-analytics-item-percentage">
+                          {Math.round(
+                            (item.budgetSpent / item.budgetMax) * 100,
+                          )}
+                          %
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="category-analytics-item-info">
-                  <p className="category-analytics-item-name">
-                    {item.nameCategory}
-                  </p>
-                  <p className="category-analytics-item-budget">
-                    {item.budgetSpent.toFixed(2)}
-                  </p>
+                <div className="category-analytics-bottom">
+                  <div className="progressBar">
+                    <div
+                      className="progressBar-fill"
+                      style={{
+                        width: `${Math.round((item.budgetSpent / item.budgetMax) * 100)}%`,
+                        backgroundColor: item.color,
+                      }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             );
