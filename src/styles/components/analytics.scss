@@ -34,4 +34,27 @@
       }
     }*/
   }
+
+  .category-analytics {
+    background: rgba($dark, 0.3);
+    padding: 1.5rem 1rem;
+    border-radius: $border-radius;
+    .title-h3 {
+      text-transform: capitalize;
+      color: $light-gray;
+      margin-bottom: 1rem;
+    }
+    .category-analytics-list {
+    }
+    .category-analytics-item {
+      padding: 1rem;
+      @include text-light-grey;
+    }
+    .category-analytics-top {
+      @include flex-start;
+    }
+    .category-analytics-item-info {
+      @include flex-between;
+    }
+  }
 }
