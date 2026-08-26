@@ -102,7 +102,7 @@
   }
   .prediction-analytics {
     margin-top: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
     background: $primary;
     background: linear-gradient(
       90deg,
@@ -110,5 +110,25 @@
       rgba(45, 52, 54, 0.5) 15%
     );
     border-radius: $border-radius-sm;
+    &-top {
+      @include flex-start;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    &-bottom {
+      @include flex-center;
+    }
+    .title-h3 {
+      color: $light-gray;
+      margin-bottom: 0.3rem;
+    }
+    p {
+      color: $light-gray;
+      text-align: justify;
+      strong {
+        color: $primary;
+      }
+    }
   }
 }

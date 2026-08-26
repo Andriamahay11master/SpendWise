@@ -36,7 +36,13 @@
     color: $light-gray;
     &:hover {
       background: $gray;
-      color: $light-gray;
+    }
+  }
+  &-white {
+    background: rgba($white, 0.8);
+    color: $neutral;
+    &:hover {
+      background: $white;
     }
   }
 }
