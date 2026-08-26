@@ -3,6 +3,7 @@ import { GiPartyPopper } from "react-icons/gi";
 import { GoArrowRight } from "react-icons/go";
 import { IoFastFood } from "react-icons/io5";
 import { MdEmojiTransportation } from "react-icons/md";
+import { PiHeadCircuit } from "react-icons/pi";
 import { Link } from "react-router";
 import {
   PieChart,
@@ -156,6 +157,23 @@ const Analytics = () => {
           <Link to="/categoryReport" className="btn btn-gray">
             View Detail Report <GoArrowRight />
           </Link>
+        </div>
+      </div>
+      <div className="prediction-analytics">
+        <div className="prediction-analytics-top">
+          <div className="prediction-col">
+            <div className="prediction-icon">
+              <PiHeadCircuit />
+            </div>
+          </div>
+          <div className="prediction-col">
+            <h3 className="title-h3">Ai Smart Prediction</h3>
+            <p>
+              Based on your trends, you're on track to save{" "}
+              <strong>$420</strong> more than last month if current spending
+              continues
+            </p>
+          </div>
         </div>
       </div>
     </div>
