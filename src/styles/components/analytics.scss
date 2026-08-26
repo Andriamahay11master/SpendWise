@@ -110,14 +110,26 @@
       rgba(45, 52, 54, 0.5) 15%
     );
     border-radius: $border-radius-sm;
+    .prediction-icon {
+      @include flex-center;
+      padding: 1.5rem 0.5rem;
+      border-radius: 40%;
+      background-color: $primary;
+      svg {
+        font-size: $font-size-2xl;
+      }
+    }
     &-top {
       @include flex-start;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
       margin-bottom: 2rem;
     }
     &-bottom {
       @include flex-center;
+      .btn {
+        width: auto;
+      }
     }
     .title-h3 {
       color: $light-gray;

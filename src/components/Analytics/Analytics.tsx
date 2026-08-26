@@ -175,7 +175,7 @@ const Analytics = () => {
             </p>
           </div>
         </div>
-        <div className="prediction-bottom">
+        <div className="prediction-analytics-bottom">
           <Link to="/prediction" className="btn btn-white">
             Set Target
           </Link>
