@@ -100,4 +100,15 @@
       }
     }
   }
+  .prediction-analytics {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: $primary;
+    background: linear-gradient(
+      90deg,
+      rgba(57, 255, 20, 0.2) 0%,
+      rgba(45, 52, 54, 0.5) 15%
+    );
+    border-radius: $border-radius-sm;
+  }
 }
