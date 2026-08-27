@@ -52,6 +52,7 @@ Vite will print the local development URL in the terminal, normally `http://loca
 | Route             | View          |
 | ----------------- | ------------- |
 | `/`               | Dashboard     |
+| `/report`         | Report        |
 | `/analytics`      | Analytics     |
 | `/addExpense`     | Add expense   |
 | `/transactions`   | Transactions  |
