@@ -12,6 +12,7 @@ import CategoryForm from "./components/Category/CategoryForm";
 
 import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
+import Report from "./components/Report/Report";
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +30,14 @@ function App() {
           element={
             <MainPage>
               <Analytics />
+            </MainPage>
+          }
+        />
+        <Route
+          path="/report"
+          element={
+            <MainPage>
+              <Report />
             </MainPage>
           }
         />
