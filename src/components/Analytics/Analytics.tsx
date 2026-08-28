@@ -13,12 +13,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import Loader from "../Loader/Loader";
 
 const Analytics = () => {
   const dataFilter = ["Week", "Month", "Year"];
   const [stateButton, setStateButton] = useState("Week");
   const [currency, setCurrency] = useState("$");
-
+  const [loading, setLoading] = useState(true);
   const data = [
     { name: "Transport", value: 325 },
     { name: "Food", value: 425 },
@@ -54,6 +55,7 @@ const Analytics = () => {
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
+  if (loading) return <Loader size={50} color={"#24d0fb"} />;
   return (
     <div className="main-block page-analytics">
       <h3 className="title-h3">financial insights</h3>
