@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GiPartyPopper } from "react-icons/gi";
 import { GoArrowRight } from "react-icons/go";
 import { IoFastFood } from "react-icons/io5";
@@ -55,6 +55,11 @@ const Analytics = () => {
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  });
   if (loading) {
     return <Loader size={75} color={"#39ff14"} />;
   } else {
