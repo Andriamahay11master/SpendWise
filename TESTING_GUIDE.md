@@ -1,6 +1,7 @@
 # Unit Testing Guide for SpendWise
 
 ## Overview
+
 This guide demonstrates various unit testing patterns using **Vitest** and **React Testing Library** for your React + TypeScript project.
 
 ---
@@ -14,6 +15,7 @@ npm install -D vitest @testing-library/react @testing-library/jest-dom @testing-
 ```
 
 Add this to `package.json` scripts:
+
 ```json
 {
   "scripts": {
@@ -29,6 +31,7 @@ Add this to `package.json` scripts:
 ## Testing Patterns
 
 ### 1. **Component Rendering Tests**
+
 Verify that components render correctly without crashing.
 
 ```typescript
@@ -41,6 +44,7 @@ it('should render without crashing', () => {
 ---
 
 ### 2. **DOM Element Tests**
+
 Check if specific elements are present in the DOM.
 
 ```typescript
@@ -54,16 +58,17 @@ it('should display all dashboard cards with correct titles', () => {
 ---
 
 ### 3. **User Interaction Tests**
+
 Test form submissions, button clicks, and input changes.
 
 ```typescript
 it('should update input value on user typing', async () => {
   const user = userEvent.setup();
   render(<ExpensesForm onSubmit={vi.fn()} />);
-  
+
   const input = screen.getByPlaceholderText(/amount/i);
   await user.type(input, '100');
-  
+
   expect(input).toHaveValue('100');
 });
 ```
@@ -71,13 +76,14 @@ it('should update input value on user typing', async () => {
 ---
 
 ### 4. **Props Testing**
+
 Verify components behave correctly with different props.
 
 ```typescript
 it('should display correct values from props', () => {
   const props = { value: 500, title: 'Food Budget' };
   render(<CategoryCard {...props} />);
-  
+
   expect(screen.getByText('Food Budget')).toBeInTheDocument();
   expect(screen.getByText('500')).toBeInTheDocument();
 });
@@ -86,6 +92,7 @@ it('should display correct values from props', () => {
 ---
 
 ### 5. **Mock Function Tests**
+
 Verify callbacks are called with correct arguments.
 
 ```typescript
@@ -101,16 +108,17 @@ expect(mockOnSubmit).toHaveBeenCalledTimes(1);
 ---
 
 ### 6. **Async/Await Tests**
+
 Handle asynchronous operations and API calls.
 
 ```typescript
 it('should load data and display results', async () => {
   render(<Analytics />);
-  
+
   await waitFor(() => {
     expect(screen.getByText(/Loading/)).not.toBeInTheDocument();
   });
-  
+
   expect(screen.getByText(/Results/)).toBeInTheDocument();
 });
 ```
@@ -118,16 +126,17 @@ it('should load data and display results', async () => {
 ---
 
 ### 7. **Utility Function Tests**
+
 Test pure functions and data transformations.
 
 ```typescript
-describe('calculateCategorySpent', () => {
-  it('should calculate correct percentage', () => {
+describe("calculateCategorySpent", () => {
+  it("should calculate correct percentage", () => {
     const result = calculateCategorySpent(250, 500);
     expect(result).toBe(50);
   });
 
-  it('should handle edge cases', () => {
+  it("should handle edge cases", () => {
     expect(calculateCategorySpent(0, 500)).toBe(0);
     expect(calculateCategorySpent(500, 500)).toBe(100);
   });
@@ -137,6 +146,7 @@ describe('calculateCategorySpent', () => {
 ---
 
 ### 8. **Mocking Child Components**
+
 Isolate component testing by mocking child components.
 
 ```typescript
@@ -148,6 +158,7 @@ vi.mock('./DashboardCard', () => ({
 ---
 
 ### 9. **Conditional Rendering Tests**
+
 Test different component states.
 
 ```typescript
@@ -165,14 +176,15 @@ it('should show content when loaded', () => {
 ---
 
 ### 10. **Error Handling Tests**
+
 Verify error states and error messages.
 
 ```typescript
 it('should display error message on failure', async () => {
   const mockFetch = vi.fn().mockRejectedValue(new Error('API Error'));
-  
+
   render(<Analytics fetchData={mockFetch} />);
-  
+
   await waitFor(() => {
     expect(screen.getByText(/error/i)).toBeInTheDocument();
   });
@@ -184,23 +196,24 @@ it('should display error message on failure', async () => {
 ## Common Testing Queries
 
 ### Query Methods
+
 ```typescript
 // Find by text
-screen.getByText('Total Balance')
-screen.queryByText('Not Present')
+screen.getByText("Total Balance");
+screen.queryByText("Not Present");
 
 // Find by role
-screen.getByRole('button', { name: /submit/i })
-screen.getByRole('heading', { level: 1 })
+screen.getByRole("button", { name: /submit/i });
+screen.getByRole("heading", { level: 1 });
 
 // Find by placeholder
-screen.getByPlaceholderText(/amount/i)
+screen.getByPlaceholderText(/amount/i);
 
 // Find by label
-screen.getByLabelText(/category/i)
+screen.getByLabelText(/category/i);
 
 // Find by test id (add data-testid to your components)
-screen.getByTestId('dashboard-card')
+screen.getByTestId("dashboard-card");
 ```
 
 ---
@@ -208,6 +221,7 @@ screen.getByTestId('dashboard-card')
 ## Best Practices
 
 ✅ **DO**:
+
 - Test user behavior, not implementation
 - Use semantic queries (getByRole, getByLabelText)
 - Keep tests focused and independent
@@ -216,6 +230,7 @@ screen.getByTestId('dashboard-card')
 - Test edge cases and error scenarios
 
 ❌ **DON'T**:
+
 - Test internal state directly
 - Use query selectors (querySelector)
 - Create dependencies between tests
@@ -229,7 +244,7 @@ screen.getByTestId('dashboard-card')
 ```typescript
 describe('ComponentName', () => {
   const mockOnSubmit = vi.fn();
-  
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -237,10 +252,10 @@ describe('ComponentName', () => {
   it('should [describe behavior]', () => {
     // Arrange
     const props = { /* ... */ };
-    
+
     // Act
     render(<Component {...props} />);
-    
+
     // Assert
     expect(screen.getByText(/text/)).toBeInTheDocument();
   });
@@ -271,6 +286,7 @@ npm run test:ui
 ---
 
 ## Resources
+
 - [Vitest Documentation](https://vitest.dev/)
 - [React Testing Library](https://testing-library.com/react)
 - [Testing Best Practices](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
