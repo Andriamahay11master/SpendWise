@@ -6,7 +6,15 @@ import { Link } from "react-router";
 import { useState } from "react";
 import React, { type SubmitEvent } from "react";
 
-const ExpensesForm = () => {
+interface ExpensesFormProps {
+  onSubmit: (formData: {
+    amount: string;
+    category: string;
+    dateE: string;
+    notes: string;
+  }) => void;
+}
+const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   const dataCategory = [
     {
       nameCategory: "Food",

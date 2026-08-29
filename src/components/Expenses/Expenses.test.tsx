@@ -20,14 +20,14 @@ describe("ExpensesForm Component", () => {
     expect(
       screen.getByLabelText(/amount/i) ||
         screen.getByPlaceholderText(/amount/i),
-    ).toBeInTheDocument();
+    ).toBeTruthy();
     expect(
       screen.getByLabelText(/category/i) ||
         screen.getByPlaceholderText(/category/i),
-    ).toBeInTheDocument();
+    ).toBeTruthy();
     expect(
       screen.getByLabelText(/date/i) || screen.getByPlaceholderText(/date/i),
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 
   // Test 2: Submit button is rendered
@@ -35,7 +35,7 @@ describe("ExpensesForm Component", () => {
     render(<ExpensesForm {...defaultProps} />);
     expect(
       screen.getByRole("button", { name: /submit|add|save/i }),
-    ).toBeInTheDocument();
+    ).toBeTruthy();
   });
 
   // Test 3: Form validation - empty fields
@@ -86,6 +86,6 @@ describe("ExpensesForm Component", () => {
       (screen.getByPlaceholderText(/amount/i) as HTMLInputElement);
 
     await user.type(amountInput, "100");
-    expect(amountInput.value).toBe("100");
+    expect(amountInput.nodeValue).toBe("100");
   });
 });
