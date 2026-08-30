@@ -34,7 +34,7 @@ const CategoryList = () => {
       <p className="page-desc">
         Optimize your financial flow by setting precise limits
       </p>
-      <div className="category-list">
+      <div className="category-list" data-testid="category-list">
         {data.map((item, index) => (
           <CategoryCard
             key={index}
