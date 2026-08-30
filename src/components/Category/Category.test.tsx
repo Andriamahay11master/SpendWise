@@ -17,15 +17,16 @@ describe("Category Form", () => {
     render(<CategoryForm />);
 
     expect(
-      screen.getByLabelText(/amount/i) ||
-        screen.getByPlaceholderText(/amount/i),
+      screen.getByLabelText(/budget/i) ||
+        screen.getByPlaceholderText(/monthly budget limit/i),
     ).toBeTruthy();
     expect(
-      screen.getByLabelText(/category/i) ||
-        screen.getByPlaceholderText(/category/i),
+      screen.getByLabelText(/category name/i) ||
+        screen.getByPlaceholderText(/category name/i),
     ).toBeTruthy();
     expect(
-      screen.getByLabelText(/date/i) || screen.getByPlaceholderText(/date/i),
+      screen.getByLabelText(/selectcolor/i) ||
+        screen.getByPlaceholderText(/select color/i),
     ).toBeTruthy();
   });
 });
