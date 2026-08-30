@@ -46,6 +46,53 @@ Vite will print the local development URL in the terminal, normally `http://loca
 | `npm run build`   | Type-check and create a production build |
 | `npm run lint`    | Run ESLint                               |
 | `npm run preview` | Serve the production build locally       |
+| `npm test`        | Run unit tests with Vitest               |
+| `npm run test:ui` | Run tests with Vitest UI dashboard       |
+
+## Unit Testing
+
+SpendWise uses **Vitest** and **React Testing Library** for unit testing.
+
+### Test Setup
+
+The project includes comprehensive unit tests for components, hooks, and utilities:
+
+- **Component tests** (`*.test.tsx`): Verify rendering, props, and user interactions
+- **Hook tests** (`*.test.tsx`): Test custom React hooks
+- **Utility tests** (`*.test.ts`): Validate pure functions and data transformations
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in UI mode (interactive dashboard)
+npm run test:ui
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+### Testing Patterns
+
+The project follows these key testing patterns:
+
+1. **Component Rendering**: Verify components render without errors
+2. **DOM Elements**: Check for expected elements and content
+3. **User Interactions**: Test form submissions, clicks, and input changes
+4. **Props Testing**: Verify components behave correctly with different props
+5. **Mock Functions**: Ensure callbacks are called with correct arguments
+6. **Async Operations**: Handle asynchronous flows and API calls
+7. **Utility Functions**: Test pure functions and data transformations
+8. **Conditional Rendering**: Test loading states and conditional UI
+
+### Resources
+
+For detailed testing examples and patterns, see:
+
+- [TESTING_GUIDE.md](TESTING_GUIDE.md) - Comprehensive guide with examples for all testing patterns
+- [TESTING_CHEATSHEET.md](TESTING_CHEATSHEET.md) - Quick reference for common test patterns
 
 ## Main routes
 
