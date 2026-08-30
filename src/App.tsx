@@ -45,7 +45,7 @@ function App() {
           path="/addExpense"
           element={
             <MainPage>
-              <ExpensesForm />
+              <ExpensesForm onSubmit={() => {}} />
             </MainPage>
           }
         />
