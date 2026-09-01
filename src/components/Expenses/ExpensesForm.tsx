@@ -51,9 +51,9 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
     setFormData((prev) => ({ ...prev, category: categoryName }));
   };
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    await onSubmit(formData);
   };
   return (
     <div className="main-block">
