@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 
 const ExpensesList = ({}) => {
   const dateToday = new Date();
-  const dataExp = [
+  /*const dataExp = [
     {
       id: "1",
       icon: <IoFastFood />,
@@ -68,29 +68,24 @@ const ExpensesList = ({}) => {
       dateExpense: "2025-08-14",
       montant: 30.0,
     },
-  ];
+  ];*/
   const [dateSearch, setDateSearch] = React.useState(
     dateToday.toISOString().split("T")[0],
   );
-  const [dataExpenses, setDataExpenses] = React.useState(dataExp);
+  const [dataExpenses, setDataExpenses] = React.useState([]);
   const onChangeDateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDateSearch(e.target.value);
   };
 
   useEffect(() => {
     if (dateSearch === "") {
-      setDataExpenses(dataExp);
+      fetch("http://localhost:5000/api/expenses")
+        .then((response) => response.json())
+        .then(setDataExpenses);
     } else {
-      const filteredExpenses = dataExp.filter((expense) => {
-        const expenseDate = new Date(expense.dateExpense);
-        const searchDate = new Date(dateSearch);
-        return (
-          expenseDate.getFullYear() === searchDate.getFullYear() &&
-          expenseDate.getMonth() === searchDate.getMonth() &&
-          expenseDate.getDate() === searchDate.getDate()
-        );
-      });
-      setDataExpenses(filteredExpenses);
+      fetch(`http://localhost:5000/api/expenses?date=${dateSearch}`)
+        .then((response) => response.json())
+        .then(setDataExpenses);
     }
   }, [dateSearch]);
 
@@ -108,7 +103,7 @@ const ExpensesList = ({}) => {
         />
       </div>
       {dataExpenses.some((expense) => {
-        const expenseDate = new Date(expense.dateExpense);
+        const expenseDate = new Date(expense.);
         return (
           expenseDate.getDate() === dateToday.getDate() &&
           expenseDate.getMonth() === dateToday.getMonth() &&
