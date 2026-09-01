@@ -2,7 +2,7 @@ import { IoFastFood } from "react-icons/io5";
 import { GiPartyPopper } from "react-icons/gi";
 import { MdEmojiTransportation } from "react-icons/md";
 import { GoArrowRight } from "react-icons/go";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import React, { type SubmitEvent } from "react";
 
@@ -15,6 +15,7 @@ interface ExpensesFormProps {
   }) => void;
 }
 const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
+  const navigate = useNavigate();
   const dataCategory = [
     {
       nameCategory: "Food",
@@ -51,9 +52,21 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
     setFormData((prev) => ({ ...prev, category: categoryName }));
   };
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const resetForm = () => {
+    setFormData({
+      amount: "",
+      category: "",
+      dateE: "",
+      notes: "",
+    });
+  };
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    await onSubmit(formData);
+    setTimeout(() => {
+      resetForm();
+      navigate("/transactions");
+    }, 1000);
   };
   return (
     <div className="main-block">

@@ -14,6 +14,25 @@ import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
 import Report from "./components/Report/Report";
 function App() {
+  const saveExpense = async (formData: {
+    amount: string;
+    category: string;
+    dateE: string;
+    notes: string;
+  }) => {
+    await fetch("http://localhost:5000/api/expenses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: formData.amount,
+        category: formData.category,
+        date: formData.dateE,
+        notes: formData.notes,
+      }),
+    });
+  };
   return (
     <BrowserRouter>
       <Routes>
@@ -45,7 +64,7 @@ function App() {
           path="/addExpense"
           element={
             <MainPage>
-              <ExpensesForm onSubmit={() => {}} />
+              <ExpensesForm onSubmit={saveExpense} />
             </MainPage>
           }
         />
