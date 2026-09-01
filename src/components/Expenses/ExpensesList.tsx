@@ -4,6 +4,55 @@ import { MdEmojiTransportation } from "react-icons/md";
 import ExpensesCard from "./ExpensesCard";
 import { CiSearch } from "react-icons/ci";
 import React, { useEffect } from "react";
+import type { ReactElement } from "react";
+
+interface ApiExpense {
+  _id: string;
+  amount: number;
+  category: string;
+  date: string;
+  notes?: string;
+}
+
+interface ExpenseIconProps {
+  color?: string;
+}
+
+interface DisplayExpense {
+  id: string;
+  icon: ReactElement<ExpenseIconProps>;
+  description: string;
+  valueCategory: string;
+  colorCategory: string;
+  currency: string;
+  dateExpense: string;
+  montant: number;
+}
+
+const categoryPresentation: Record<
+  string,
+  { icon: ReactElement<ExpenseIconProps>; color: string }
+> = {
+  Food: { icon: <IoFastFood />, color: "#24d0fb" },
+  Entertainment: { icon: <GiPartyPopper />, color: "#f5a623" },
+  Transportation: { icon: <MdEmojiTransportation />, color: "#f54e42" },
+};
+
+const toDisplayExpense = (expense: ApiExpense): DisplayExpense => {
+  const presentation =
+    categoryPresentation[expense.category] ?? categoryPresentation.Food;
+
+  return {
+    id: expense._id,
+    icon: presentation.icon,
+    description: expense.notes || expense.category,
+    valueCategory: expense.category,
+    colorCategory: presentation.color,
+    currency: "$",
+    dateExpense: expense.date.split("T")[0],
+    montant: expense.amount,
+  };
+};
 
 const ExpensesList = ({}) => {
   const dateToday = new Date();
@@ -72,21 +121,22 @@ const ExpensesList = ({}) => {
   const [dateSearch, setDateSearch] = React.useState(
     dateToday.toISOString().split("T")[0],
   );
-  const [dataExpenses, setDataExpenses] = React.useState([]);
+  const [dataExpenses, setDataExpenses] = React.useState<DisplayExpense[]>([]);
   const onChangeDateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDateSearch(e.target.value);
   };
 
   useEffect(() => {
-    if (dateSearch === "") {
-      fetch("http://localhost:5000/api/expenses")
-        .then((response) => response.json())
-        .then(setDataExpenses);
-    } else {
-      fetch(`http://localhost:5000/api/expenses?date=${dateSearch}`)
-        .then((response) => response.json())
-        .then(setDataExpenses);
-    }
+    fetch("http://localhost:5000/api/expenses")
+      .then((response) => response.json() as Promise<ApiExpense[]>)
+      .then((expenses) => expenses.map(toDisplayExpense))
+      .then((expenses) =>
+        setDataExpenses(
+          dateSearch === ""
+            ? expenses
+            : expenses.filter((expense) => expense.dateExpense === dateSearch),
+        ),
+      );
   }, [dateSearch]);
 
   return (
@@ -103,7 +153,7 @@ const ExpensesList = ({}) => {
         />
       </div>
       {dataExpenses.some((expense) => {
-        const expenseDate = new Date(expense.);
+        const expenseDate = new Date(expense.dateExpense);
         return (
           expenseDate.getDate() === dateToday.getDate() &&
           expenseDate.getMonth() === dateToday.getMonth() &&
