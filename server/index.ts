@@ -57,7 +57,8 @@ app.post("/api/categories", async (request, response) => {
       name,
       icon,
       color,
-      budget,
+      budgetCurrent: 0,
+      budgetMax: budget,
     });
     response.status(201).json(category);
   } catch {

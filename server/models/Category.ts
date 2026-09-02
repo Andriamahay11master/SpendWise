@@ -16,7 +16,13 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    budget: {
+    budgetCurrent: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 10000,
+    },
+    budgetMax: {
       type: Number,
       required: true,
       min: 0,
