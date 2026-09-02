@@ -7,13 +7,31 @@ import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { TiShoppingCart } from "react-icons/ti";
 import { CiMobile4 } from "react-icons/ci";
 import { CiPlane } from "react-icons/ci";
+import { useNavigate } from "react-router";
 
 const CategoryForm = () => {
-  const [valueRange, setValueRange] = React.useState(0);
-  const [icon, setIcon] = React.useState("IoFastFood");
+  const navigate = useNavigate();
+  const [formData, setFormData] = React.useState({
+    name: "",
+    icon: "IoFastFood",
+    color: "",
+    budget: 0,
+  });
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value === "budget" ? parseInt(value) : value,
+    }));
+  };
+
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
-    setValueRange(newValue);
+    setFormData((prevData) => ({
+      ...prevData,
+      budget: newValue,
+    }));
     // Update CSS variable for gradient background
     const percent = (newValue / 1000) * 100;
     event.target.style.setProperty("--value", `${percent}%`);
@@ -51,28 +69,88 @@ const CategoryForm = () => {
   ];
 
   const selectIcon = (nameIcon: string) => {
-    setIcon(nameIcon);
+    setFormData((prevData) => ({
+      ...prevData,
+      icon: nameIcon,
+    }));
   };
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      icon: "IoFastFood",
+      color: "",
+      budget: 0,
+    });
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          icon: formData.icon,
+          color: formData.color,
+          budget: formData.budget,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Error creating category:", error);
+        return;
+      }
+
+      const newCategory = await response.json();
+      console.log("Category created:", newCategory);
+      resetForm();
+      navigate("/listCategories");
+    } catch (error) {
+      console.error("Failed to create category:", error);
+    }
+  };
+
   return (
     <div className="main-block">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="categoryName">Category Name:</label>
-          <input id="categoryName" type="text" placeholder="Category Name" />
+          <input
+            id="categoryName"
+            type="text"
+            name="name"
+            placeholder="Category Name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
         </div>
         <div className="form-group form-icon">
           <div className="form-group-top">
             <label htmlFor="selectIcon">Select Icon:</label>
             <div className="form-icon-value">
               <span>selected:</span>
-              <input id="selectIcon" type="text" value={icon} readOnly />
+              <input
+                id="selectIcon"
+                type="text"
+                name="icon"
+                value={formData.icon}
+                readOnly
+                onChange={handleInputChange}
+              />
             </div>
           </div>
           <div className="list-icon">
             {dataIcon.map((item, index) => (
               <div
                 className={
-                  icon === item.name ? "icon-item selected" : "icon-item"
+                  formData.icon === item.name
+                    ? "icon-item selected"
+                    : "icon-item"
                 }
                 key={index}
                 onClick={() => selectIcon(item.name)}
@@ -92,21 +170,29 @@ const CategoryForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="selectColor">Select Color:</label>
-          <input id="selectColor" type="color" placeholder="Select Color" />
+          <input
+            id="selectColor"
+            type="color"
+            name="color"
+            placeholder="Select Color"
+            value={formData.color}
+            onChange={handleInputChange}
+          />
         </div>
         <div className="form-group form-range">
           <div className="form-group-top">
             <label htmlFor="budget">Monthly Budget Limit:</label>
-            <span className="currentRangeValue">${valueRange}</span>
+            <span className="currentRangeValue">${formData.budget}</span>
           </div>
           <input
             id="budget"
             type="range"
+            name="budget"
             placeholder="Monthly Budget Limit"
             min="0"
             max="1000"
             step="50"
-            value={valueRange}
+            value={formData.budget}
             onChange={handleRangeChange}
           />
           <div className="range-intervalle-value">
