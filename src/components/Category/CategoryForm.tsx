@@ -9,18 +9,9 @@ import { CiMobile4 } from "react-icons/ci";
 import { CiPlane } from "react-icons/ci";
 
 const CategoryForm = () => {
-  const [valueRange, setValueRange] = React.useState(0);
-  const [icon, setIcon] = React.useState("IoFastFood");
-  const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(event.target.value);
-    setValueRange(newValue);
-    // Update CSS variable for gradient background
-    const percent = (newValue / 1000) * 100;
-    event.target.style.setProperty("--value", `${percent}%`);
-  };
   const [formData, setFormData] = React.useState({
     name: "",
-    icon: icon,
+    icon: "IoFastFood",
     color: "",
     budget: 0,
   });
@@ -29,8 +20,19 @@ const CategoryForm = () => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value === "budget" ? parseInt(value) : value,
     }));
+  };
+
+  const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseInt(event.target.value);
+    setFormData((prevData) => ({
+      ...prevData,
+      budget: newValue,
+    }));
+    // Update CSS variable for gradient background
+    const percent = (newValue / 1000) * 100;
+    event.target.style.setProperty("--value", `${percent}%`);
   };
 
   const dataIcon = [
@@ -65,11 +67,16 @@ const CategoryForm = () => {
   ];
 
   const selectIcon = (nameIcon: string) => {
-    setIcon(nameIcon);
+    setFormData((prevData) => ({
+      ...prevData,
+      icon: nameIcon,
+    }));
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("Category Form Data:", formData);
+    // TODO: Send formData to API endpoint
   };
 
   return (
@@ -105,7 +112,7 @@ const CategoryForm = () => {
             {dataIcon.map((item, index) => (
               <div
                 className={
-                  icon === item.name ? "icon-item selected" : "icon-item"
+                  formData.icon === item.name ? "icon-item selected" : "icon-item"
                 }
                 key={index}
                 onClick={() => selectIcon(item.name)}
@@ -128,6 +135,7 @@ const CategoryForm = () => {
           <input
             id="selectColor"
             type="color"
+            name="color"
             placeholder="Select Color"
             value={formData.color}
             onChange={handleInputChange}
@@ -136,16 +144,17 @@ const CategoryForm = () => {
         <div className="form-group form-range">
           <div className="form-group-top">
             <label htmlFor="budget">Monthly Budget Limit:</label>
-            <span className="currentRangeValue">${valueRange}</span>
+            <span className="currentRangeValue">${formData.budget}</span>
           </div>
           <input
             id="budget"
             type="range"
+            name="budget"
             placeholder="Monthly Budget Limit"
             min="0"
             max="1000"
             step="50"
-            value={valueRange}
+            value={formData.budget}
             onChange={handleRangeChange}
           />
           <div className="range-intervalle-value">
