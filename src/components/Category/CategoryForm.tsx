@@ -7,8 +7,10 @@ import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { TiShoppingCart } from "react-icons/ti";
 import { CiMobile4 } from "react-icons/ci";
 import { CiPlane } from "react-icons/ci";
+import { useNavigate } from "react-router";
 
 const CategoryForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
     name: "",
     icon: "IoFastFood",
@@ -73,10 +75,28 @@ const CategoryForm = () => {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      icon: "IoFastFood",
+      color: "",
+      budget: 0,
+    });
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Category Form Data:", formData);
-    // TODO: Send formData to API endpoint
+    await fetch("/api/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    setTimeout(() => {
+      resetForm();
+      navigate("/listCategories");
+    }, 1000);
   };
 
   return (
@@ -112,7 +132,9 @@ const CategoryForm = () => {
             {dataIcon.map((item, index) => (
               <div
                 className={
-                  formData.icon === item.name ? "icon-item selected" : "icon-item"
+                  formData.icon === item.name
+                    ? "icon-item selected"
+                    : "icon-item"
                 }
                 key={index}
                 onClick={() => selectIcon(item.name)}
