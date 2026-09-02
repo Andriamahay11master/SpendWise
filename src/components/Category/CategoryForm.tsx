@@ -18,6 +18,20 @@ const CategoryForm = () => {
     const percent = (newValue / 1000) * 100;
     event.target.style.setProperty("--value", `${percent}%`);
   };
+  const [formData, setFormData] = React.useState({
+    name: "",
+    icon: icon,
+    color: "",
+    budget: 0,
+  });
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const dataIcon = [
     {
@@ -53,19 +67,38 @@ const CategoryForm = () => {
   const selectIcon = (nameIcon: string) => {
     setIcon(nameIcon);
   };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
   return (
     <div className="main-block">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="categoryName">Category Name:</label>
-          <input id="categoryName" type="text" placeholder="Category Name" />
+          <input
+            id="categoryName"
+            type="text"
+            name="name"
+            placeholder="Category Name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
         </div>
         <div className="form-group form-icon">
           <div className="form-group-top">
             <label htmlFor="selectIcon">Select Icon:</label>
             <div className="form-icon-value">
               <span>selected:</span>
-              <input id="selectIcon" type="text" value={icon} readOnly />
+              <input
+                id="selectIcon"
+                type="text"
+                name="icon"
+                value={formData.icon}
+                readOnly
+                onChange={handleInputChange}
+              />
             </div>
           </div>
           <div className="list-icon">
@@ -92,7 +125,13 @@ const CategoryForm = () => {
         </div>
         <div className="form-group">
           <label htmlFor="selectColor">Select Color:</label>
-          <input id="selectColor" type="color" placeholder="Select Color" />
+          <input
+            id="selectColor"
+            type="color"
+            placeholder="Select Color"
+            value={formData.color}
+            onChange={handleInputChange}
+          />
         </div>
         <div className="form-group form-range">
           <div className="form-group-top">
