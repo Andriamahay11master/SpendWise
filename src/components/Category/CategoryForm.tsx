@@ -86,22 +86,33 @@ const CategoryForm = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await fetch("/api/categories", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: formData.name,
-        icon: formData.icon,
-        color: formData.color,
-        budgetMax: formData.budget,
-      }),
-    });
-    setTimeout(() => {
+    try {
+      const response = await fetch("http://localhost:5000/api/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          icon: formData.icon,
+          color: formData.color,
+          budget: formData.budget,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error("Error creating category:", error);
+        return;
+      }
+
+      const newCategory = await response.json();
+      console.log("Category created:", newCategory);
       resetForm();
       navigate("/listCategories");
-    }, 1000);
+    } catch (error) {
+      console.error("Failed to create category:", error);
+    }
   };
 
   return (

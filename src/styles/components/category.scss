@@ -22,6 +22,7 @@
   }
   .category-name {
     font-size: $font-size-lg;
+    text-transform: capitalize;
   }
   .category-icon {
     @include flex-center;
@@ -39,6 +40,12 @@
   padding-bottom: 3rem;
   .category-list {
     margin-top: 1rem;
+  }
+  .no-category-message {
+    margin: 1rem 0;
+    text-align: center;
+    color: $light-gray;
+    font-size: $font-size-base;
   }
   .btn-primary {
     text-transform: uppercase;
