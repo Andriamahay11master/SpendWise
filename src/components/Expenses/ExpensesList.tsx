@@ -118,9 +118,7 @@ const ExpensesList = ({}) => {
       montant: 30.0,
     },
   ];*/
-  const [dateSearch, setDateSearch] = React.useState(
-    dateToday.toISOString().split("T")[0],
-  );
+  const [dateSearch, setDateSearch] = React.useState("");
   const [dataExpenses, setDataExpenses] = React.useState<DisplayExpense[]>([]);
   const onChangeDateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDateSearch(e.target.value);

@@ -23,6 +23,7 @@ const ExpensesCard = ({
   currency = "$",
   montant,
 }: ExpensesCardProps) => {
+  const date = new Date(dateExpense);
   return (
     <Link to={`/expenses/${id}`} className="expenses-card">
       <div className="expenses-card-icon">
@@ -33,7 +34,7 @@ const ExpensesCard = ({
           <p className="expenses-card-description">{description}</p>
           <p className="expenses-card-info-plus">
             {valueCategory}
-            <strong>{dateExpense}</strong>
+            <strong>{date.toLocaleDateString()}</strong>
           </p>
         </div>
         <div className="expenses-card-col">
