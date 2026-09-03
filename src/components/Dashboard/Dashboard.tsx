@@ -102,7 +102,7 @@ const Dashboard = () => {
       icon: <MdEmojiTransportation />,
       description: "Gas Refill",
       valueCategory: "Transportation",
-      colorCategory: "#f54e42",
+      colorCategory: "#76ff67",
       currency: "$",
       dateExpense: "2023-07-13",
       montant: 50.0,

@@ -5,6 +5,7 @@ import { GoArrowRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import React, { type SubmitEvent } from "react";
+import { TiShoppingCart } from "react-icons/ti";
 
 interface ExpensesFormProps {
   onSubmit: (formData: {
@@ -23,19 +24,29 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
       nameCategory: "Food",
       iconCategory: <IoFastFood />,
       iconCategoryName: "IoFastFood",
-      color: "36, 208, 251",
+      color: "#fd21ac",
+      rgbColor: "253, 33, 172",
+    },
+    {
+      nameCategory: "Grocery shopping",
+      iconCategory: <TiShoppingCart />,
+      iconCategoryName: "TiShoppingCart",
+      color: "#38d327",
+      rgbColor: "56, 211, 39",
     },
     {
       nameCategory: "Entertainment",
       iconCategory: <GiPartyPopper />,
       iconCategoryName: "GiPartyPopper",
-      color: "245, 166, 35",
+      color: "#f5a623",
+      rgbColor: "245, 166, 35",
     },
     {
       nameCategory: "Transportation",
       iconCategory: <MdEmojiTransportation />,
       iconCategoryName: "MdEmojiTransportation",
-      color: "245, 78, 66",
+      color: "#24d0fb",
+      rgbColor: "245, 78, 66",
     },
   ];
 
@@ -141,7 +152,7 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
               >
                 <div
                   className="category-icon"
-                  style={{ backgroundColor: `rgba(${data.color}, 0.1)` }}
+                  style={{ backgroundColor: `rgba(${data.rgbColor}, 0.1)` }}
                 >
                   {React.cloneElement(data.iconCategory, { color: data.color })}
                 </div>
