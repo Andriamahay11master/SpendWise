@@ -23,6 +23,19 @@ const expenseSchema = new mongoose.Schema(
       default: "",
       trim: true,
     },
+    currency: {
+      type: String,
+      required: true,
+      default: "$",
+    },
+    colorCategory: {
+      type: String,
+      required: true,
+    },
+    icon: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true },
 );
