@@ -55,6 +55,16 @@ app.get("/api/categories", async (_request, response) => {
   response.json(categories);
 });
 
+// Get color of a category by name
+app.get("/api/categories/:name/color", async (request, response) => {
+  const category = await Category.findOne({ name: request.params.name });
+  if (category) {
+    response.json({ color: category.color });
+  } else {
+    response.status(404).json({ message: "Category not found" });
+  }
+});
+
 // Add a new category
 app.post("/api/categories", async (request, response) => {
   try {

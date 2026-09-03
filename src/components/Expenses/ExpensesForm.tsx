@@ -10,6 +10,7 @@ interface ExpensesFormProps {
   onSubmit: (formData: {
     amount: string;
     category: string;
+    iconCategory: string;
     dateE: string;
     notes: string;
   }) => void;
@@ -20,16 +21,19 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
     {
       nameCategory: "Food",
       iconCategory: <IoFastFood />,
+      iconCategoryName: "IoFastFood",
       color: "36, 208, 251",
     },
     {
       nameCategory: "Entertainment",
       iconCategory: <GiPartyPopper />,
+      iconCategoryName: "GiPartyPopper",
       color: "245, 166, 35",
     },
     {
       nameCategory: "Transportation",
       iconCategory: <MdEmojiTransportation />,
+      iconCategoryName: "MdEmojiTransportation",
       color: "245, 78, 66",
     },
   ];
@@ -37,6 +41,7 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
+    iconCategory: "",
     dateE: "",
     notes: "",
   });
@@ -48,14 +53,22 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   };
 
   // Handler for category selection
-  const handleCategorySelect = (categoryName: string) => {
-    setFormData((prev) => ({ ...prev, category: categoryName }));
+  const handleCategorySelect = (
+    categoryName: string,
+    iconCategoryName: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      category: categoryName,
+      iconCategory: iconCategoryName,
+    }));
   };
 
   const resetForm = () => {
     setFormData({
       amount: "",
       category: "",
+      iconCategory: "",
       dateE: "",
       notes: "",
     });
@@ -92,6 +105,13 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
               value={formData.category}
               onChange={handleChange}
             />
+            <input
+              type="hidden"
+              name="iconCategory"
+              id="iconCategory"
+              value={formData.iconCategory}
+              onChange={handleChange}
+            />
             <Link to="/listCategories">View all</Link>
           </div>
           <div className="form-category-list">
@@ -99,7 +119,9 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
               <div
                 className={`category-item ${formData.category === data.nameCategory ? "active" : ""}`}
                 key={index}
-                onClick={() => handleCategorySelect(data.nameCategory)}
+                onClick={() =>
+                  handleCategorySelect(data.nameCategory, data.iconCategoryName)
+                }
               >
                 <div
                   className="category-icon"

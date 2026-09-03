@@ -88,4 +88,15 @@ describe("ExpensesForm Component", () => {
     await user.type(amountInput, "100");
     expect(amountInput.nodeValue).toBe("100");
   });
+
+  /*it("should store the selected category name in the hidden icon category input", () => {
+    render(<ExpensesForm {...defaultProps} />);
+
+    fireEvent.click(screen.getByText("Food"));
+
+    expect(screen.getByDisplayValue("Food")).toHaveAttribute(
+      "name",
+      "iconCategory",
+    );
+  });*/
 });
