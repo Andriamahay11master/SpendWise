@@ -12,9 +12,12 @@ import ExpensesCard from "../Expenses/ExpensesCard";
 import React, { useEffect, type ReactElement } from "react";
 import { TiShoppingCart } from "react-icons/ti";
 import { CiMobile4, CiPlane } from "react-icons/ci";
+import type { ExpenseType } from "../../type/ExpenseType";
 
 const Dashboard = () => {
-  const [lastTransactions, setLastTransactions] = React.useState([] as any[]);
+  const [lastTransactions, setLastTransactions] = React.useState(
+    [] as ExpenseType[],
+  );
   const cardData = [
     {
       typeCard: 1,
@@ -137,7 +140,17 @@ const Dashboard = () => {
         </div>
         <div className="dashboard-transaction-bottom">
           {lastTransactions.map((data, index) => (
-            <ExpensesCard key={index} {...data} />
+            <ExpensesCard
+              key={index}
+              id={data.id}
+              icon={iconMap[data.icon] || iconMap.IoFastFood}
+              description={data.notes}
+              valueCategory={data.category}
+              colorCategory={data.colorCategory}
+              dateExpense={data.date}
+              currency={data.currency}
+              montant={data.amount}
+            />
           ))}
         </div>
       </div>
