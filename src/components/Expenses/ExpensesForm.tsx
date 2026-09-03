@@ -11,6 +11,7 @@ interface ExpensesFormProps {
     amount: string;
     category: string;
     iconCategory: string;
+    colorCategory: string;
     dateE: string;
     notes: string;
   }) => void;
@@ -42,6 +43,7 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
     amount: "",
     category: "",
     iconCategory: "",
+    colorCategory: "",
     dateE: "",
     notes: "",
   });
@@ -56,11 +58,13 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   const handleCategorySelect = (
     categoryName: string,
     iconCategoryName: string,
+    colorCategory: string,
   ) => {
     setFormData((prev) => ({
       ...prev,
       category: categoryName,
       iconCategory: iconCategoryName,
+      colorCategory: colorCategory,
     }));
   };
 
@@ -69,6 +73,7 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
       amount: "",
       category: "",
       iconCategory: "",
+      colorCategory: "",
       dateE: "",
       notes: "",
     });
@@ -112,6 +117,13 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
               value={formData.iconCategory}
               onChange={handleChange}
             />
+            <input
+              type="hidden"
+              name="colorCategory"
+              id="colorCategory"
+              value={formData.colorCategory}
+              onChange={handleChange}
+            />
             <Link to="/listCategories">View all</Link>
           </div>
           <div className="form-category-list">
@@ -120,7 +132,11 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
                 className={`category-item ${formData.category === data.nameCategory ? "active" : ""}`}
                 key={index}
                 onClick={() =>
-                  handleCategorySelect(data.nameCategory, data.iconCategoryName)
+                  handleCategorySelect(
+                    data.nameCategory,
+                    data.iconCategoryName,
+                    data.color,
+                  )
                 }
               >
                 <div
