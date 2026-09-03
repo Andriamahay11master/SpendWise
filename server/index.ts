@@ -27,13 +27,15 @@ app.get("/api/transactions/last", async (_request, response) => {
 // Create a new expense
 app.post("/api/expenses", async (request, response) => {
   try {
-    const { amount, category, date, notes } = request.body;
+    const { amount, category, date, notes, icon, colorCategory } = request.body;
 
     const expense = await Expense.create({
       amount: Number(amount),
       category,
       date,
       notes,
+      icon,
+      colorCategory,
     });
 
     response.status(201).json(expense);
