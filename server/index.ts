@@ -18,16 +18,24 @@ app.get("/api/expenses", async (_request, response) => {
   response.json(expenses);
 });
 
+// Get last 3 expenses
+app.get("/api/transactions/last", async (_request, response) => {
+  const lastTransactions = await Expense.find().sort({ date: -1 }).limit(3);
+  response.json(lastTransactions);
+});
+
 // Create a new expense
 app.post("/api/expenses", async (request, response) => {
   try {
-    const { amount, category, date, notes } = request.body;
+    const { amount, category, date, notes, icon, colorCategory } = request.body;
 
     const expense = await Expense.create({
       amount: Number(amount),
       category,
       date,
       notes,
+      icon,
+      colorCategory,
     });
 
     response.status(201).json(expense);
@@ -47,6 +55,16 @@ app.delete("/api/expenses/:id", async (request, response) => {
 app.get("/api/categories", async (_request, response) => {
   const categories = await Category.find();
   response.json(categories);
+});
+
+// Get color of a category by name
+app.get("/api/categories/:name/color", async (request, response) => {
+  const category = await Category.findOne({ name: request.params.name });
+  if (category) {
+    response.json({ color: category.color });
+  } else {
+    response.status(404).json({ message: "Category not found" });
+  }
 });
 
 // Add a new category

@@ -5,11 +5,14 @@ import { GoArrowRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import React, { type SubmitEvent } from "react";
+import { TiShoppingCart } from "react-icons/ti";
 
 interface ExpensesFormProps {
   onSubmit: (formData: {
     amount: string;
     category: string;
+    iconCategory: string;
+    colorCategory: string;
     dateE: string;
     notes: string;
   }) => void;
@@ -20,23 +23,38 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
     {
       nameCategory: "Food",
       iconCategory: <IoFastFood />,
-      color: "36, 208, 251",
+      iconCategoryName: "IoFastFood",
+      color: "#fd21ac",
+      rgbColor: "253, 33, 172",
+    },
+    {
+      nameCategory: "Grocery shopping",
+      iconCategory: <TiShoppingCart />,
+      iconCategoryName: "TiShoppingCart",
+      color: "#38d327",
+      rgbColor: "56, 211, 39",
     },
     {
       nameCategory: "Entertainment",
       iconCategory: <GiPartyPopper />,
-      color: "245, 166, 35",
+      iconCategoryName: "GiPartyPopper",
+      color: "#f5a623",
+      rgbColor: "245, 166, 35",
     },
     {
       nameCategory: "Transportation",
       iconCategory: <MdEmojiTransportation />,
-      color: "245, 78, 66",
+      iconCategoryName: "MdEmojiTransportation",
+      color: "#24d0fb",
+      rgbColor: "245, 78, 66",
     },
   ];
 
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
+    iconCategory: "",
+    colorCategory: "",
     dateE: "",
     notes: "",
   });
@@ -48,14 +66,25 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   };
 
   // Handler for category selection
-  const handleCategorySelect = (categoryName: string) => {
-    setFormData((prev) => ({ ...prev, category: categoryName }));
+  const handleCategorySelect = (
+    categoryName: string,
+    iconCategoryName: string,
+    colorCategory: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      category: categoryName,
+      iconCategory: iconCategoryName,
+      colorCategory: colorCategory,
+    }));
   };
 
   const resetForm = () => {
     setFormData({
       amount: "",
       category: "",
+      iconCategory: "",
+      colorCategory: "",
       dateE: "",
       notes: "",
     });
@@ -92,6 +121,20 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
               value={formData.category}
               onChange={handleChange}
             />
+            <input
+              type="hidden"
+              name="iconCategory"
+              id="iconCategory"
+              value={formData.iconCategory}
+              onChange={handleChange}
+            />
+            <input
+              type="hidden"
+              name="colorCategory"
+              id="colorCategory"
+              value={formData.colorCategory}
+              onChange={handleChange}
+            />
             <Link to="/listCategories">View all</Link>
           </div>
           <div className="form-category-list">
@@ -99,11 +142,17 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
               <div
                 className={`category-item ${formData.category === data.nameCategory ? "active" : ""}`}
                 key={index}
-                onClick={() => handleCategorySelect(data.nameCategory)}
+                onClick={() =>
+                  handleCategorySelect(
+                    data.nameCategory,
+                    data.iconCategoryName,
+                    data.color,
+                  )
+                }
               >
                 <div
                   className="category-icon"
-                  style={{ backgroundColor: `rgba(${data.color}, 0.1)` }}
+                  style={{ backgroundColor: `rgba(${data.rgbColor}, 0.1)` }}
                 >
                   {React.cloneElement(data.iconCategory, { color: data.color })}
                 </div>

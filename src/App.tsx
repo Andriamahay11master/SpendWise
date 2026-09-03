@@ -17,6 +17,8 @@ function App() {
   const saveExpense = async (formData: {
     amount: string;
     category: string;
+    iconCategory: string;
+    colorCategory: string;
     dateE: string;
     notes: string;
   }) => {
@@ -30,6 +32,8 @@ function App() {
         category: formData.category,
         date: formData.dateE,
         notes: formData.notes,
+        icon: formData.iconCategory,
+        colorCategory: formData.colorCategory,
       }),
     });
   };

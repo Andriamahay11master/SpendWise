@@ -2,12 +2,22 @@ import DashboardCard from "./DashboardCard";
 import { FaMoneyBills } from "react-icons/fa6";
 import { IoFastFood } from "react-icons/io5";
 import { GiPartyPopper } from "react-icons/gi";
-import { MdEmojiTransportation } from "react-icons/md";
+import {
+  MdEmojiTransportation,
+  MdOutlineHealthAndSafety,
+} from "react-icons/md";
 import CategoryProgressBarCard from "../Category/CategoryProgressBarCard";
 import { Link } from "react-router-dom";
 import ExpensesCard from "../Expenses/ExpensesCard";
+import React, { useEffect, type ReactElement } from "react";
+import { TiShoppingCart } from "react-icons/ti";
+import { CiMobile4, CiPlane } from "react-icons/ci";
+import type { ExpenseType } from "../../type/ExpenseType";
 
 const Dashboard = () => {
+  const [lastTransactions, setLastTransactions] = React.useState(
+    [] as ExpenseType[],
+  );
   const cardData = [
     {
       typeCard: 1,
@@ -53,7 +63,20 @@ const Dashboard = () => {
     },
   ];
 
-  const dataLastTransactions = [
+  interface TransactionIconProps {
+    color?: string;
+  }
+
+  const iconMap: Record<string, ReactElement<TransactionIconProps>> = {
+    IoFastFood: <IoFastFood />,
+    GiPartyPopper: <GiPartyPopper />,
+    MdEmojiTransportation: <MdEmojiTransportation />,
+    MdOutlineHealthAndSafety: <MdOutlineHealthAndSafety />,
+    TiShoppingCart: <TiShoppingCart />,
+    CiMobile4: <CiMobile4 />,
+    CiPlane: <CiPlane />,
+  };
+  /*const dataLastTransactions = [
     {
       id: "1",
       icon: <IoFastFood />,
@@ -79,12 +102,26 @@ const Dashboard = () => {
       icon: <MdEmojiTransportation />,
       description: "Gas Refill",
       valueCategory: "Transportation",
-      colorCategory: "#f54e42",
+      colorCategory: "#76ff67",
       currency: "$",
       dateExpense: "2023-07-13",
       montant: 50.0,
     },
-  ];
+  ];*/
+  useEffect(() => {
+    const fetchLastTransactions = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/transactions/last",
+        );
+        const data = await response.json();
+        setLastTransactions(data);
+      } catch (error) {
+        console.error("Error fetching last transactions:", error);
+      }
+    };
+    fetchLastTransactions();
+  }, []);
   return (
     <div className="main-block">
       {cardData.map((data, index) => (
@@ -102,8 +139,18 @@ const Dashboard = () => {
           <Link to="/transactions">View All</Link>
         </div>
         <div className="dashboard-transaction-bottom">
-          {dataLastTransactions.map((data, index) => (
-            <ExpensesCard key={index} {...data} />
+          {lastTransactions.map((data, index) => (
+            <ExpensesCard
+              key={index}
+              id={data.id}
+              icon={iconMap[data.icon] || iconMap.IoFastFood}
+              description={data.notes}
+              valueCategory={data.category}
+              colorCategory={data.colorCategory}
+              dateExpense={data.date}
+              currency={data.currency}
+              montant={data.amount}
+            />
           ))}
         </div>
       </div>
