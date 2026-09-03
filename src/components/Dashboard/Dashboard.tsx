@@ -6,8 +6,10 @@ import { MdEmojiTransportation } from "react-icons/md";
 import CategoryProgressBarCard from "../Category/CategoryProgressBarCard";
 import { Link } from "react-router-dom";
 import ExpensesCard from "../Expenses/ExpensesCard";
+import React, { useEffect } from "react";
 
 const Dashboard = () => {
+  const [lastTransactions, setLastTransactions] = React.useState([] as any[]);
   const cardData = [
     {
       typeCard: 1,
@@ -53,7 +55,7 @@ const Dashboard = () => {
     },
   ];
 
-  const dataLastTransactions = [
+  /*const dataLastTransactions = [
     {
       id: "1",
       icon: <IoFastFood />,
@@ -84,7 +86,21 @@ const Dashboard = () => {
       dateExpense: "2023-07-13",
       montant: 50.0,
     },
-  ];
+  ];*/
+  useEffect(() => {
+    const fetchLastTransactions = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/transactions/last",
+        );
+        const data = await response.json();
+        setLastTransactions(data);
+      } catch (error) {
+        console.error("Error fetching last transactions:", error);
+      }
+    };
+    fetchLastTransactions();
+  }, []);
   return (
     <div className="main-block">
       {cardData.map((data, index) => (
@@ -102,7 +118,7 @@ const Dashboard = () => {
           <Link to="/transactions">View All</Link>
         </div>
         <div className="dashboard-transaction-bottom">
-          {dataLastTransactions.map((data, index) => (
+          {lastTransactions.map((data, index) => (
             <ExpensesCard key={index} {...data} />
           ))}
         </div>
