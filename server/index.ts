@@ -18,6 +18,12 @@ app.get("/api/expenses", async (_request, response) => {
   response.json(expenses);
 });
 
+// Get last 3 expenses
+app.get("/api/transactions/last", async (_request, response) => {
+  const lastTransactions = await Expense.find().sort({ date: -1 }).limit(3);
+  response.json(lastTransactions);
+});
+
 // Create a new expense
 app.post("/api/expenses", async (request, response) => {
   try {
