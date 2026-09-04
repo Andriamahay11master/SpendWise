@@ -1,12 +1,17 @@
 import { IoFastFood } from "react-icons/io5";
 import { GiPartyPopper } from "react-icons/gi";
-import { MdEmojiTransportation } from "react-icons/md";
+import {
+  MdEmojiTransportation,
+  MdOutlineHealthAndSafety,
+} from "react-icons/md";
 import { GoArrowRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import React, { type SubmitEvent } from "react";
 import { TiShoppingCart } from "react-icons/ti";
 import type { CategoryType } from "../../type/CategoryType";
+import { hexToRgb } from "../../utils/function";
+import { CiMobile4, CiPlane } from "react-icons/ci";
 
 interface ExpensesFormProps {
   onSubmit: (formData: {
@@ -21,36 +26,20 @@ interface ExpensesFormProps {
 const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   const navigate = useNavigate();
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
-  /*const dataCategory = [
-    {
-      nameCategory: "Food",
-      iconCategory: <IoFastFood />,
-      iconCategoryName: "IoFastFood",
-      color: "#fd21ac",
-      rgbColor: "253, 33, 172",
-    },
-    {
-      nameCategory: "Grocery shopping",
-      iconCategory: <TiShoppingCart />,
-      iconCategoryName: "TiShoppingCart",
-      color: "#38d327",
-      rgbColor: "56, 211, 39",
-    },
-    {
-      nameCategory: "Entertainment",
-      iconCategory: <GiPartyPopper />,
-      iconCategoryName: "GiPartyPopper",
-      color: "#f5a623",
-      rgbColor: "245, 166, 35",
-    },
-    {
-      nameCategory: "Transportation",
-      iconCategory: <MdEmojiTransportation />,
-      iconCategoryName: "MdEmojiTransportation",
-      color: "#24d0fb",
-      rgbColor: "245, 78, 66",
-    },
-  ];*/
+
+  interface CategoryIconProps {
+    color?: string;
+  }
+
+  const iconMap: Record<string, ReactElement<CategoryIconProps>> = {
+    IoFastFood: <IoFastFood />,
+    GiPartyPopper: <GiPartyPopper />,
+    MdEmojiTransportation: <MdEmojiTransportation />,
+    MdOutlineHealthAndSafety: <MdOutlineHealthAndSafety />,
+    TiShoppingCart: <TiShoppingCart />,
+    CiMobile4: <CiMobile4 />,
+    CiPlane: <CiPlane />,
+  };
 
   const [formData, setFormData] = useState({
     amount: "",
@@ -103,7 +92,7 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/categories");
+        const response = await fetch("http://localhost:5000/api/categories");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
@@ -159,23 +148,23 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
           <div className="form-category-list">
             {dataCategory.map((data, index) => (
               <div
-                className={`category-item ${formData.category === data.nameCategory ? "active" : ""}`}
+                className={`category-item ${formData.category === data.name ? "active" : ""}`}
                 key={index}
                 onClick={() =>
-                  handleCategorySelect(
-                    data.nameCategory,
-                    data.iconCategoryName,
-                    data.color,
-                  )
+                  handleCategorySelect(data.name, data.icon, data.color)
                 }
               >
                 <div
                   className="category-icon"
-                  style={{ backgroundColor: `rgba(${data.rgbColor}, 0.1)` }}
+                  style={{
+                    backgroundColor: `rgba(${hexToRgb(data.color)?.r}, ${hexToRgb(data.color)?.g}, ${hexToRgb(data.color)?.b}, 0.1)`,
+                  }}
                 >
-                  {React.cloneElement(data.iconCategory, { color: data.color })}
+                  {React.cloneElement(iconMap[data.icon], {
+                    color: data.color,
+                  })}
                 </div>
-                <p className="category-name">{data.nameCategory}</p>
+                <p className="category-name">{data.name}</p>
               </div>
             ))}
           </div>
