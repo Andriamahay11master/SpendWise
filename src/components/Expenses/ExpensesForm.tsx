@@ -1,17 +1,10 @@
-import { IoFastFood } from "react-icons/io5";
-import { GiPartyPopper } from "react-icons/gi";
-import {
-  MdEmojiTransportation,
-  MdOutlineHealthAndSafety,
-} from "react-icons/md";
 import { GoArrowRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router";
-import { useEffect, useState, type ReactElement } from "react";
+import { useEffect, useState } from "react";
 import React, { type SubmitEvent } from "react";
-import { TiShoppingCart } from "react-icons/ti";
 import type { CategoryType } from "../../type/CategoryType";
 import { hexToRgb } from "../../utils/function";
-import { CiMobile4, CiPlane } from "react-icons/ci";
+import useCategoryIcon from "../../context/useCategoryIcon";
 
 interface ExpensesFormProps {
   onSubmit: (formData: {
@@ -24,23 +17,9 @@ interface ExpensesFormProps {
   }) => void;
 }
 const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
+  const iconMap = useCategoryIcon();
   const navigate = useNavigate();
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
-
-  interface CategoryIconProps {
-    color?: string;
-  }
-
-  const iconMap: Record<string, ReactElement<CategoryIconProps>> = {
-    IoFastFood: <IoFastFood />,
-    GiPartyPopper: <GiPartyPopper />,
-    MdEmojiTransportation: <MdEmojiTransportation />,
-    MdOutlineHealthAndSafety: <MdOutlineHealthAndSafety />,
-    TiShoppingCart: <TiShoppingCart />,
-    CiMobile4: <CiMobile4 />,
-    CiPlane: <CiPlane />,
-  };
-
   const [formData, setFormData] = useState({
     amount: "",
     category: "",

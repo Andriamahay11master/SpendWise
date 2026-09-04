@@ -1,31 +1,11 @@
-import { GiPartyPopper } from "react-icons/gi";
-import { IoFastFood } from "react-icons/io5";
-import {
-  MdEmojiTransportation,
-  MdOutlineHealthAndSafety,
-} from "react-icons/md";
 import ExpensesCard from "./ExpensesCard";
-import { CiMobile4, CiPlane, CiSearch } from "react-icons/ci";
+import { CiSearch } from "react-icons/ci";
 import React, { useEffect } from "react";
-import type { ReactElement } from "react";
-import { TiShoppingCart } from "react-icons/ti";
 import type { ExpenseType } from "../../type/ExpenseType";
-
-interface CategoryIconProps {
-  color?: string;
-}
-
-const iconMap: Record<string, ReactElement<CategoryIconProps>> = {
-  IoFastFood: <IoFastFood />,
-  GiPartyPopper: <GiPartyPopper />,
-  MdEmojiTransportation: <MdEmojiTransportation />,
-  MdOutlineHealthAndSafety: <MdOutlineHealthAndSafety />,
-  TiShoppingCart: <TiShoppingCart />,
-  CiMobile4: <CiMobile4 />,
-  CiPlane: <CiPlane />,
-};
+import useCategoryIcon from "../../context/useCategoryIcon";
 
 const ExpensesList = ({}) => {
+  const iconMap = useCategoryIcon();
   const dateToday = new Date();
   const [dateSearch, setDateSearch] = React.useState("");
   const [dataExpenses, setDataExpenses] = React.useState<ExpenseType[]>([]);
