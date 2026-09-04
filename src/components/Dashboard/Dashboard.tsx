@@ -13,14 +13,16 @@ import React, { useEffect, type ReactElement } from "react";
 import { TiShoppingCart } from "react-icons/ti";
 import { CiMobile4, CiPlane } from "react-icons/ci";
 import type { ExpenseType } from "../../type/ExpenseType";
+import type { CategoryType } from "../../type/CategoryType";
 
 const Dashboard = () => {
   const [lastTransactions, setLastTransactions] = React.useState(
     [] as ExpenseType[],
   );
+  const [categories, setCategories] = React.useState([] as CategoryType[]);
   const [totalWeekSpending, setTotalWeekSpending] = React.useState(0);
   const [totalMonthSpending, setTotalMonthSpending] = React.useState(0);
-  const cardData = [
+  const kpiData = [
     {
       typeCard: 1,
       title: "Total Balance",
@@ -41,35 +43,11 @@ const Dashboard = () => {
     },
   ];
 
-  const categoryData = [
-    {
-      nameCategory: "Food",
-      iconCategory: <IoFastFood />,
-      budgetSpent: 220,
-      budgetMax: 500,
-      color: "#24d0fb",
-    },
-    {
-      nameCategory: "Entertainment",
-      iconCategory: <GiPartyPopper />,
-      budgetSpent: 150,
-      budgetMax: 400,
-      color: "#f5a623",
-    },
-    {
-      nameCategory: "Transportation",
-      iconCategory: <MdEmojiTransportation />,
-      budgetSpent: 100,
-      budgetMax: 250,
-      color: "#f54e42",
-    },
-  ];
-
-  interface TransactionIconProps {
+  interface CategoryIconProps {
     color?: string;
   }
 
-  const iconMap: Record<string, ReactElement<TransactionIconProps>> = {
+  const iconMap: Record<string, ReactElement<CategoryIconProps>> = {
     IoFastFood: <IoFastFood />,
     GiPartyPopper: <GiPartyPopper />,
     MdEmojiTransportation: <MdEmojiTransportation />,
@@ -116,19 +94,38 @@ const Dashboard = () => {
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/categories");
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
     fetchLastTransactions();
     fetchTotalWeekSpending();
     fetchTotalMonthSpending();
   }, []);
   return (
     <div className="main-block">
-      {cardData.map((data, index) => (
+      {kpiData.map((data, index) => (
         <DashboardCard key={index} {...data} />
       ))}
       <h2 className="title-h2">Budget Overview</h2>
       <div className="dashboard-category">
-        {categoryData.map((data, index) => (
-          <CategoryProgressBarCard key={index} {...data} />
+        {categories.map((data, index) => (
+          <CategoryProgressBarCard
+            key={index}
+            budgetMax={data.budgetMax}
+            color={data.color}
+            currency={data.currency}
+            nameCategory={data.name}
+            iconCategory={iconMap[data.icon]}
+            budgetSpent={data.budgetCurrent}
+          />
         ))}
       </div>
       <div className="dashboard-transaction">
