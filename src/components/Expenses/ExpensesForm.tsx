@@ -3,9 +3,10 @@ import { GiPartyPopper } from "react-icons/gi";
 import { MdEmojiTransportation } from "react-icons/md";
 import { GoArrowRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React, { type SubmitEvent } from "react";
 import { TiShoppingCart } from "react-icons/ti";
+import type { CategoryType } from "../../type/CategoryType";
 
 interface ExpensesFormProps {
   onSubmit: (formData: {
@@ -19,7 +20,8 @@ interface ExpensesFormProps {
 }
 const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   const navigate = useNavigate();
-  const dataCategory = [
+  const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
+  /*const dataCategory = [
     {
       nameCategory: "Food",
       iconCategory: <IoFastFood />,
@@ -48,7 +50,7 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
       color: "#24d0fb",
       rgbColor: "245, 78, 66",
     },
-  ];
+  ];*/
 
   const [formData, setFormData] = useState({
     amount: "",
@@ -97,6 +99,23 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
       navigate("/transactions");
     }, 1000);
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/categories");
+        if (!response.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+        const data = await response.json();
+        setDataCategory(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
   return (
     <div className="main-block">
       <form className="form-expense" onSubmit={handleSubmit}>
