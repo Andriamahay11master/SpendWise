@@ -18,13 +18,15 @@ const Dashboard = () => {
   const [lastTransactions, setLastTransactions] = React.useState(
     [] as ExpenseType[],
   );
+  const [totalWeekSpending, setTotalWeekSpending] = React.useState(0);
+  const [totalMonthSpending, setTotalMonthSpending] = React.useState(0);
   const cardData = [
     {
       typeCard: 1,
       title: "Total Balance",
       currency: "$",
       icon: <FaMoneyBills />,
-      value: 7548.453,
+      value: totalWeekSpending,
       desc: "weekly growth",
       color: "#47f64d",
     },
@@ -32,7 +34,7 @@ const Dashboard = () => {
       typeCard: 2,
       title: "Monthly Spending",
       currency: "$",
-      value: 4210,
+      value: totalMonthSpending,
       desc: "on track to stay within budget",
       limit: 5000,
       color: "#24d0fb",
@@ -76,38 +78,7 @@ const Dashboard = () => {
     CiMobile4: <CiMobile4 />,
     CiPlane: <CiPlane />,
   };
-  /*const dataLastTransactions = [
-    {
-      id: "1",
-      icon: <IoFastFood />,
-      description: "Grocery Shopping",
-      valueCategory: "Food",
-      colorCategory: "#24d0fb",
-      currency: "$",
-      dateExpense: "2023-07-15",
-      montant: 75.5,
-    },
-    {
-      id: "2",
-      icon: <GiPartyPopper />,
-      description: "Movie Night",
-      valueCategory: "Entertainment",
-      colorCategory: "#f5a623",
-      currency: "$",
-      dateExpense: "2023-07-14",
-      montant: 30.0,
-    },
-    {
-      id: "3",
-      icon: <MdEmojiTransportation />,
-      description: "Gas Refill",
-      valueCategory: "Transportation",
-      colorCategory: "#76ff67",
-      currency: "$",
-      dateExpense: "2023-07-13",
-      montant: 50.0,
-    },
-  ];*/
+
   useEffect(() => {
     const fetchLastTransactions = async () => {
       try {
@@ -120,7 +91,34 @@ const Dashboard = () => {
         console.error("Error fetching last transactions:", error);
       }
     };
+
+    const fetchTotalWeekSpending = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/expenses/total/week",
+        );
+        const data = await response.json();
+        setTotalWeekSpending(data.totalExpenses);
+      } catch (error) {
+        console.error("Error fetching total week spending:", error);
+      }
+    };
+
+    const fetchTotalMonthSpending = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/expenses/total/month",
+        );
+        const data = await response.json();
+        setTotalMonthSpending(data.totalExpenses);
+      } catch (error) {
+        console.error("Error fetching total month spending:", error);
+      }
+    };
+
     fetchLastTransactions();
+    fetchTotalWeekSpending();
+    fetchTotalMonthSpending();
   }, []);
   return (
     <div className="main-block">

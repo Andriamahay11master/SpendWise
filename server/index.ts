@@ -25,7 +25,7 @@ app.get("/api/transactions/last", async (_request, response) => {
 });
 
 //Get the total expense for the current month
-app.get("/api/expenses/total", async (_request, response) => {
+app.get("/api/expenses/total/month", async (_request, response) => {
   const startOfMonth = new Date();
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
