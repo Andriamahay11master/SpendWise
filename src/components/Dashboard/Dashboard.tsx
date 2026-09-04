@@ -1,21 +1,15 @@
 import DashboardCard from "./DashboardCard";
 import { FaMoneyBills } from "react-icons/fa6";
-import { IoFastFood } from "react-icons/io5";
-import { GiPartyPopper } from "react-icons/gi";
-import {
-  MdEmojiTransportation,
-  MdOutlineHealthAndSafety,
-} from "react-icons/md";
 import CategoryProgressBarCard from "../Category/CategoryProgressBarCard";
 import { Link } from "react-router-dom";
 import ExpensesCard from "../Expenses/ExpensesCard";
-import React, { useEffect, type ReactElement } from "react";
-import { TiShoppingCart } from "react-icons/ti";
-import { CiMobile4, CiPlane } from "react-icons/ci";
+import React, { useEffect } from "react";
 import type { ExpenseType } from "../../type/ExpenseType";
 import type { CategoryType } from "../../type/CategoryType";
+import useCategoryIcon from "../../context/useCategoryIcon";
 
 const Dashboard = () => {
+  const iconMap = useCategoryIcon();
   const [lastTransactions, setLastTransactions] = React.useState(
     [] as ExpenseType[],
   );
@@ -42,20 +36,6 @@ const Dashboard = () => {
       color: "#24d0fb",
     },
   ];
-
-  interface CategoryIconProps {
-    color?: string;
-  }
-
-  const iconMap: Record<string, ReactElement<CategoryIconProps>> = {
-    IoFastFood: <IoFastFood />,
-    GiPartyPopper: <GiPartyPopper />,
-    MdEmojiTransportation: <MdEmojiTransportation />,
-    MdOutlineHealthAndSafety: <MdOutlineHealthAndSafety />,
-    TiShoppingCart: <TiShoppingCart />,
-    CiMobile4: <CiMobile4 />,
-    CiPlane: <CiPlane />,
-  };
 
   useEffect(() => {
     const fetchLastTransactions = async () => {
