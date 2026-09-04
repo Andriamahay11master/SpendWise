@@ -24,6 +24,47 @@ app.get("/api/transactions/last", async (_request, response) => {
   response.json(lastTransactions);
 });
 
+//Get the total expense for the current month
+app.get("/api/expenses/total/month", async (_request, response) => {
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1);
+  startOfMonth.setHours(0, 0, 0, 0);
+
+  const endOfMonth = new Date();
+  endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+  endOfMonth.setDate(0);
+  endOfMonth.setHours(23, 59, 59, 999);
+
+  const expenses = await Expense.find({
+    date: { $gte: startOfMonth, $lte: endOfMonth },
+  });
+  const totalExpenses = expenses.reduce(
+    (total, expense) => total + expense.amount,
+    0,
+  );
+  response.json({ totalExpenses });
+});
+
+//Get the total expense for the week
+app.get("/api/expenses/total/week", async (_request, response) => {
+  const startOfWeek = new Date();
+  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  const endOfWeek = new Date();
+  endOfWeek.setDate(endOfWeek.getDate() - endOfWeek.getDay() + 7);
+  endOfWeek.setHours(23, 59, 59, 999);
+
+  const expenses = await Expense.find({
+    date: { $gte: startOfWeek, $lte: endOfWeek },
+  });
+  const totalExpenses = expenses.reduce(
+    (total, expense) => total + expense.amount,
+    0,
+  );
+  response.json({ totalExpenses });
+});
+
 // Create a new expense
 app.post("/api/expenses", async (request, response) => {
   try {

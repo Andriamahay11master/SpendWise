@@ -1,31 +1,12 @@
-import { GiPartyPopper } from "react-icons/gi";
-import { IoAddCircle, IoFastFood } from "react-icons/io5";
-import { MdEmojiTransportation } from "react-icons/md";
-import { MdOutlineHealthAndSafety } from "react-icons/md";
-import { TiShoppingCart } from "react-icons/ti";
-import { CiMobile4 } from "react-icons/ci";
-import { CiPlane } from "react-icons/ci";
+import { IoAddCircle } from "react-icons/io5";
 import CategoryCard from "./CategoryCard";
 import { Link } from "react-router";
 import React from "react";
-import type { ReactElement } from "react";
 import type { CategoryType } from "../../type/CategoryType";
-
-interface CategoryIconProps {
-  color?: string;
-}
-
-const iconMap: Record<string, ReactElement<CategoryIconProps>> = {
-  IoFastFood: <IoFastFood />,
-  GiPartyPopper: <GiPartyPopper />,
-  MdEmojiTransportation: <MdEmojiTransportation />,
-  MdOutlineHealthAndSafety: <MdOutlineHealthAndSafety />,
-  TiShoppingCart: <TiShoppingCart />,
-  CiMobile4: <CiMobile4 />,
-  CiPlane: <CiPlane />,
-};
+import useCategoryIcon from "../../context/useCategoryIcon";
 
 const CategoryList = () => {
+  const iconMap = useCategoryIcon();
   const [listCategory, setListCategory] = React.useState([] as CategoryType[]);
 
   React.useEffect(() => {
