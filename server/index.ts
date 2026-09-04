@@ -64,6 +64,7 @@ app.get("/api/expenses/total/week", async (_request, response) => {
   );
   response.json({ totalExpenses });
 });
+
 // Create a new expense
 app.post("/api/expenses", async (request, response) => {
   try {
