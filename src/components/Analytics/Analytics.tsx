@@ -22,13 +22,6 @@ const Analytics = () => {
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
   const [dataNbTransactionByCategory, setDataNbTransactionByCategory] =
     useState<TransactionType[]>([]);
-  const data = [
-    { name: "Transport", value: 325 },
-    { name: "Food", value: 425 },
-    { name: "Entertainment", value: 350 },
-  ];
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -101,10 +94,7 @@ const Analytics = () => {
               label
             >
               {dataCategory.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={entry.color || COLORS[index % COLORS.length]}
-                />
+                <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
             <Tooltip />
