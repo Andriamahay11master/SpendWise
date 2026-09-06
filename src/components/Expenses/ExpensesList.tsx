@@ -46,6 +46,49 @@ const ExpensesList = ({}) => {
     return date < startOfMonth;
   };
 
+  const groupExpensesByPeriod = (expenses: ExpenseType[], today: Date) => {
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    const startOfMonth = new Date(today);
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    return [
+      {
+        label: "today",
+        items: expenses.filter((expense) =>
+          isSameDay(new Date(expense.date), today),
+        ),
+      },
+      {
+        label: "yesterday",
+        items: expenses.filter((expense) =>
+          isSameDay(new Date(expense.date), yesterday),
+        ),
+      },
+      {
+        label: "this month",
+        items: expenses.filter((expense) => {
+          const date = new Date(expense.date);
+          return (
+            date >= startOfMonth &&
+            date <= today &&
+            !isSameDay(date, today) &&
+            !isSameDay(date, yesterday)
+          );
+        }),
+      },
+      {
+        label: "older",
+        items: expenses.filter((expense) => {
+          const date = new Date(expense.date);
+          return date < startOfMonth;
+        }),
+      },
+    ].filter((group) => group.items.length > 0);
+  };
+
   return (
     <div className="main-block">
       <div className="expenses-filter">
