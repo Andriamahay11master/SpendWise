@@ -14,12 +14,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Loader from "../Loader/Loader";
+import type { CategoryType } from "../../type/CategoryType";
 
 const Analytics = () => {
   const dataFilter = ["Week", "Month", "Year"];
   const [stateButton, setStateButton] = useState("Week");
   const [currency, setCurrency] = useState("$");
   const [loading, setLoading] = useState(true);
+  const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
   const data = [
     { name: "Transport", value: 325 },
     { name: "Food", value: 425 },
