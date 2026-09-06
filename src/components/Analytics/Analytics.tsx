@@ -91,19 +91,19 @@ const Analytics = () => {
         <ResponsiveContainer width="100%" aspect={1}>
           <PieChart>
             <Pie
-              data={data}
+              data={dataCategory}
               cx={"50%"}
               cy={"45%"}
               innerRadius={"30%"} // Makes it a donut chart (optional)
               outerRadius={"55%"}
               fill="#8884d8"
-              dataKey="value"
+              dataKey={"budgetCurrent"}
               label
             >
-              {data.map((entry, index) => (
+              {dataCategory.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
+                  fill={entry.color || COLORS[index % COLORS.length]}
                 />
               ))}
             </Pie>
