@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { GiPartyPopper } from "react-icons/gi";
-import { GoArrowRight } from "react-icons/go";
-import { IoFastFood } from "react-icons/io5";
-import { MdEmojiTransportation } from "react-icons/md";
 import { PiHeadCircuit } from "react-icons/pi";
 import { Link } from "react-router";
 import {
@@ -15,6 +11,8 @@ import {
 } from "recharts";
 import type { CategoryType } from "../../type/CategoryType";
 import useCategoryIcon from "../../context/useCategoryIcon";
+import type { TransactionType } from "../../type/TransactionType";
+import { GoArrowRight } from "react-icons/go";
 
 const Analytics = () => {
   const iconMap = useCategoryIcon();
@@ -22,38 +20,13 @@ const Analytics = () => {
   const [stateButton, setStateButton] = useState("Week");
   const [currency, setCurrency] = useState("$");
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
+  const [dataNbTransactionByCategory, setDataNbTransactionByCategory] =
+    useState<TransactionType[]>([]);
   const data = [
     { name: "Transport", value: 325 },
     { name: "Food", value: 425 },
     { name: "Entertainment", value: 350 },
   ];
-
-  /*const categoryData = [
-    {
-      nameCategory: "Food",
-      iconCategory: <IoFastFood />,
-      budgetSpent: 220,
-      budgetMax: 500,
-      color: "#24d0fb",
-      nbTransaction: 15,
-    },
-    {
-      nameCategory: "Entertainment",
-      iconCategory: <GiPartyPopper />,
-      budgetSpent: 150,
-      budgetMax: 400,
-      color: "#f5a623",
-      nbTransaction: 20,
-    },
-    {
-      nameCategory: "Transportation",
-      iconCategory: <MdEmojiTransportation />,
-      budgetSpent: 100,
-      budgetMax: 250,
-      color: "#f54e42",
-      nbTransaction: 10,
-    },
-  ];*/
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
@@ -68,136 +41,156 @@ const Analytics = () => {
       }
     };
     fetchCategoryData();
+
+    const fetchNbTransactionByCategory = async (valCategory: string) => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/categories/${valCategory}/expenses/count`,
+        );
+        const data = await response.json();
+        setDataNbTransactionByCategory(data);
+      } catch (error) {
+        console.error(
+          "Error fetching number of transactions by category:",
+          error,
+        );
+      }
+    };
+    for (const category of dataCategory) {
+      fetchNbTransactionByCategory(category.name);
+    }
+    console.log("test" + dataNbTransactionByCategory);
   }, []);
-    return (
-      <div className="main-block page-analytics">
-        <h3 className="title-h3">financial insights</h3>
-        <h2 className="title-h2">Analytics</h2>
-        <div className="filter-analytics">
-          {dataFilter.map((item, index) => {
+  return (
+    <div className="main-block page-analytics">
+      <h3 className="title-h3">financial insights</h3>
+      <h2 className="title-h2">Analytics</h2>
+      <div className="filter-analytics">
+        {dataFilter.map((item, index) => {
+          return (
+            <button
+              key={index}
+              className={
+                stateButton === item
+                  ? "btn btn-filter active"
+                  : "btn btn-filter"
+              }
+              onClick={() => setStateButton(item)}
+            >
+              {item}
+            </button>
+          );
+        })}
+      </div>
+      <div className="filter-donut">
+        <ResponsiveContainer width="100%" aspect={1}>
+          <PieChart>
+            <Pie
+              data={data}
+              cx={"50%"}
+              cy={"45%"}
+              innerRadius={"30%"} // Makes it a donut chart (optional)
+              outerRadius={"55%"}
+              fill="#8884d8"
+              dataKey="value"
+              label
+            >
+              {data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="category-analytics">
+        <h3 className="title-h3">Category details</h3>
+        <div className="category-analytics-list">
+          {dataCategory.map((item, index) => {
             return (
-              <button
-                key={index}
-                className={
-                  stateButton === item
-                    ? "btn btn-filter active"
-                    : "btn btn-filter"
-                }
-                onClick={() => setStateButton(item)}
-              >
-                {item}
-              </button>
-            );
-          })}
-        </div>
-        <div className="filter-donut">
-          <ResponsiveContainer width="100%" aspect={1}>
-            <PieChart>
-              <Pie
-                data={data}
-                cx={"50%"}
-                cy={"45%"}
-                innerRadius={"30%"} // Makes it a donut chart (optional)
-                outerRadius={"55%"}
-                fill="#8884d8"
-                dataKey="value"
-                label
-              >
-                {data.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="category-analytics">
-          <h3 className="title-h3">Category details</h3>
-          <div className="category-analytics-list">
-            {dataCategory.map((item, index) => {
-              return (
-                <div className="category-analytics-item" key={index}>
-                  <div className="category-analytics-top">
-                    <div className="category-analytics-top-col">
-                      <div className="category-analytics-item-icon">
-                        {React.cloneElement(iconMap[item.icon], {
-                          color: item.color,
-                        })}
-                      </div>
-                    </div>
-                    <div className="category-analytics-top-col">
-                      <div className="category-analytics-item-info">
-                        <div className="category-analytics-item-info-col">
-                          <p className="category-analytics-item-name">
-                            {item.name}
-                          </p>
-                          <p className="category-analytics-item-nb-transactions">
-                            {item.nbTransaction} transactions
-                          </p>
-                        </div>
-                        <div className="category-analytics-item-info-col">
-                          <p className="category-analytics-item-budget">
-                            {currency}
-                            {item.budgetCurrent.toFixed(2)}
-                          </p>
-                          <p className="category-analytics-item-percentage">
-                            {Math.round(
-                              (item.budgetCurrent / item.budgetMax) * 100,
-                            )}
-                            %
-                          </p>
-                        </div>
-                      </div>
+              <div className="category-analytics-item" key={index}>
+                <div className="category-analytics-top">
+                  <div className="category-analytics-top-col">
+                    <div className="category-analytics-item-icon">
+                      {React.cloneElement(iconMap[item.icon], {
+                        color: item.color,
+                      })}
                     </div>
                   </div>
-                  <div className="category-analytics-bottom">
-                    <div className="progressBar">
-                      <div
-                        className="progressBar-fill"
-                        style={{
-                          width: `${Math.round((item.budgetCurrent / item.budgetMax) * 100)}%`,
-                          backgroundColor: item.color,
-                        }}
-                      ></div>
+                  <div className="category-analytics-top-col">
+                    <div className="category-analytics-item-info">
+                      <div className="category-analytics-item-info-col">
+                        <p className="category-analytics-item-name">
+                          {item.name}
+                        </p>
+                        <p className="category-analytics-item-nb-transactions">
+                          {dataNbTransactionByCategory[index]?.nbTransaction ||
+                            0}{" "}
+                          transactions
+                        </p>
+                      </div>
+                      <div className="category-analytics-item-info-col">
+                        <p className="category-analytics-item-budget">
+                          {currency}
+                          {item.budgetCurrent.toFixed(2)}
+                        </p>
+                        <p className="category-analytics-item-percentage">
+                          {Math.round(
+                            (item.budgetCurrent / item.budgetMax) * 100,
+                          )}
+                          %
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-
-            <Link to="/categoryReport" className="btn btn-gray">
-              View Detail Report <GoArrowRight />
-            </Link>
-          </div>
-        </div>
-        <div className="prediction-analytics">
-          <div className="prediction-analytics-top">
-            <div className="prediction-col">
-              <div className="prediction-icon">
-                <PiHeadCircuit />
+                <div className="category-analytics-bottom">
+                  <div className="progressBar">
+                    <div
+                      className="progressBar-fill"
+                      style={{
+                        width: `${Math.round((item.budgetCurrent / item.budgetMax) * 100)}%`,
+                        backgroundColor: item.color,
+                      }}
+                    ></div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="prediction-col">
-              <h3 className="title-h3">Ai Smart Prediction</h3>
-              <p>
-                Based on your trends, you're on track to save{" "}
-                <strong>$420</strong> more than last month if current spending
-                continues
-              </p>
-            </div>
-          </div>
-          <div className="prediction-analytics-bottom">
-            <Link to="/prediction" className="btn btn-white">
-              Set Target
-            </Link>
-          </div>
+            );
+          })}
+
+          <Link to="/categoryReport" className="btn btn-gray">
+            View Detail Report <GoArrowRight />
+          </Link>
         </div>
       </div>
-    );
-  }
+      <div className="prediction-analytics">
+        <div className="prediction-analytics-top">
+          <div className="prediction-col">
+            <div className="prediction-icon">
+              <PiHeadCircuit />
+            </div>
+          </div>
+          <div className="prediction-col">
+            <h3 className="title-h3">Ai Smart Prediction</h3>
+            <p>
+              Based on your trends, you're on track to save{" "}
+              <strong>$420</strong> more than last month if current spending
+              continues
+            </p>
+          </div>
+        </div>
+        <div className="prediction-analytics-bottom">
+          <Link to="/prediction" className="btn btn-white">
+            Set Target
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };
 export default Analytics;

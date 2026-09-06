@@ -68,7 +68,9 @@ app.get("/api/expenses/total/week", async (_request, response) => {
 //Get number of expenses for a specific category
 app.get("/api/categories/:name/expenses/count", async (request, response) => {
   const categoryName = request.params.name;
-  const count = await Expense.countDocuments({ category: categoryName });
+  const count = await Expense.countDocuments({
+    category: categoryName.toLocaleLowerCase(),
+  });
   response.json({ count });
 });
 
