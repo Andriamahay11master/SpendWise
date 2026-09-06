@@ -34,32 +34,37 @@ const Analytics = () => {
     const fetchCategoryData = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/categories");
-        const data = await response.json();
-        setDataCategory(data);
+        const categories = await response.json();
+        setDataCategory(categories);
+
+        const countsExpensesByCategory = await Promise.all(
+          categories.map(async (category: CategoryType) => {
+            try {
+              const response = await fetch(
+                `http://localhost:5000/api/categories/${category.name}/expenses/count`,
+              );
+              const result = await response.json();
+              return {
+                referenceCategory: category.name,
+                nbTransaction: result.nbTransaction ?? result.count ?? 0,
+              };
+            } catch (error) {
+              console.error(
+                `Error fetching number of transactions for category ${category.name}:`,
+                error,
+              );
+              return { referenceCategory: category.name, nbTransaction: 0 };
+            }
+          }),
+        );
+
+        setDataNbTransactionByCategory(countsExpensesByCategory);
       } catch (error) {
         console.error("Error fetching category data:", error);
       }
     };
-    fetchCategoryData();
 
-    const fetchNbTransactionByCategory = async (valCategory: string) => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/api/categories/${valCategory}/expenses/count`,
-        );
-        const data = await response.json();
-        setDataNbTransactionByCategory(data);
-      } catch (error) {
-        console.error(
-          "Error fetching number of transactions by category:",
-          error,
-        );
-      }
-    };
-    for (const category of dataCategory) {
-      fetchNbTransactionByCategory(category.name);
-    }
-    console.log("test" + dataNbTransactionByCategory);
+    fetchCategoryData();
   }, []);
   return (
     <div className="main-block page-analytics">
@@ -111,6 +116,11 @@ const Analytics = () => {
         <h3 className="title-h3">Category details</h3>
         <div className="category-analytics-list">
           {dataCategory.map((item, index) => {
+            const categoryCount =
+              dataNbTransactionByCategory.find(
+                (entry) => entry.referenceCategory === item.name,
+              )?.nbTransaction ?? 0;
+
             return (
               <div className="category-analytics-item" key={index}>
                 <div className="category-analytics-top">
@@ -128,9 +138,7 @@ const Analytics = () => {
                           {item.name}
                         </p>
                         <p className="category-analytics-item-nb-transactions">
-                          {dataNbTransactionByCategory[index]?.nbTransaction ||
-                            0}{" "}
-                          transactions
+                          {categoryCount} transactions
                         </p>
                       </div>
                       <div className="category-analytics-item-info-col">

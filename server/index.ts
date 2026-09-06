@@ -69,9 +69,9 @@ app.get("/api/expenses/total/week", async (_request, response) => {
 app.get("/api/categories/:name/expenses/count", async (request, response) => {
   const categoryName = request.params.name;
   const count = await Expense.countDocuments({
-    category: categoryName.toLocaleLowerCase(),
+    category: { $regex: new RegExp(`^${categoryName}$`, "i") },
   });
-  response.json({ count });
+  response.json({ nbTransaction: count });
 });
 
 // Create a new expense
