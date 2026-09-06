@@ -13,14 +13,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import Loader from "../Loader/Loader";
 import type { CategoryType } from "../../type/CategoryType";
+import useCategoryIcon from "../../context/useCategoryIcon";
 
 const Analytics = () => {
+  const iconMap = useCategoryIcon();
   const dataFilter = ["Week", "Month", "Year"];
   const [stateButton, setStateButton] = useState("Week");
   const [currency, setCurrency] = useState("$");
-  const [loading, setLoading] = useState(true);
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
   const data = [
     { name: "Transport", value: 325 },
@@ -28,7 +28,7 @@ const Analytics = () => {
     { name: "Entertainment", value: 350 },
   ];
 
-  const categoryData = [
+  /*const categoryData = [
     {
       nameCategory: "Food",
       iconCategory: <IoFastFood />,
@@ -53,18 +53,22 @@ const Analytics = () => {
       color: "#f54e42",
       nbTransaction: 10,
     },
-  ];
+  ];*/
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  });
-  if (loading) {
-    return <Loader size={75} color={"#39ff14"} />;
-  } else {
+    const fetchCategoryData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/categories");
+        const data = await response.json();
+        setDataCategory(data);
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+      }
+    };
+    fetchCategoryData();
+  }, []);
     return (
       <div className="main-block page-analytics">
         <h3 className="title-h3">financial insights</h3>
@@ -114,13 +118,13 @@ const Analytics = () => {
         <div className="category-analytics">
           <h3 className="title-h3">Category details</h3>
           <div className="category-analytics-list">
-            {categoryData.map((item, index) => {
+            {dataCategory.map((item, index) => {
               return (
                 <div className="category-analytics-item" key={index}>
                   <div className="category-analytics-top">
                     <div className="category-analytics-top-col">
                       <div className="category-analytics-item-icon">
-                        {React.cloneElement(item.iconCategory, {
+                        {React.cloneElement(iconMap[item.icon], {
                           color: item.color,
                         })}
                       </div>
@@ -129,7 +133,7 @@ const Analytics = () => {
                       <div className="category-analytics-item-info">
                         <div className="category-analytics-item-info-col">
                           <p className="category-analytics-item-name">
-                            {item.nameCategory}
+                            {item.name}
                           </p>
                           <p className="category-analytics-item-nb-transactions">
                             {item.nbTransaction} transactions
@@ -138,11 +142,11 @@ const Analytics = () => {
                         <div className="category-analytics-item-info-col">
                           <p className="category-analytics-item-budget">
                             {currency}
-                            {item.budgetSpent.toFixed(2)}
+                            {item.budgetCurrent.toFixed(2)}
                           </p>
                           <p className="category-analytics-item-percentage">
                             {Math.round(
-                              (item.budgetSpent / item.budgetMax) * 100,
+                              (item.budgetCurrent / item.budgetMax) * 100,
                             )}
                             %
                           </p>
@@ -155,7 +159,7 @@ const Analytics = () => {
                       <div
                         className="progressBar-fill"
                         style={{
-                          width: `${Math.round((item.budgetSpent / item.budgetMax) * 100)}%`,
+                          width: `${Math.round((item.budgetCurrent / item.budgetMax) * 100)}%`,
                           backgroundColor: item.color,
                         }}
                       ></div>
