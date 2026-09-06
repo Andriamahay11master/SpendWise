@@ -8,7 +8,7 @@ const MainPage = ({ children }: { children: React.ReactNode }) => {
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(true);
+      setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
