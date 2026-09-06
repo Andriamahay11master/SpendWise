@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { PiHeadCircuit } from "react-icons/pi";
 import { Link } from "react-router";
 import {
@@ -18,17 +18,23 @@ const Analytics = () => {
   const iconMap = useCategoryIcon();
   const dataFilter = ["Week", "Month", "Year"];
   const [stateButton, setStateButton] = useState("Week");
-  const [currency, setCurrency] = useState("$");
+  const currency = "$";
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
   const [dataNbTransactionByCategory, setDataNbTransactionByCategory] =
     useState<TransactionType[]>([]);
-  const data = [
-    { name: "Transport", value: 325 },
-    { name: "Food", value: 425 },
-    { name: "Entertainment", value: 350 },
-  ];
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+  const valPercentageCategory = useMemo(
+    () =>
+      dataCategory.map((item) => {
+        const percentage = (item.budgetCurrent / item.budgetMax) * 100;
+        return {
+          name: item.name,
+          value: Number(percentage.toFixed(2)),
+          color: item.color,
+        };
+      }),
+    [dataCategory],
+  );
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -91,20 +97,17 @@ const Analytics = () => {
         <ResponsiveContainer width="100%" aspect={1}>
           <PieChart>
             <Pie
-              data={data}
+              data={valPercentageCategory}
               cx={"50%"}
               cy={"45%"}
               innerRadius={"30%"} // Makes it a donut chart (optional)
               outerRadius={"55%"}
               fill="#8884d8"
-              dataKey="value"
+              dataKey={"value"}
               label
             >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
+              {valPercentageCategory.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
             <Tooltip />
