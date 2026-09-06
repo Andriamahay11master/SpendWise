@@ -34,6 +34,18 @@ const ExpensesList = ({}) => {
       });
   }, [dateSearch]);
 
+  const isSameDay = (a: Date, b: Date) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
+  const isBeforeMonthStart = (date: Date, today: Date) => {
+    const startOfMonth = new Date(today);
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+    return date < startOfMonth;
+  };
+
   return (
     <div className="main-block">
       <div className="expenses-filter">
