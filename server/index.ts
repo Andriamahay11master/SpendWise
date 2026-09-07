@@ -134,6 +134,25 @@ app.post("/api/categories", async (request, response) => {
   }
 });
 
+//Update budgetCurrent for category
+app.put("/api/categories/:id/budgetCurrent", async (request, response) => {
+  try {
+    const { budgetCurrent } = request.body;
+    const category = await Category.findByIdAndUpdate(
+      request.params.id,
+      { budgetCurrent },
+      { new: true },
+    );
+    if (category) {
+      response.json(category);
+    } else {
+      response.status(404).json({ message: "Category not found" });
+    }
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
 // Delete a category
 app.delete("/api/categories/:id", async (request, response) => {
   await Category.findByIdAndDelete(request.params.id);
