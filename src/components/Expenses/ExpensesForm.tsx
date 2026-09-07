@@ -5,16 +5,10 @@ import React, { type SubmitEvent } from "react";
 import type { CategoryType } from "../../type/CategoryType";
 import { hexToRgb } from "../../utils/function";
 import useCategoryIcon from "../../context/useCategoryIcon";
+import type { ExpenseFormData } from "../../services/expenseService";
 
 interface ExpensesFormProps {
-  onSubmit: (formData: {
-    amount: string;
-    category: string;
-    iconCategory: string;
-    colorCategory: string;
-    dateE: string;
-    notes: string;
-  }) => void;
+  onSubmit: (formData: ExpenseFormData) => Promise<void>;
 }
 const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   const iconMap = useCategoryIcon();
