@@ -135,9 +135,9 @@ app.post("/api/categories", async (request, response) => {
 });
 
 //Get the budgetCurrent for a specific category
-app.get("/api/categories/:id/budgetCurrent", async (request, response) => {
+app.get("/api/categories/:name/budgetCurrent", async (request, response) => {
   try {
-    const category = await Category.findById(request.params.id);
+    const category = await Category.findOne({ name: request.params.name });
     if (category) {
       response.json({ budgetCurrent: category.budgetCurrent });
     } else {
@@ -149,11 +149,11 @@ app.get("/api/categories/:id/budgetCurrent", async (request, response) => {
 });
 
 //Update budgetCurrent for category
-app.put("/api/categories/:id/budgetCurrent", async (request, response) => {
+app.put("/api/categories/:name/budgetCurrent", async (request, response) => {
   try {
     const { budgetCurrent } = request.body;
-    const category = await Category.findByIdAndUpdate(
-      request.params.id,
+    const category = await Category.findOneAndUpdate(
+      { name: request.params.name },
       { budgetCurrent },
       { new: true },
     );

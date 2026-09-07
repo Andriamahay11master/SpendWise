@@ -13,7 +13,46 @@ import CategoryForm from "./components/Category/CategoryForm";
 import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
 import Report from "./components/Report/Report";
+
 function App() {
+  const getLastBudgetForCategory = async (categoryId: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/categories/${categoryId}/budgetCurrent`,
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch budgetCurrent");
+      }
+      const data = await response.json();
+      return data.budgetCurrent;
+    } catch (error) {
+      console.error("Error fetching budgetCurrent:", error);
+      return null;
+    }
+  };
+
+  const updateBudgetForCategory = async (
+    categoryId: string,
+    newBudgetCurrent: number,
+  ) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/categories/${categoryId}/budgetCurrent`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ budgetCurrent: newBudgetCurrent }),
+        },
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update budgetCurrent");
+      }
+    } catch (error) {
+      console.error("Error updating budgetCurrent:", error);
+    }
+  };
   const saveExpense = async (formData: {
     amount: string;
     category: string;
@@ -22,6 +61,11 @@ function App() {
     dateE: string;
     notes: string;
   }) => {
+    const lastBudget = await getLastBudgetForCategory(formData.category);
+    if (lastBudget !== null) {
+      const newBudgetCurrent = lastBudget + Number(formData.amount);
+      await updateBudgetForCategory(formData.category, newBudgetCurrent);
+    }
     await fetch("http://localhost:5000/api/expenses", {
       method: "POST",
       headers: {
