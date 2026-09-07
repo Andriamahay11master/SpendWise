@@ -13,30 +13,9 @@ import CategoryForm from "./components/Category/CategoryForm";
 import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
 import Report from "./components/Report/Report";
+import { saveExpense } from "./services/expenseService";
+
 function App() {
-  const saveExpense = async (formData: {
-    amount: string;
-    category: string;
-    iconCategory: string;
-    colorCategory: string;
-    dateE: string;
-    notes: string;
-  }) => {
-    await fetch("http://localhost:5000/api/expenses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: formData.amount,
-        category: formData.category,
-        date: formData.dateE,
-        notes: formData.notes,
-        icon: formData.iconCategory,
-        colorCategory: formData.colorCategory,
-      }),
-    });
-  };
   return (
     <BrowserRouter>
       <Routes>

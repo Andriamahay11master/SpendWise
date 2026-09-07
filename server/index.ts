@@ -134,6 +134,39 @@ app.post("/api/categories", async (request, response) => {
   }
 });
 
+//Get the budgetCurrent for a specific category
+app.get("/api/categories/:name/budgetCurrent", async (request, response) => {
+  try {
+    const category = await Category.findOne({ name: request.params.name });
+    if (category) {
+      response.json({ budgetCurrent: category.budgetCurrent });
+    } else {
+      response.status(404).json({ message: "Category not found" });
+    }
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
+//Update budgetCurrent for category
+app.put("/api/categories/:name/budgetCurrent", async (request, response) => {
+  try {
+    const { budgetCurrent } = request.body;
+    const category = await Category.findOneAndUpdate(
+      { name: request.params.name },
+      { budgetCurrent },
+      { new: true },
+    );
+    if (category) {
+      response.json(category);
+    } else {
+      response.status(404).json({ message: "Category not found" });
+    }
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
 // Delete a category
 app.delete("/api/categories/:id", async (request, response) => {
   await Category.findByIdAndDelete(request.params.id);
