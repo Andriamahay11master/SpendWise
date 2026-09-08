@@ -1,47 +1,57 @@
 import ExpensesCard from "./ExpensesCard";
 import { CiSearch } from "react-icons/ci";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import type { ExpenseType } from "../../type/ExpenseType";
 import useCategoryIcon from "../../context/useCategoryIcon";
 import { getExpenseGroups } from "../../utils/expenseGroups";
+import { useQuery } from "@tanstack/react-query";
+
+// Fetch expenses from the API
+const fetchExpenses = async (): Promise<ExpenseType[]> => {
+  const response = await fetch("http://localhost:5000/api/expenses");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch expenses");
+  }
+
+  return await response.json();
+};
 
 const ExpensesList = () => {
   const iconMap = useCategoryIcon();
   const today = useMemo(() => new Date(), []);
   const [dateSearch, setDateSearch] = React.useState("");
-  const [dataExpenses, setDataExpenses] = React.useState<ExpenseType[]>([]);
+  const { data: dataExpenses } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: fetchExpenses,
+  });
+
+  const filteredExpenses = useMemo(() => {
+    const expenses = dataExpenses ?? [];
+
+    if (!dateSearch) {
+      return expenses;
+    }
+
+    const searchDate = new Date(dateSearch);
+    return expenses.filter((expense) => {
+      const expenseDate = new Date(expense.date);
+      return (
+        expenseDate.getFullYear() === searchDate.getFullYear() &&
+        expenseDate.getMonth() === searchDate.getMonth() &&
+        expenseDate.getDate() === searchDate.getDate()
+      );
+    });
+  }, [dataExpenses, dateSearch]);
 
   const expenseGroups = useMemo(
-    () => getExpenseGroups(dataExpenses, today),
-    [dataExpenses, today],
+    () => getExpenseGroups(filteredExpenses, today),
+    [filteredExpenses, today],
   );
 
   const onChangeDateSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDateSearch(e.target.value);
   };
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/expenses")
-      .then((response) => response.json() as Promise<ExpenseType[]>)
-      .then((data) => {
-        if (!dateSearch) {
-          setDataExpenses(data);
-          return;
-        }
-
-        const searchDate = new Date(dateSearch);
-        const filteredData = data.filter((expense) => {
-          const expenseDate = new Date(expense.date);
-          return (
-            expenseDate.getDate() === searchDate.getDate() &&
-            expenseDate.getMonth() === searchDate.getMonth() &&
-            expenseDate.getFullYear() === searchDate.getFullYear()
-          );
-        });
-
-        setDataExpenses(filteredData);
-      });
-  }, [dateSearch]);
 
   return (
     <div className="main-block">
@@ -76,7 +86,7 @@ const ExpensesList = () => {
         </div>
       ))}
 
-      {dataExpenses.length === 0 && (
+      {filteredExpenses.length === 0 && (
         <div className="no-expenses">
           <p>No expenses found for the selected date.</p>
         </div>
