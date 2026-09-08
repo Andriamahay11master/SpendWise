@@ -3,19 +3,58 @@ import { FaMoneyBills } from "react-icons/fa6";
 import CategoryProgressBarCard from "../Category/CategoryProgressBarCard";
 import { Link } from "react-router-dom";
 import ExpensesCard from "../Expenses/ExpensesCard";
-import React, { useEffect } from "react";
 import type { ExpenseType } from "../../type/ExpenseType";
 import type { CategoryType } from "../../type/CategoryType";
 import useCategoryIcon from "../../context/useCategoryIcon";
+import { useQuery } from "@tanstack/react-query";
+
+// Fetch last transactions from the API
+const fetchLastTransactions = async () => {
+  const response = await fetch("http://localhost:5000/api/transactions/last");
+  return await response.json();
+};
+
+// Fetch total week spending
+const fetchTotalWeekSpending = async () => {
+  const response = await fetch("http://localhost:5000/api/expenses/total/week");
+  return await response.json();
+};
+
+// Fetch total month spending
+const fetchTotalMonthSpending = async () => {
+  const response = await fetch(
+    "http://localhost:5000/api/expenses/total/month",
+  );
+  return await response.json();
+};
+
+// Fetch categories
+const fetchCategories = async () => {
+  const response = await fetch("http://localhost:5000/api/categories");
+  return await response.json();
+};
 
 const Dashboard = () => {
   const iconMap = useCategoryIcon();
-  const [lastTransactions, setLastTransactions] = React.useState(
-    [] as ExpenseType[],
-  );
-  const [categories, setCategories] = React.useState([] as CategoryType[]);
-  const [totalWeekSpending, setTotalWeekSpending] = React.useState(0);
-  const [totalMonthSpending, setTotalMonthSpending] = React.useState(0);
+  const { data: lastTransactions } = useQuery({
+    queryKey: ["lastTransactions"],
+    queryFn: fetchLastTransactions,
+  });
+  const { data: totalWeekSpendingData } = useQuery({
+    queryKey: ["totalWeekSpending"],
+    queryFn: fetchTotalWeekSpending,
+  });
+  const { data: totalMonthSpendingData } = useQuery({
+    queryKey: ["totalMonthSpending"],
+    queryFn: fetchTotalMonthSpending,
+  });
+  const { data: categoriesData } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
+  const totalWeekSpending = totalWeekSpendingData?.totalExpenses || 0;
+  const totalMonthSpending = totalMonthSpendingData?.totalExpenses || 0;
+
   const kpiData = [
     {
       typeCard: 1,
@@ -37,58 +76,6 @@ const Dashboard = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchLastTransactions = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/transactions/last",
-        );
-        const data = await response.json();
-        setLastTransactions(data);
-      } catch (error) {
-        console.error("Error fetching last transactions:", error);
-      }
-    };
-
-    const fetchTotalWeekSpending = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/expenses/total/week",
-        );
-        const data = await response.json();
-        setTotalWeekSpending(data.totalExpenses);
-      } catch (error) {
-        console.error("Error fetching total week spending:", error);
-      }
-    };
-
-    const fetchTotalMonthSpending = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/expenses/total/month",
-        );
-        const data = await response.json();
-        setTotalMonthSpending(data.totalExpenses);
-      } catch (error) {
-        console.error("Error fetching total month spending:", error);
-      }
-    };
-
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/categories");
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-    fetchLastTransactions();
-    fetchTotalWeekSpending();
-    fetchTotalMonthSpending();
-  }, []);
   return (
     <div className="main-block">
       {kpiData.map((data, index) => (
@@ -96,7 +83,7 @@ const Dashboard = () => {
       ))}
       <h2 className="title-h2">Budget Overview</h2>
       <div className="dashboard-category">
-        {categories.map((data, index) => (
+        {categoriesData?.map((data: CategoryType, index: number) => (
           <CategoryProgressBarCard
             key={index}
             budgetMax={data.budgetMax}
@@ -114,7 +101,7 @@ const Dashboard = () => {
           <Link to="/transactions">View All</Link>
         </div>
         <div className="dashboard-transaction-bottom">
-          {lastTransactions.map((data, index) => (
+          {lastTransactions?.map((data: ExpenseType, index: number) => (
             <ExpensesCard
               key={index}
               id={data.id}
