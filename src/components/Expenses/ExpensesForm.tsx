@@ -1,19 +1,28 @@
 import { GoArrowRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import React, { type SubmitEvent } from "react";
 import type { CategoryType } from "../../type/CategoryType";
 import { hexToRgb } from "../../utils/function";
 import useCategoryIcon from "../../context/useCategoryIcon";
 import type { ExpenseFormData } from "../../services/expenseService";
+import { saveExpense } from "../../services/expenseService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-interface ExpensesFormProps {
-  onSubmit: (formData: ExpenseFormData) => Promise<void>;
-}
-const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
+const fetchCategories = async (): Promise<CategoryType[]> => {
+  const response = await fetch("http://localhost:5000/api/categories");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  return response.json();
+};
+
+const ExpensesForm = () => {
   const iconMap = useCategoryIcon();
   const navigate = useNavigate();
-  const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
+  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     amount: "",
     category: "",
@@ -21,6 +30,19 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
     colorCategory: "",
     dateE: "",
     notes: "",
+  });
+  const { data: dataCategory = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
+  const saveExpenseMutation = useMutation({
+    mutationFn: (data: ExpenseFormData) => saveExpense(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      await queryClient.invalidateQueries({ queryKey: ["categories"] });
+      resetForm();
+      navigate("/transactions");
+    },
   });
 
   // Single change handler for all text inputs
@@ -55,29 +77,8 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
   };
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await onSubmit(formData);
-    setTimeout(() => {
-      resetForm();
-      navigate("/transactions");
-    }, 1000);
+    saveExpenseMutation.mutate(formData);
   };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/categories");
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        const data = await response.json();
-        setDataCategory(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
   return (
     <div className="main-block">
       <form className="form-expense" onSubmit={handleSubmit}>
@@ -164,8 +165,15 @@ const ExpensesForm = ({ onSubmit }: ExpensesFormProps) => {
           />
         </div>
         <div className="form-group form-button">
-          <button type="submit" className="btn btn-primary">
-            <span>Save Transaction</span> <GoArrowRight />
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={saveExpenseMutation.isPending}
+          >
+            <span>
+              {saveExpenseMutation.isPending ? "Saving..." : "Save Transaction"}
+            </span>
+            {!saveExpenseMutation.isPending && <GoArrowRight />}
           </button>
         </div>
       </form>

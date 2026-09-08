@@ -13,7 +13,6 @@ import CategoryForm from "./components/Category/CategoryForm";
 import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
 import Report from "./components/Report/Report";
-import { saveExpense } from "./services/expenseService";
 
 function App() {
   return (
@@ -47,7 +46,7 @@ function App() {
           path="/addExpense"
           element={
             <MainPage>
-              <ExpensesForm onSubmit={saveExpense} />
+              <ExpensesForm />
             </MainPage>
           }
         />
