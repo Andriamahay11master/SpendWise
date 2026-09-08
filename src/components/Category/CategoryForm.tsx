@@ -8,6 +8,35 @@ import { TiShoppingCart } from "react-icons/ti";
 import { CiMobile4 } from "react-icons/ci";
 import { CiPlane } from "react-icons/ci";
 import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+
+const createCategory = async (categoryData: {
+  name: string;
+  icon: string;
+  color: string;
+  budget: number;
+}) => {
+  const response = await fetch("http://localhost:5000/api/categories", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: categoryData.name,
+      icon: categoryData.icon,
+      color: categoryData.color,
+      budget: categoryData.budget,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    console.error("Error creating category:", error);
+    return;
+  }
+
+  return await response.json();
+};
 
 const CategoryForm = () => {
   const navigate = useNavigate();
@@ -84,40 +113,23 @@ const CategoryForm = () => {
     });
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/categories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          icon: formData.icon,
-          color: formData.color,
-          budget: formData.budget,
-        }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        console.error("Error creating category:", error);
-        return;
-      }
-
-      const newCategory = await response.json();
+  const { mutate } = useMutation({
+    mutationFn: createCategory,
+    onSuccess: (newCategory) => {
       console.log("Category created:", newCategory);
       resetForm();
       navigate("/listCategories");
-    } catch (error) {
-      console.error("Failed to create category:", error);
-    }
-  };
+    },
+  });
 
   return (
     <div className="main-block">
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          mutate(formData);
+        }}
+      >
         <div className="form-group">
           <label htmlFor="categoryName">Category Name:</label>
           <input
