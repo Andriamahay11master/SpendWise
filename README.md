@@ -8,10 +8,11 @@ SpendWise is a full-stack expense-tracking application built to help users monit
 - **Transactions**: browse expenses grouped by today, yesterday, this month, or older; filter by date.
 - **Add expense**: enter an amount, choose a category, set a date, and add a note.
 - **Categories**: review category budgets and manage category creation from the UI.
-- **Analytics**: dedicated analytics section ready for chart-based insights.
+- **Analytics**: dedicated analytics section with category insights and chart-ready data.
 - **Profile**: profile area accessible from the header and bottom navigation.
 - **Responsive layout**: shared navigation, forms, cards, and Sass styling designed for smaller screens.
 - **Backend API**: Express routes for expenses and categories connected to MongoDB.
+- **Data fetching**: TanStack Query used for async data loading, caching, and invalidation.
 
 ## Tech stack
 
@@ -20,9 +21,9 @@ SpendWise is a full-stack expense-tracking application built to help users monit
 - React 19 and TypeScript
 - Vite
 - React Router
+- TanStack Query
 - Sass modules and shared Sass variables
 - React Icons
-- React Hook Form and TanStack Query
 - Recharts for charting
 
 ### Backend
@@ -36,15 +37,18 @@ SpendWise is a full-stack expense-tracking application built to help users monit
 
 ```text
 SpendWise/
-├── src/                 # React app source
-│   ├── components/      # UI components
+├── src/
+│   ├── components/      # UI components (dashboard, expenses, analytics, etc.)
 │   ├── pages/           # Route layouts and page shells
+│   ├── services/        # API and business logic helpers
 │   ├── styles/          # Sass styles
+│   ├── utils/           # Helper utilities
 │   ├── App.tsx          # App routes
-│   └── main.tsx         # Frontend bootstrap
-├── server/              # Express + MongoDB backend
+│   ├── main.tsx         # Frontend bootstrap and QueryClientProvider
+│   └── ...
+├── server/
 │   ├── models/          # Expense and Category schemas
-│   ├── index.ts         # API server entry point
+│   ├── index.ts         # Express API entry point
 │   └── package.json     # Server dependencies and scripts
 ├── public/              # Static assets
 ├── package.json         # Frontend scripts and dependencies
@@ -52,7 +56,8 @@ SpendWise/
 ├── README.md            # Project documentation
 ├── TESTING_GUIDE.md     # Testing guide
 ├── TESTING_CHEATSHEET.md # Quick testing reference
-└── eslint.config.js    # ESLint configuration
+├── eslint.config.js    # ESLint configuration
+└── tsconfig*.json      # TypeScript configuration files
 ```
 
 ## Getting started
@@ -106,6 +111,16 @@ npm run dev
 
 The frontend will usually run on `http://localhost:5173`, and the API will run on `http://localhost:5000`.
 
+### 5) TanStack Query usage
+
+The app uses TanStack Query for asynchronous data flow:
+
+- `useQuery` to load expenses and categories
+- `useMutation` to save a new expense
+- invalidation to refresh the list after a successful save
+
+This keeps the UI responsive and avoids manual fetch wiring across components.
+
 ## Available scripts
 
 ### Frontend
@@ -135,6 +150,7 @@ The server exposes CRUD-style routes for expense and category management.
 - `GET /api/transactions/last` — fetch the last 3 expenses
 - `GET /api/expenses/total/month` — get total spending for the current month
 - `GET /api/expenses/total/week` — get total spending for the current week
+- `GET /api/categories/:name/expenses/count` — get the number of expenses for one category
 - `POST /api/expenses` — create a new expense
 - `DELETE /api/expenses/:id` — delete an expense
 
@@ -190,8 +206,8 @@ npm run test:coverage
 
 ## Current status
 
-The frontend is actively built around a responsive spending dashboard, while the server handles persisted expense and category records in MongoDB. Some screens still work with local sample data during UI development, but the backend is in place for real data storage and API-driven flows.
+The app is now structured around a React frontend connected to an Express + MongoDB backend, with TanStack Query managing data loading and mutation lifecycle. The dashboard and transaction flows are set up for API-driven state, while some views can still be extended with additional filtering and richer analytics logic.
 
 ## Development notes
 
-When adding a new view, register its route in `src/App.tsx`, reuse the shared layout components in `src/pages`, and keep page-specific styles near their owning component. Run `npm run lint` and `npm run build` before opening a pull request, and make sure the backend is running when testing API-connected features.
+When adding a new view, register its route in `src/App.tsx`, reuse the shared layout components in `src/pages`, and keep page-specific styles near their owning component. Prefer TanStack Query for async data loading and cache invalidation rather than wiring fetch calls directly inside components. Run `npm run lint` and `npm run build` before opening a pull request, and make sure the backend is running when testing API-connected features.
