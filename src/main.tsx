@@ -1,4 +1,5 @@
 import { StrictMode } from "react";
+import type { ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import {
   createRootRoute,
@@ -25,115 +26,79 @@ const rootRoute = createRootRoute({
   component: App,
 });
 
-const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: () => (
-    <MainPage>
-      <Dashboard />
-    </MainPage>
-  ),
-});
+const createMainPageRoute = (path: string, page: ReactNode) =>
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path,
+    component: () => <MainPage>{page}</MainPage>,
+  });
 
-const analyticsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/analytics",
-  component: () => (
-    <MainPage>
-      <Analytics />
-    </MainPage>
-  ),
-});
+const createGabaritRoute = (
+  path: string,
+  title: string,
+  icon: ReactNode,
+  page: ReactNode,
+) =>
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path,
+    component: () => (
+      <MainPageGabarit icon={icon} title={title}>
+        {page}
+      </MainPageGabarit>
+    ),
+  });
 
-const reportRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/report",
-  component: () => (
-    <MainPage>
-      <Report />
-    </MainPage>
-  ),
-});
+const createPlaceholderRoute = (path: string, label: string) =>
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path,
+    component: () => <div>{label} coming soon</div>,
+  });
 
-const addExpenseRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/addExpense",
-  component: () => (
-    <MainPage>
-      <ExpensesForm />
-    </MainPage>
-  ),
-});
+const indexRoute = createMainPageRoute("/", <Dashboard />);
+const analyticsRoute = createMainPageRoute("/analytics", <Analytics />);
+const reportRoute = createMainPageRoute("/report", <Report />);
+const addExpenseRoute = createMainPageRoute("/addExpense", <ExpensesForm />);
+const categoriesRoute = createMainPageRoute(
+  "/listCategories",
+  <CategoryList />,
+);
+const profileRoute = createMainPageRoute(
+  "/profile",
+  <Profile image="/user.png" name="Name user" email="user@email.com" />,
+);
 
-const categoriesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/listCategories",
-  component: () => (
-    <MainPage>
-      <CategoryList />
-    </MainPage>
-  ),
-});
+const addCategoryRoute = createGabaritRoute(
+  "/addCategory",
+  "Add Category",
+  <FaAngleLeft size={30} />,
+  <CategoryForm />,
+);
+const transactionsRoute = createGabaritRoute(
+  "/transactions",
+  "Transactions",
+  <GoArrowLeft size={30} />,
+  <ExpensesList />,
+);
 
-const addCategoryRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/addCategory",
-  component: () => (
-    <MainPageGabarit icon={<FaAngleLeft size={30} />} title="Add Category">
-      <CategoryForm />
-    </MainPageGabarit>
-  ),
-});
-
-const profileRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/profile",
-  component: () => (
-    <MainPage>
-      <Profile image="/user.png" name="Name user" email="user@email.com" />
-    </MainPage>
-  ),
-});
-
-const transactionsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/transactions",
-  component: () => (
-    <MainPageGabarit icon={<GoArrowLeft size={30} />} title="Transactions">
-      <ExpensesList />
-    </MainPageGabarit>
-  ),
-});
-
-const expenseDetailRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/expenses/$id",
-  component: () => <div>Expense detail coming soon</div>,
-});
-
-const categoryReportRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/categoryReport",
-  component: () => <div>Category report coming soon</div>,
-});
-
-const predictionRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/prediction",
-  component: () => <div>Prediction page coming soon</div>,
-});
-
-const profileInfoRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/profil/info/$name",
-  component: () => <div>Profile info coming soon</div>,
-});
-
-const profilePasswordRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/profil/password/$name",
-  component: () => <div>Profile password coming soon</div>,
-});
+const expenseDetailRoute = createPlaceholderRoute(
+  "/expenses/$id",
+  "Expense detail",
+);
+const categoryReportRoute = createPlaceholderRoute(
+  "/categoryReport",
+  "Category report",
+);
+const predictionRoute = createPlaceholderRoute("/prediction", "Prediction");
+const profileInfoRoute = createPlaceholderRoute(
+  "/profil/info/$name",
+  "Profile info",
+);
+const profilePasswordRoute = createPlaceholderRoute(
+  "/profil/password/$name",
+  "Profile password",
+);
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
