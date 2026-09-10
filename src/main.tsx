@@ -4,10 +4,10 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
-  Outlet,
   RouterProvider,
 } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import App from "./App";
 import MainPage from "./pages/MainPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Analytics from "./components/Analytics/Analytics";
@@ -22,7 +22,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
 
 const rootRoute = createRootRoute({
-  component: () => <Outlet />,
+  component: App,
 });
 
 const indexRoute = createRoute({
