@@ -1,6 +1,6 @@
 import { IoAddCircle } from "react-icons/io5";
 import CategoryCard from "./CategoryCard";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 import type { CategoryType } from "../../type/CategoryType";
 import useCategoryIcon from "../../context/useCategoryIcon";
 import { useQuery } from "@tanstack/react-query";

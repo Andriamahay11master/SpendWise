@@ -1,5 +1,5 @@
 import React, { type ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 interface ExpensesIconProps {
   color?: string;
 }
@@ -25,7 +25,7 @@ const ExpensesCard = ({
 }: ExpensesCardProps) => {
   const date = new Date(dateExpense);
   return (
-    <Link to={`/expenses/${id}`} className="expenses-card">
+    <Link to="/expenses/$id" params={{ id }} className="expenses-card">
       <div className="expenses-card-icon">
         {React.cloneElement(icon, { color: colorCategory })}
       </div>

@@ -4,7 +4,7 @@ import { LuMoon } from "react-icons/lu";
 import { MdOutlineLanguage } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { CiLock } from "react-icons/ci";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 interface ProfileProps {
   image: string;
   name: string;
@@ -31,7 +31,11 @@ const Profile = ({ image, name, email }: ProfileProps) => {
       <div className="profil-bottom">
         <div className="profil-setting">
           <h3 className="title-h3">personal information</h3>
-          <Link to={`/profil/info/${name}`} className="profil-setting-item">
+          <Link
+            to="/profil/info/$name"
+            params={{ name }}
+            className="profil-setting-item"
+          >
             <div className="profil-col">
               <div className="setting-icon user">
                 <FaRegUser />
@@ -45,7 +49,11 @@ const Profile = ({ image, name, email }: ProfileProps) => {
         </div>
         <div className="profil-setting">
           <h3 className="title-h3">security</h3>
-          <Link to={`/profil/password/${name}`} className="profil-setting-item">
+          <Link
+            to="/profil/password/$name"
+            params={{ name }}
+            className="profil-setting-item"
+          >
             <div className="profil-col">
               <div className="setting-icon security">
                 <CiLock />

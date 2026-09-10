@@ -1,7 +1,7 @@
 import DashboardCard from "./DashboardCard";
 import { FaMoneyBills } from "react-icons/fa6";
 import CategoryProgressBarCard from "../Category/CategoryProgressBarCard";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import ExpensesCard from "../Expenses/ExpensesCard";
 import type { ExpenseType } from "../../type/ExpenseType";
 import type { CategoryType } from "../../type/CategoryType";

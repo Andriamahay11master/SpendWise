@@ -7,7 +7,7 @@ import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { TiShoppingCart } from "react-icons/ti";
 import { CiMobile4 } from "react-icons/ci";
 import { CiPlane } from "react-icons/ci";
-import { useNavigate } from "react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 
 const createCategory = async (categoryData: {
@@ -118,7 +118,7 @@ const CategoryForm = () => {
     onSuccess: (newCategory) => {
       console.log("Category created:", newCategory);
       resetForm();
-      navigate("/listCategories");
+      navigate({ to: "/listCategories" });
     },
   });
 

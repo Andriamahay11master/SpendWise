@@ -1,5 +1,5 @@
 import { GoArrowRight } from "react-icons/go";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import React, { type SubmitEvent } from "react";
 import type { CategoryType } from "../../type/CategoryType";
@@ -41,7 +41,7 @@ const ExpensesForm = () => {
       await queryClient.invalidateQueries({ queryKey: ["expenses"] });
       await queryClient.invalidateQueries({ queryKey: ["categories"] });
       resetForm();
-      navigate("/transactions");
+      navigate({ to: "/transactions" });
     },
   });
 
