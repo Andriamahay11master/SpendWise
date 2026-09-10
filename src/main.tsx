@@ -105,6 +105,36 @@ const transactionsRoute = createRoute({
   ),
 });
 
+const expenseDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/expenses/$id",
+  component: () => <div>Expense detail coming soon</div>,
+});
+
+const categoryReportRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/categoryReport",
+  component: () => <div>Category report coming soon</div>,
+});
+
+const predictionRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/prediction",
+  component: () => <div>Prediction page coming soon</div>,
+});
+
+const profileInfoRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/profil/info/$name",
+  component: () => <div>Profile info coming soon</div>,
+});
+
+const profilePasswordRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/profil/password/$name",
+  component: () => <div>Profile password coming soon</div>,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   analyticsRoute,
@@ -114,6 +144,11 @@ const routeTree = rootRoute.addChildren([
   addCategoryRoute,
   profileRoute,
   transactionsRoute,
+  expenseDetailRoute,
+  categoryReportRoute,
+  predictionRoute,
+  profileInfoRoute,
+  profilePasswordRoute,
 ]);
 
 const queryClient = new QueryClient();

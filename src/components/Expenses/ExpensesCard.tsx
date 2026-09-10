@@ -25,7 +25,7 @@ const ExpensesCard = ({
 }: ExpensesCardProps) => {
   const date = new Date(dateExpense);
   return (
-    <Link to={{ to: `/expenses/${id}` }} className="expenses-card">
+    <Link to="/expenses/$id" params={{ id }} className="expenses-card">
       <div className="expenses-card-icon">
         {React.cloneElement(icon, { color: colorCategory })}
       </div>
