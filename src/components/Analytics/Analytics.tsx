@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { PiHeadCircuit } from "react-icons/pi";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 import {
   PieChart,
   Pie,

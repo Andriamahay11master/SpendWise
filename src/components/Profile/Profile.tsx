@@ -4,7 +4,7 @@ import { LuMoon } from "react-icons/lu";
 import { MdOutlineLanguage } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { CiLock } from "react-icons/ci";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 interface ProfileProps {
   image: string;
   name: string;

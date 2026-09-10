@@ -4,7 +4,7 @@ import { IoHome } from "react-icons/io5";
 import { IoAnalytics } from "react-icons/io5";
 import { MdOutlineCategory } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 
 const Menu = () => {
   const menuItems = [

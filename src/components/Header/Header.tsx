@@ -1,5 +1,5 @@
 import { GiTakeMyMoney } from "react-icons/gi";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 
 interface HeaderProps {
   icon?: React.ReactNode;
