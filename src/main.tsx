@@ -26,15 +26,18 @@ const rootRoute = createRootRoute({
   component: App,
 });
 
-const createMainPageRoute = (path: string, page: ReactNode) =>
+const createMainPageRoute = <const TPath extends string>(
+  path: TPath,
+  page: ReactNode,
+) =>
   createRoute({
     getParentRoute: () => rootRoute,
     path,
     component: () => <MainPage>{page}</MainPage>,
   });
 
-const createGabaritRoute = (
-  path: string,
+const createGabaritRoute = <const TPath extends string>(
+  path: TPath,
   title: string,
   icon: ReactNode,
   page: ReactNode,
@@ -49,7 +52,10 @@ const createGabaritRoute = (
     ),
   });
 
-const createPlaceholderRoute = (path: string, label: string) =>
+const createPlaceholderRoute = <const TPath extends string>(
+  path: TPath,
+  label: string,
+) =>
   createRoute({
     getParentRoute: () => rootRoute,
     path,
@@ -82,10 +88,11 @@ const transactionsRoute = createGabaritRoute(
   <ExpensesList />,
 );
 
-const expenseDetailRoute = createPlaceholderRoute(
-  "/expenses/$id",
-  "Expense detail",
-);
+const expenseDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/expenses/$id",
+  component: () => <div>Expense detail coming soon</div>,
+});
 const categoryReportRoute = createPlaceholderRoute(
   "/categoryReport",
   "Category report",
