@@ -7,6 +7,7 @@ import type { ExpenseType } from "../../type/ExpenseType";
 import type { CategoryType } from "../../type/CategoryType";
 import useCategoryIcon from "../../context/useCategoryIcon";
 import { useQuery } from "@tanstack/react-query";
+import useCurrency from "../../context/useCurrency";
 
 // Fetch last transactions from the API
 const fetchLastTransactions = async () => {
@@ -42,6 +43,7 @@ const fetchBudget = async () => {
 
 const Dashboard = () => {
   const iconMap = useCategoryIcon();
+  const currency = useCurrency();
   const { data: lastTransactions } = useQuery({
     queryKey: ["lastTransactions"],
     queryFn: fetchLastTransactions,
@@ -62,16 +64,16 @@ const Dashboard = () => {
     queryKey: ["budget"],
     queryFn: fetchBudget,
   });
+
   const totalWeekSpending = totalWeekSpendingData?.totalExpenses || 0;
   const totalMonthSpending = totalMonthSpendingData?.totalExpenses || 0;
   const limitMonthlyBudget = Number(budgetMonthly?.budget ?? 0);
-  const monthlyBudgetCurrency = budgetMonthly?.currency ?? "$";
 
   const kpiData = [
     {
       typeCard: 1,
       title: "Total Balance",
-      currency: monthlyBudgetCurrency,
+      currency: currency,
       icon: <FaMoneyBills />,
       value: totalWeekSpending,
       desc: "weekly growth",
@@ -80,7 +82,7 @@ const Dashboard = () => {
     {
       typeCard: 2,
       title: "Monthly Spending",
-      currency: monthlyBudgetCurrency,
+      currency: currency,
       value: totalMonthSpending,
       desc: "on track to stay within budget",
       limit: limitMonthlyBudget,
