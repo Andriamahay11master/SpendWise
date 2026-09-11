@@ -5,6 +5,7 @@ export type ExpenseFormData = {
   colorCategory: string;
   dateE: string;
   notes: string;
+  currency: string;
 };
 
 const API_URL = "http://localhost:5000/api";
@@ -71,9 +72,10 @@ export const saveExpense = async (formData: ExpenseFormData) => {
       notes: formData.notes,
       icon: formData.iconCategory,
       colorCategory: formData.colorCategory,
+      currency: formData.currency,
     }),
   });
-
+  console.log("ici la réponse", formData.currency);
   if (!response.ok) {
     throw new Error("Failed to save expense");
   }

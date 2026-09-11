@@ -1,6 +1,6 @@
 import React from "react";
 import currencies from "../../utils/currency";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
 interface BudgetSettings {
@@ -31,6 +31,7 @@ const addBudget = async (budgetSettings: BudgetSettings) => {
 
 const Budget = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [settings, setSettings] = React.useState<BudgetSettings>({
     currencyCode: "USD",
     currency: "$",
@@ -52,6 +53,8 @@ const Budget = () => {
   const { mutate } = useMutation({
     mutationFn: addBudget,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currency"] });
+      queryClient.invalidateQueries({ queryKey: ["budget"] });
       resetForm();
       navigate({ to: "/" });
     },

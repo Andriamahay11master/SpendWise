@@ -10,8 +10,13 @@ import { useQuery } from "@tanstack/react-query";
 import useCurrency from "../../context/useCurrency";
 
 // Fetch last transactions from the API
-const fetchLastTransactions = async () => {
+const fetchLastTransactions = async (): Promise<ExpenseType[]> => {
   const response = await fetch("http://localhost:5000/api/transactions/last");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch last transactions");
+  }
+
   return await response.json();
 };
 
@@ -44,7 +49,7 @@ const fetchBudget = async () => {
 const Dashboard = () => {
   const iconMap = useCategoryIcon();
   const currency = useCurrency();
-  const { data: lastTransactions } = useQuery({
+  const { data: lastTransactions = [], error: lastTransactionsError } = useQuery({
     queryKey: ["lastTransactions"],
     queryFn: fetchLastTransactions,
   });
@@ -89,7 +94,9 @@ const Dashboard = () => {
       color: "#24d0fb",
     },
   ];
-
+  if (lastTransactionsError) {
+    console.error("Failed to load last transactions:", lastTransactionsError);
+  }
   return (
     <div className="main-block">
       {kpiData.map((data, index) => (

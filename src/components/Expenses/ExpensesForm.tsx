@@ -8,6 +8,7 @@ import useCategoryIcon from "../../context/useCategoryIcon";
 import type { ExpenseFormData } from "../../services/expenseService";
 import { saveExpense } from "../../services/expenseService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useCurrency from "../../context/useCurrency";
 
 const fetchCategories = async (): Promise<CategoryType[]> => {
   const response = await fetch("http://localhost:5000/api/categories");
@@ -20,6 +21,7 @@ const fetchCategories = async (): Promise<CategoryType[]> => {
 };
 
 const ExpensesForm = () => {
+  const currency = useCurrency();
   const iconMap = useCategoryIcon();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -30,7 +32,9 @@ const ExpensesForm = () => {
     colorCategory: "",
     dateE: "",
     notes: "",
+    currency: currency,
   });
+
   const { data: dataCategory = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
@@ -39,6 +43,7 @@ const ExpensesForm = () => {
     mutationFn: (data: ExpenseFormData) => saveExpense(data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      await queryClient.invalidateQueries({ queryKey: ["lastTransactions"] });
       await queryClient.invalidateQueries({ queryKey: ["categories"] });
       resetForm();
       navigate({ to: "/transactions" });
@@ -73,6 +78,7 @@ const ExpensesForm = () => {
       colorCategory: "",
       dateE: "",
       notes: "",
+      currency: currency,
     });
   };
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
@@ -116,6 +122,12 @@ const ExpensesForm = () => {
               id="colorCategory"
               value={formData.colorCategory}
               onChange={handleChange}
+            />
+            <input
+              type="hidden"
+              name="currency"
+              id="currency"
+              value={formData.currency}
             />
             <Link to="/listCategories">View all</Link>
           </div>
