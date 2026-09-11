@@ -19,6 +19,9 @@ const DashboardCard = ({
   color,
   limit,
 }: DashboardCardProps) => {
+  const safeLimit = Number(limit ?? 0);
+  const progress = safeLimit > 0 ? Math.min((value / safeLimit) * 100, 100) : 0;
+
   return (
     <div className="dashboard-card">
       {icon && <div className="dashboard-icon">{icon}</div>}
@@ -27,21 +30,19 @@ const DashboardCard = ({
       </div>
       <div className="dashboard-bottom">
         <p className="dashboard-value" style={{ color: color }}>
-          {currency}
-          {value.toFixed(2)}
+          {currency} {value.toFixed(2)}
         </p>
         {typeCard === 2 ? (
           <div className="dashboard-progress-info">
             <p className="dashboard-limit">
               limit&nbsp;:&nbsp;
-              {currency}
-              {limit?.toFixed(2)}
+              {currency} {safeLimit.toFixed(2)}
             </p>
             <div className="dashboard-progress">
               <div
                 className="dashboard-progress-bar"
                 style={{
-                  width: `${(value / limit!) * 100}%`,
+                  width: `${progress}%`,
                   backgroundColor: color,
                 }}
               ></div>

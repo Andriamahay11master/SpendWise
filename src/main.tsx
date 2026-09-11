@@ -19,6 +19,7 @@ import MainPageGabarit from "./pages/MainPageGabarit";
 import ExpensesList from "./components/Expenses/ExpensesList";
 import CategoryForm from "./components/Category/CategoryForm";
 import Report from "./components/Report/Report";
+import Budget from "./components/Budget/Budget";
 import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
 
@@ -65,6 +66,7 @@ const createPlaceholderRoute = <const TPath extends string>(
 const indexRoute = createMainPageRoute("/", <Dashboard />);
 const analyticsRoute = createMainPageRoute("/analytics", <Analytics />);
 const reportRoute = createMainPageRoute("/report", <Report />);
+const budgetRoute = createMainPageRoute("/budget", <Budget />);
 const addExpenseRoute = createMainPageRoute("/addExpense", <ExpensesForm />);
 const categoriesRoute = createMainPageRoute(
   "/listCategories",
@@ -111,6 +113,7 @@ const routeTree = rootRoute.addChildren([
   indexRoute,
   analyticsRoute,
   reportRoute,
+  budgetRoute,
   addExpenseRoute,
   categoriesRoute,
   addCategoryRoute,

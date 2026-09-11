@@ -4,6 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { Expense } from "./models/Expense";
 import { Category } from "./models/Category";
+import { Budget } from "./models/Budget";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,15 +13,50 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 // **********Routes expenses API************
+
+// Save budget
+app.post("/api/budget", async (request, response) => {
+  try {
+    const { currencyCode, currency, budget } = request.body;
+    const budgetData = await Budget.create({
+      currencyCode,
+      currency,
+      budget,
+      date: new Date(),
+      libelle:
+        "Budget" +
+        " " +
+        new Date().toLocaleString("en-US", { month: "long" }) +
+        " " +
+        new Date().getFullYear(),
+    });
+    response.status(201).json(budgetData);
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
+//Get Current Budget
+app.get("/api/budget/current", async (_request, response) => {
+  try {
+    const currentBudget = await Budget.findOne().sort({ date: -1 });
+    response.json(currentBudget);
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
 // Get all expenses
 app.get("/api/expenses", async (_request, response) => {
-  const expenses = await Expense.find().sort({ date: -1 });
+  const expenses = await Expense.find().sort({ date: -1, createdAt: -1 });
   response.json(expenses);
 });
 
 // Get last 3 expenses
 app.get("/api/transactions/last", async (_request, response) => {
-  const lastTransactions = await Expense.find().sort({ date: -1 }).limit(3);
+  const lastTransactions = await Expense.find()
+    .sort({ date: -1, createdAt: -1 })
+    .limit(3);
   response.json(lastTransactions);
 });
 
@@ -77,7 +113,8 @@ app.get("/api/categories/:name/expenses/count", async (request, response) => {
 // Create a new expense
 app.post("/api/expenses", async (request, response) => {
   try {
-    const { amount, category, date, notes, icon, colorCategory } = request.body;
+    const { amount, category, date, notes, icon, colorCategory, currency } =
+      request.body;
 
     const expense = await Expense.create({
       amount: Number(amount),
@@ -86,6 +123,7 @@ app.post("/api/expenses", async (request, response) => {
       notes,
       icon,
       colorCategory,
+      currency,
     });
 
     response.status(201).json(expense);
