@@ -4,6 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { Expense } from "./models/Expense";
 import { Category } from "./models/Category";
+import { Budget } from "./models/Budget";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,6 +13,33 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 // **********Routes expenses API************
+
+// Save budget
+app.post("/api/budget", async (request, response) => {
+  try {
+    const { currency, budget } = request.body;
+    const budgetData = await Budget.create({
+      currency,
+      budget,
+      date: new Date(),
+      libelle: "Budget" + " " + new Date().toLocaleString(),
+    });
+    response.status(201).json(budgetData);
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
+//Get Current Budget
+app.get("/api/budget/current", async (_request, response) => {
+  try {
+    const currentBudget = await Budget.findOne().sort({ date: -1 });
+    response.json(currentBudget);
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
 // Get all expenses
 app.get("/api/expenses", async (_request, response) => {
   const expenses = await Expense.find().sort({ date: -1 });

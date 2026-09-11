@@ -13,8 +13,18 @@ const budgetSchema = new mongoose.Schema(
       min: 100,
       default: 100,
     },
+    date: {
+      type: Date,
+      required: true,
+      default: Date.now,
+    },
+    libelle: {
+      type: String,
+      required: true,
+      default: "Budget" + " " + new Date().toLocaleString(), // eg: Budget September 2026
+    },
   },
 
   { timestamps: true },
 );
-export const Category = mongoose.model("Budget", budgetSchema);
+export const Budget = mongoose.model("Budget", budgetSchema);
