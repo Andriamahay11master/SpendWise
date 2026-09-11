@@ -113,7 +113,8 @@ app.get("/api/categories/:name/expenses/count", async (request, response) => {
 // Create a new expense
 app.post("/api/expenses", async (request, response) => {
   try {
-    const { amount, category, date, notes, icon, colorCategory } = request.body;
+    const { amount, category, date, notes, icon, colorCategory, currency } =
+      request.body;
 
     const expense = await Expense.create({
       amount: Number(amount),
@@ -122,6 +123,7 @@ app.post("/api/expenses", async (request, response) => {
       notes,
       icon,
       colorCategory,
+      currency,
     });
 
     response.status(201).json(expense);
