@@ -30,15 +30,13 @@ const DashboardCard = ({
       </div>
       <div className="dashboard-bottom">
         <p className="dashboard-value" style={{ color: color }}>
-          {currency}
-          {value.toFixed(2)}
+          {currency} {value.toFixed(2)}
         </p>
         {typeCard === 2 ? (
           <div className="dashboard-progress-info">
             <p className="dashboard-limit">
               limit&nbsp;:&nbsp;
-              {currency}
-              {safeLimit.toFixed(2)}
+              {currency} {safeLimit.toFixed(2)}
             </p>
             <div className="dashboard-progress">
               <div
