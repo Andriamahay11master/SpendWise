@@ -1,14 +1,6 @@
 import React from "react";
-
+import currencies from "../../utils/currency";
 const budgetStorageKey = "spendwise-budget-settings";
-
-const currencies = [
-  { code: "USD", label: "US Dollar", symbol: "$" },
-  { code: "EUR", label: "Euro", symbol: "€" },
-  { code: "GBP", label: "British Pound", symbol: "£" },
-  { code: "JPY", label: "Japanese Yen", symbol: "¥" },
-  { code: "CAD", label: "Canadian Dollar", symbol: "CA$" },
-];
 
 interface BudgetSettings {
   currency: string;
