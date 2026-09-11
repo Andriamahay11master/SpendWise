@@ -128,6 +128,7 @@ const ExpensesForm = () => {
               name="currency"
               id="currency"
               value={formData.currency}
+              onChange={handleChange}
             />
             <Link to="/listCategories">View all</Link>
           </div>

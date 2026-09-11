@@ -75,7 +75,7 @@ export const saveExpense = async (formData: ExpenseFormData) => {
       currency: formData.currency,
     }),
   });
-  console.log("ici la réponse", formData.currency);
+
   if (!response.ok) {
     throw new Error("Failed to save expense");
   }

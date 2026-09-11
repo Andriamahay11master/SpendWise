@@ -17,8 +17,9 @@ app.use(express.json());
 // Save budget
 app.post("/api/budget", async (request, response) => {
   try {
-    const { currency, budget } = request.body;
+    const { currencyCode, currency, budget } = request.body;
     const budgetData = await Budget.create({
+      currencyCode,
       currency,
       budget,
       date: new Date(),

@@ -39,7 +39,7 @@ const Budget = () => {
   });
 
   const selectedCurrency = currencies.find(
-    (currency) => currency.symbol === settings.currency,
+    (currency) => currency.code === settings.currencyCode,
   );
 
   const resetForm = () => {
@@ -52,9 +52,9 @@ const Budget = () => {
 
   const { mutate } = useMutation({
     mutationFn: addBudget,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currency"] });
-      queryClient.invalidateQueries({ queryKey: ["budget"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["currency"] });
+      await queryClient.invalidateQueries({ queryKey: ["budget"] });
       resetForm();
       navigate({ to: "/" });
     },
@@ -68,6 +68,20 @@ const Budget = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = event.target;
+
+    if (name === "currencyCode") {
+      const selectedCurrency = currencies.find(
+        (currency) => currency.code === value,
+      );
+
+      setSettings((currentSettings) => ({
+        ...currentSettings,
+        currency: selectedCurrency?.symbol ?? currentSettings.currency,
+        currencyCode: selectedCurrency?.code ?? currentSettings.currencyCode,
+      }));
+      return;
+    }
+
     setSettings((currentSettings) => ({
       ...currentSettings,
       [name]: name === "monthlyBudget" ? Number(value) : value,
@@ -85,21 +99,16 @@ const Budget = () => {
           <label htmlFor="currency">Currency</label>
           <select
             id="currency"
-            name="currency"
-            value={settings.currency}
+            name="currencyCode"
+            value={settings.currencyCode}
             onChange={handleChange}
           >
             {currencies.map((currency) => (
-              <option key={currency.code} value={currency.symbol}>
+              <option key={currency.code} value={currency.code}>
                 {currency.code} - {currency.label} ({currency.symbol})
               </option>
             ))}
           </select>
-          <input
-            type="hidden"
-            name="currencyCode"
-            value={selectedCurrency?.code}
-          />
         </div>
         <div className="budget-settings__field">
           <label htmlFor="monthlyBudget">Monthly budget</label>

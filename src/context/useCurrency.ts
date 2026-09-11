@@ -11,7 +11,7 @@ const useCurrency = () => {
     queryKey: ["currency"],
     queryFn: fetchCurrency,
   });
-  return dataCurrency?.currency || "$";
+  return dataCurrency?.currency;
 };
 
 export default useCurrency;
