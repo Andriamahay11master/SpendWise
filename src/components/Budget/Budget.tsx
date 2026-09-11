@@ -1,57 +1,62 @@
 import React from "react";
 import currencies from "../../utils/currency";
-const budgetStorageKey = "spendwise-budget-settings";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 
 interface BudgetSettings {
   currency: string;
   monthlyBudget: number;
 }
 
-const defaultSettings: BudgetSettings = {
-  currency: "USD",
-  monthlyBudget: 0,
-};
+const addBudget = async (budgetSettings: BudgetSettings) => {
+  const response = await fetch("http://localhost:5000/api/budget", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      currency: budgetSettings.currency,
+      budget: budgetSettings.monthlyBudget,
+    }),
+  });
 
-const getStoredSettings = (): BudgetSettings => {
-  try {
-    const storedSettings = localStorage.getItem(budgetStorageKey);
-    if (!storedSettings) return defaultSettings;
-
-    const parsedSettings = JSON.parse(
-      storedSettings,
-    ) as Partial<BudgetSettings>;
-    const currency = currencies.some(
-      (item) => item.code === parsedSettings.currency,
-    )
-      ? parsedSettings.currency!
-      : defaultSettings.currency;
-    const monthlyBudget = Number(parsedSettings.monthlyBudget);
-
-    return {
-      currency,
-      monthlyBudget:
-        Number.isFinite(monthlyBudget) && monthlyBudget >= 0
-          ? monthlyBudget
-          : defaultSettings.monthlyBudget,
-    };
-  } catch {
-    return defaultSettings;
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
   }
+  return await response.json();
 };
 
 const Budget = () => {
-  const [settings, setSettings] =
-    React.useState<BudgetSettings>(getStoredSettings);
+  const navigate = useNavigate();
+  const [settings, setSettings] = React.useState<BudgetSettings>({
+    currency: "USD",
+    monthlyBudget: 0,
+  });
   const [isSaved, setIsSaved] = React.useState(false);
 
   const selectedCurrency = currencies.find(
     (currency) => currency.code === settings.currency,
   );
 
+  const resetForm = () => {
+    setSettings({
+      currency: "USD",
+      monthlyBudget: 0,
+    });
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: addBudget,
+    onSuccess: () => {
+      resetForm();
+      navigate({ to: "/transactions" });
+      setIsSaved(true);
+    },
+  });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem(budgetStorageKey, JSON.stringify(settings));
-    setIsSaved(true);
+    mutate(settings);
   };
 
   const handleChange = (
