@@ -17,10 +17,13 @@
       background: rgba($dark, 0.1);
       color: $light-gray;
       font: inherit;
-
       &:focus {
         outline: none;
         border-color: $primary;
+      }
+      option {
+        color: $light-gray;
+        background-color: $dark;
       }
     }
   }

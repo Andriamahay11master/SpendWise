@@ -33,7 +33,6 @@ const Budget = () => {
     currency: "USD",
     monthlyBudget: 0,
   });
-  const [isSaved, setIsSaved] = React.useState(false);
 
   const selectedCurrency = currencies.find(
     (currency) => currency.code === settings.currency,
@@ -50,8 +49,7 @@ const Budget = () => {
     mutationFn: addBudget,
     onSuccess: () => {
       resetForm();
-      navigate({ to: "/transactions" });
-      setIsSaved(true);
+      navigate({ to: "/" });
     },
   });
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,7 +61,6 @@ const Budget = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = event.target;
-    setIsSaved(false);
     setSettings((currentSettings) => ({
       ...currentSettings,
       [name]: name === "monthlyBudget" ? Number(value) : value,
@@ -101,7 +98,7 @@ const Budget = () => {
               name="monthlyBudget"
               type="number"
               min="0"
-              step="0.01"
+              step="10"
               value={settings.monthlyBudget}
               onChange={handleChange}
               required
@@ -111,11 +108,6 @@ const Budget = () => {
         <button type="submit" className="btn btn-primary">
           Save budget settings
         </button>
-        {isSaved && (
-          <p className="budget-settings__status" role="status">
-            Budget settings saved.
-          </p>
-        )}
       </form>
     </div>
   );

@@ -21,6 +21,6 @@ const currencies = [
   { code: "PLN", label: "Polish Zloty", symbol: "zł" },
   { code: "MGA", label: "Malagasy Ariary", symbol: "Ar" },
   { code: "CLP", label: "Chilean Peso", symbol: "Ch$" },
-  { code: "MRU", label: "Mauritian Rupee", symbol: "MRU" },
+  { code: "MUR", label: "Mauritian Rupee", symbol: "Rs" },
 ];
 export default currencies;

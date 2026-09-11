@@ -21,7 +21,8 @@ const budgetSchema = new mongoose.Schema(
     libelle: {
       type: String,
       required: true,
-      default: "Budget" + " " + new Date().toLocaleString(), // eg: Budget September 2026
+      default:
+        "Budget" + " " + new Date().getMonth() + " " + new Date().getFullYear(), // eg: Budget September 2026
     },
   },
 

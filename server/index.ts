@@ -22,7 +22,12 @@ app.post("/api/budget", async (request, response) => {
       currency,
       budget,
       date: new Date(),
-      libelle: "Budget" + " " + new Date().toLocaleString(),
+      libelle:
+        "Budget" +
+        " " +
+        new Date().toLocaleString("en-US", { month: "long" }) +
+        " " +
+        new Date().getFullYear(),
     });
     response.status(201).json(budgetData);
   } catch {
