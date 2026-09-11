@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
 interface BudgetSettings {
+  currencyCode: string;
   currency: string;
   monthlyBudget: number;
 }
@@ -15,6 +16,7 @@ const addBudget = async (budgetSettings: BudgetSettings) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      currencyCode: budgetSettings.currencyCode,
       currency: budgetSettings.currency,
       budget: budgetSettings.monthlyBudget,
     }),
@@ -30,17 +32,19 @@ const addBudget = async (budgetSettings: BudgetSettings) => {
 const Budget = () => {
   const navigate = useNavigate();
   const [settings, setSettings] = React.useState<BudgetSettings>({
-    currency: "USD",
+    currencyCode: "USD",
+    currency: "$",
     monthlyBudget: 0,
   });
 
   const selectedCurrency = currencies.find(
-    (currency) => currency.code === settings.currency,
+    (currency) => currency.symbol === settings.currency,
   );
 
   const resetForm = () => {
     setSettings({
-      currency: "USD",
+      currencyCode: "USD",
+      currency: "$",
       monthlyBudget: 0,
     });
   };
@@ -83,11 +87,16 @@ const Budget = () => {
             onChange={handleChange}
           >
             {currencies.map((currency) => (
-              <option key={currency.code} value={currency.code}>
+              <option key={currency.code} value={currency.symbol}>
                 {currency.code} - {currency.label} ({currency.symbol})
               </option>
             ))}
           </select>
+          <input
+            type="hidden"
+            name="currencyCode"
+            value={selectedCurrency?.code}
+          />
         </div>
         <div className="budget-settings__field">
           <label htmlFor="monthlyBudget">Monthly budget</label>

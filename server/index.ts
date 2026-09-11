@@ -45,6 +45,16 @@ app.get("/api/budget/current", async (_request, response) => {
   }
 });
 
+// Get currency
+app.get("/api/budget/currency", async (_request, response) => {
+  try {
+    const currentBudget = await Budget.findOne().sort({ date: -1 });
+    response.json(currentBudget?.currency);
+  } catch {
+    response.status(400).json({ message: "Invalid budget data" });
+  }
+});
+
 // Get all expenses
 app.get("/api/expenses", async (_request, response) => {
   const expenses = await Expense.find().sort({ date: -1 });

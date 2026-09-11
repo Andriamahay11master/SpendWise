@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const budgetSchema = new mongoose.Schema(
   {
+    currencyCode: {
+      type: String,
+      required: true,
+      default: "USD",
+    },
     currency: {
       type: String,
       required: true,

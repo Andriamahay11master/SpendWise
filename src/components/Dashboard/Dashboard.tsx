@@ -34,6 +34,12 @@ const fetchCategories = async () => {
   return await response.json();
 };
 
+// Fetch Budget
+const fetchBudget = async () => {
+  const response = await fetch("http://localhost:5000/api/budget/current");
+  return await response.json();
+};
+
 const Dashboard = () => {
   const iconMap = useCategoryIcon();
   const { data: lastTransactions } = useQuery({
@@ -52,14 +58,20 @@ const Dashboard = () => {
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
+  const { data: budgetMonthly } = useQuery({
+    queryKey: ["budget"],
+    queryFn: fetchBudget,
+  });
   const totalWeekSpending = totalWeekSpendingData?.totalExpenses || 0;
   const totalMonthSpending = totalMonthSpendingData?.totalExpenses || 0;
+  const limitMonthlyBudget = Number(budgetMonthly?.budget ?? 0);
+  const monthlyBudgetCurrency = budgetMonthly?.currency ?? "$";
 
   const kpiData = [
     {
       typeCard: 1,
       title: "Total Balance",
-      currency: "$",
+      currency: monthlyBudgetCurrency,
       icon: <FaMoneyBills />,
       value: totalWeekSpending,
       desc: "weekly growth",
@@ -68,10 +80,10 @@ const Dashboard = () => {
     {
       typeCard: 2,
       title: "Monthly Spending",
-      currency: "$",
+      currency: monthlyBudgetCurrency,
       value: totalMonthSpending,
       desc: "on track to stay within budget",
-      limit: 5000,
+      limit: limitMonthlyBudget,
       color: "#24d0fb",
     },
   ];
