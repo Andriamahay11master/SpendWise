@@ -39,8 +39,7 @@ const ExpensesCard = ({
         </div>
         <div className="expenses-card-col">
           <p className="expenses-card-amount">
-            {currency}
-            {montant.toFixed(2)}
+            {currency} {montant.toFixed(2)}
           </p>
         </div>
       </div>

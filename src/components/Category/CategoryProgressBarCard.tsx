@@ -34,8 +34,7 @@ const CategoryProgressBarCard = ({
       <div className="category-progress-bar-card-bottom">
         <p className="category-progress-bar-card-name">{nameCategory}</p>
         <p className="category-progress-bar-card-budget">
-          {currency}
-          {budgetSpent.toFixed(2)} / {currency}
+          {currency} {budgetSpent.toFixed(2)} / {currency}{" "}
           {budgetMax.toFixed(2)}
         </p>
       </div>
