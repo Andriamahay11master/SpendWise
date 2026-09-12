@@ -147,11 +147,13 @@ The server exposes CRUD-style routes for expense and category management.
 ### Expense endpoints
 
 - `GET /api/expenses` — fetch all expenses ordered by date descending
+- `GET /api/budget/current` — fetch the curernt budget and current currency
 - `GET /api/transactions/last` — fetch the last 3 expenses
 - `GET /api/expenses/total/month` — get total spending for the current month
 - `GET /api/expenses/total/week` — get total spending for the current week
 - `GET /api/categories/:name/expenses/count` — get the number of expenses for one category
 - `POST /api/expenses` — create a new expense
+- `POST /api/budget` — create a new budget
 - `DELETE /api/expenses/:id` — delete an expense
 
 ### Category endpoints
@@ -163,16 +165,17 @@ The server exposes CRUD-style routes for expense and category management.
 
 ## Main routes
 
-| Route             | View          |
-| ----------------- | ------------- |
-| `/`               | Dashboard     |
-| `/report`         | Report        |
-| `/analytics`      | Analytics     |
-| `/addExpense`     | Add expense   |
-| `/transactions`   | Transactions  |
-| `/listCategories` | Category list |
-| `/addCategory`    | Add category  |
-| `/profile`        | Profile       |
+| Route             | View              |
+| ----------------- | ----------------- |
+| `/`               | Dashboard         |
+| `/report`         | Report            |
+| `/analytics`      | Analytics         |
+| `/addExpense`     | Add expense       |
+| `/transactions`   | Transactions      |
+| `/listCategories` | Category list     |
+| `/addCategory`    | Add category      |
+| `/profile`        | Profile           |
+| `/budget`         | Budget & Currency |
 
 ## Unit Testing
 

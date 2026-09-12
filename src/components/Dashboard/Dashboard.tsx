@@ -49,10 +49,11 @@ const fetchBudget = async () => {
 const Dashboard = () => {
   const iconMap = useCategoryIcon();
   const currency = useCurrency();
-  const { data: lastTransactions = [], error: lastTransactionsError } = useQuery({
-    queryKey: ["lastTransactions"],
-    queryFn: fetchLastTransactions,
-  });
+  const { data: lastTransactions = [], error: lastTransactionsError } =
+    useQuery({
+      queryKey: ["lastTransactions"],
+      queryFn: fetchLastTransactions,
+    });
   const { data: totalWeekSpendingData } = useQuery({
     queryKey: ["totalWeekSpending"],
     queryFn: fetchTotalWeekSpending,
@@ -109,7 +110,7 @@ const Dashboard = () => {
             key={index}
             budgetMax={data.budgetMax}
             color={data.color}
-            currency={data.currency}
+            currency={currency}
             nameCategory={data.name}
             iconCategory={iconMap[data.icon]}
             budgetSpent={data.budgetCurrent}

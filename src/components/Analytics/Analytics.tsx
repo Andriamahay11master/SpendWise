@@ -13,12 +13,13 @@ import type { CategoryType } from "../../type/CategoryType";
 import useCategoryIcon from "../../context/useCategoryIcon";
 import type { TransactionType } from "../../type/TransactionType";
 import { GoArrowRight } from "react-icons/go";
+import useCurrency from "../../context/useCurrency";
 
 const Analytics = () => {
+  const currency = useCurrency();
   const iconMap = useCategoryIcon();
   const dataFilter = ["Week", "Month", "Year"];
   const [stateButton, setStateButton] = useState("Week");
-  const currency = "$";
   const [dataCategory, setDataCategory] = useState<CategoryType[]>([]);
   const [dataNbTransactionByCategory, setDataNbTransactionByCategory] =
     useState<TransactionType[]>([]);
@@ -146,8 +147,7 @@ const Analytics = () => {
                       </div>
                       <div className="category-analytics-item-info-col">
                         <p className="category-analytics-item-budget">
-                          {currency}
-                          {item.budgetCurrent.toFixed(2)}
+                          {currency} {item.budgetCurrent.toFixed(2)}
                         </p>
                         <p className="category-analytics-item-percentage">
                           {Math.round(
@@ -190,8 +190,8 @@ const Analytics = () => {
             <h3 className="title-h3">Ai Smart Prediction</h3>
             <p>
               Based on your trends, you're on track to save{" "}
-              <strong>$420</strong> more than last month if current spending
-              continues
+              <strong>{currency} 420</strong> more than last month if current
+              spending continues
             </p>
           </div>
         </div>

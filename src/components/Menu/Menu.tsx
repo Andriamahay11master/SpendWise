@@ -3,7 +3,6 @@ import { IoHome } from "react-icons/io5";
 import { IoAnalytics } from "react-icons/io5";
 import { MdOutlineCategory } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
-import { FiSettings } from "react-icons/fi";
 import { Link } from "@tanstack/react-router";
 
 const Menu = () => {
@@ -17,7 +16,6 @@ const Menu = () => {
       link: "/listCategories",
     },
     { name: "Profile", icon: <FiUser />, link: "/profile" },
-    { name: "Budget", icon: <FiSettings />, link: "/budget" },
   ];
 
   return (
