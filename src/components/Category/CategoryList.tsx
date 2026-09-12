@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import type { CategoryType } from "../../type/CategoryType";
 import useCategoryIcon from "../../context/useCategoryIcon";
 import { useQuery } from "@tanstack/react-query";
+import useCurrency from "../../context/useCurrency";
 
 const fetchCategories = async () => {
   const response = await fetch("http://localhost:5000/api/categories");
@@ -11,6 +12,7 @@ const fetchCategories = async () => {
 };
 
 const CategoryList = () => {
+  const currency = useCurrency();
   const iconMap = useCategoryIcon();
   const { data: categories } = useQuery({
     queryKey: ["categories"],
@@ -33,6 +35,7 @@ const CategoryList = () => {
               budgetSpent={item.budgetCurrent}
               budgetMax={item.budgetMax}
               color={item.color}
+              currency={currency}
             />
           ))}
         {categories?.length === 0 && (

@@ -36,8 +36,7 @@ const CategoryCard = ({
         </div>
         <div className="category-col">
           <p className="category-amount" style={{ color: color }}>
-            {currency}
-            {budget.toFixed(2)}
+            {currency} {budget.toFixed(2)}
           </p>
         </div>
       </div>
