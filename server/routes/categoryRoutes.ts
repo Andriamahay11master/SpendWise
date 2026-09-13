@@ -37,40 +37,46 @@ categoryRouter.post("/api/categories", async (request, response) => {
   }
 });
 
-categoryRouter.get("/api/categories/:name/budgetCurrent", async (request, response) => {
-  try {
-    const category = await Category.findOne({ name: request.params.name });
+categoryRouter.get(
+  "/api/categories/:name/budgetCurrent",
+  async (request, response) => {
+    try {
+      const category = await Category.findOne({ name: request.params.name });
 
-    if (category) {
-      response.json({ budgetCurrent: category.budgetCurrent });
-      return;
+      if (category) {
+        response.json({ budgetCurrent: category.budgetCurrent });
+        return;
+      }
+
+      response.status(404).json({ message: "Category not found" });
+    } catch {
+      response.status(400).json({ message: "Invalid budget data" });
     }
+  },
+);
 
-    response.status(404).json({ message: "Category not found" });
-  } catch {
-    response.status(400).json({ message: "Invalid budget data" });
-  }
-});
+categoryRouter.put(
+  "/api/categories/:name/budgetCurrent",
+  async (request, response) => {
+    try {
+      const { budgetCurrent } = request.body;
+      const category = await Category.findOneAndUpdate(
+        { name: request.params.name },
+        { budgetCurrent },
+        { new: true },
+      );
 
-categoryRouter.put("/api/categories/:name/budgetCurrent", async (request, response) => {
-  try {
-    const { budgetCurrent } = request.body;
-    const category = await Category.findOneAndUpdate(
-      { name: request.params.name },
-      { budgetCurrent },
-      { new: true },
-    );
+      if (category) {
+        response.json(category);
+        return;
+      }
 
-    if (category) {
-      response.json(category);
-      return;
+      response.status(404).json({ message: "Category not found" });
+    } catch {
+      response.status(400).json({ message: "Invalid budget data" });
     }
-
-    response.status(404).json({ message: "Category not found" });
-  } catch {
-    response.status(400).json({ message: "Invalid budget data" });
-  }
-});
+  },
+);
 
 categoryRouter.delete("/api/categories/:id", async (request, response) => {
   await Category.findByIdAndDelete(request.params.id);

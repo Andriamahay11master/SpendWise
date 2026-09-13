@@ -47,15 +47,18 @@ expenseRouter.get("/api/expenses/total/week", async (_request, response) => {
   response.json({ totalExpenses });
 });
 
-expenseRouter.get("/api/categories/:name/expenses/count", async (request, response) => {
-  const categoryName = request.params.name;
+expenseRouter.get(
+  "/api/categories/:name/expenses/count",
+  async (request, response) => {
+    const categoryName = request.params.name;
 
-  const count = await Expense.countDocuments({
-    category: { $regex: new RegExp(`^${categoryName}$`, "i") },
-  });
+    const count = await Expense.countDocuments({
+      category: { $regex: new RegExp(`^${categoryName}$`, "i") },
+    });
 
-  response.json({ nbTransaction: count });
-});
+    response.json({ nbTransaction: count });
+  },
+);
 
 expenseRouter.post("/api/expenses", async (request, response) => {
   try {
