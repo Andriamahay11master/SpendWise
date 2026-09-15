@@ -154,6 +154,7 @@ The server exposes CRUD-style routes for expense and category management.
 - `GET /api/categories/:name/expenses/count` — get the number of expenses for one category
 - `POST /api/expenses` — create a new expense
 - `POST /api/budget` — create a new budget
+- `PUT /api/budget` — update budget
 - `DELETE /api/expenses/:id` — delete an expense
 
 ### Category endpoints

@@ -67,6 +67,7 @@ const indexRoute = createMainPageRoute("/", <Dashboard />);
 const analyticsRoute = createMainPageRoute("/analytics", <Analytics />);
 const reportRoute = createMainPageRoute("/report", <Report />);
 const budgetRoute = createMainPageRoute("/budget", <Budget />);
+const budgetRouteUpdate = createMainPageRoute("/updateBudget", <Budget />);
 const addExpenseRoute = createMainPageRoute("/addExpense", <ExpensesForm />);
 const categoriesRoute = createMainPageRoute(
   "/listCategories",
@@ -114,6 +115,7 @@ const routeTree = rootRoute.addChildren([
   analyticsRoute,
   reportRoute,
   budgetRoute,
+  budgetRouteUpdate,
   addExpenseRoute,
   categoriesRoute,
   addCategoryRoute,
