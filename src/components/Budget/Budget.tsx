@@ -1,6 +1,6 @@
 import React from "react";
 import currencies from "../../utils/currency";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "@tanstack/react-router";
 
 interface BudgetSettings {
@@ -8,6 +8,21 @@ interface BudgetSettings {
   currency: string;
   monthlyBudget: number;
 }
+
+const fetchCurrentBudget = async (): Promise<BudgetSettings> => {
+  const response = await fetch("http://localhost:5000/api/budget/current");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch current budget");
+  }
+
+  const budget = await response.json();
+  return {
+    currencyCode: budget.currencyCode,
+    currency: budget.currency,
+    monthlyBudget: budget.budget,
+  };
+};
 
 const addBudget = async (budgetSettings: BudgetSettings) => {
   const response = await fetch("http://localhost:5000/api/budget", {
@@ -54,6 +69,11 @@ const Budget = () => {
   const params = useParams({ strict: false });
   const isUpdate = params.limit !== undefined;
   const queryClient = useQueryClient();
+  const { data: currentBudget } = useQuery({
+    queryKey: ["budget"],
+    queryFn: fetchCurrentBudget,
+    enabled: isUpdate,
+  });
   const [settings, setSettings] = React.useState<BudgetSettings>({
     currencyCode: "USD",
     currency: "$",
@@ -61,13 +81,10 @@ const Budget = () => {
   });
 
   React.useEffect(() => {
-    if (params.limit !== undefined) {
-      setSettings((currentSettings) => ({
-        ...currentSettings,
-        monthlyBudget: Number(params.limit),
-      }));
+    if (currentBudget) {
+      setSettings(currentBudget);
     }
-  }, [params.limit]);
+  }, [currentBudget]);
 
   const selectedCurrency = currencies.find(
     (currency) => currency.code === settings.currencyCode,
