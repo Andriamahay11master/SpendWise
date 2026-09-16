@@ -1,7 +1,7 @@
 import React from "react";
 import currencies from "../../utils/currency";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 
 interface BudgetSettings {
   currencyCode: string;
@@ -29,8 +29,30 @@ const addBudget = async (budgetSettings: BudgetSettings) => {
   return await response.json();
 };
 
+const updateBudget = async (budgetSettings: BudgetSettings) => {
+  const response = await fetch("http://localhost:5000/api/budget", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      currencyCode: budgetSettings.currencyCode,
+      currency: budgetSettings.currency,
+      budget: budgetSettings.monthlyBudget,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+  return await response.json();
+};
+
 const Budget = () => {
   const navigate = useNavigate();
+  const params = useParams({ from: "/updateBudget/$limit" });
+  console.log(params);
   const queryClient = useQueryClient();
   const [settings, setSettings] = React.useState<BudgetSettings>({
     currencyCode: "USD",

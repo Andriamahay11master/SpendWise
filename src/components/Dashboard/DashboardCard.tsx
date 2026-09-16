@@ -57,7 +57,11 @@ const DashboardCard = ({
       </div>
       {typeCard === 2 && (
         <div className="dashboard-update-budget">
-          <Link to="/updateBudget" className="btn btn-primary">
+          <Link
+            to="/updateBudget/$limit"
+            params={{ limit: safeLimit.toFixed(2) }}
+            className="btn btn-primary"
+          >
             Update budget
           </Link>
         </div>
