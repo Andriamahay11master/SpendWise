@@ -92,6 +92,7 @@ const Dashboard = () => {
       value: totalMonthSpending,
       desc: "on track to stay within budget",
       limit: limitMonthlyBudget,
+      budgetId: budgetMonthly?._id,
       color: "#24d0fb",
     },
   ];

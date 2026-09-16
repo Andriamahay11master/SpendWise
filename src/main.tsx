@@ -68,7 +68,7 @@ const analyticsRoute = createMainPageRoute("/analytics", <Analytics />);
 const reportRoute = createMainPageRoute("/report", <Report />);
 const budgetRoute = createMainPageRoute("/budget", <Budget />);
 const budgetRouteUpdate = createMainPageRoute(
-  "/updateBudget/$limit",
+  "/updateBudget/$id",
   <Budget />,
 );
 const addExpenseRoute = createMainPageRoute("/addExpense", <ExpensesForm />);

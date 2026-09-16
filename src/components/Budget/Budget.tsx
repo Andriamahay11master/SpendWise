@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "@tanstack/react-router";
 
 interface BudgetSettings {
+  id?: string;
   currencyCode: string;
   currency: string;
   monthlyBudget: number;
@@ -18,6 +19,7 @@ const fetchCurrentBudget = async (): Promise<BudgetSettings> => {
 
   const budget = await response.json();
   return {
+    id: budget._id,
     currencyCode: budget.currencyCode,
     currency: budget.currency,
     monthlyBudget: budget.budget,
@@ -45,17 +47,24 @@ const addBudget = async (budgetSettings: BudgetSettings) => {
 };
 
 const updateBudget = async (budgetSettings: BudgetSettings) => {
-  const response = await fetch("http://localhost:5000/api/budget", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
+  if (!budgetSettings.id) {
+    throw new Error("Budget id is missing");
+  }
+
+  const response = await fetch(
+    `http://localhost:5000/api/budget/${budgetSettings.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        currencyCode: budgetSettings.currencyCode,
+        currency: budgetSettings.currency,
+        budget: budgetSettings.monthlyBudget,
+      }),
     },
-    body: JSON.stringify({
-      currencyCode: budgetSettings.currencyCode,
-      currency: budgetSettings.currency,
-      budget: budgetSettings.monthlyBudget,
-    }),
-  });
+  );
 
   if (!response.ok) {
     const error = await response.json();
@@ -67,7 +76,7 @@ const updateBudget = async (budgetSettings: BudgetSettings) => {
 const Budget = () => {
   const navigate = useNavigate();
   const params = useParams({ strict: false });
-  const isUpdate = params.limit !== undefined;
+  const isUpdate = params.id !== undefined;
   const queryClient = useQueryClient();
   const { data: currentBudget } = useQuery({
     queryKey: ["budget"],
@@ -77,7 +86,7 @@ const Budget = () => {
   const [settings, setSettings] = React.useState<BudgetSettings>({
     currencyCode: "USD",
     currency: "$",
-    monthlyBudget: params.limit ? Number(params.limit) : 0,
+    monthlyBudget: 0,
   });
 
   React.useEffect(() => {
