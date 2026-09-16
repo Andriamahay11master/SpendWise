@@ -51,14 +51,23 @@ const updateBudget = async (budgetSettings: BudgetSettings) => {
 
 const Budget = () => {
   const navigate = useNavigate();
-  const params = useParams({ from: "/updateBudget/$limit" });
-  console.log(params);
+  const params = useParams({ strict: false });
+  const isUpdate = params.limit !== undefined;
   const queryClient = useQueryClient();
   const [settings, setSettings] = React.useState<BudgetSettings>({
     currencyCode: "USD",
     currency: "$",
-    monthlyBudget: 0,
+    monthlyBudget: params.limit ? Number(params.limit) : 0,
   });
+
+  React.useEffect(() => {
+    if (params.limit !== undefined) {
+      setSettings((currentSettings) => ({
+        ...currentSettings,
+        monthlyBudget: Number(params.limit),
+      }));
+    }
+  }, [params.limit]);
 
   const selectedCurrency = currencies.find(
     (currency) => currency.code === settings.currencyCode,
@@ -73,7 +82,7 @@ const Budget = () => {
   };
 
   const { mutate } = useMutation({
-    mutationFn: addBudget,
+    mutationFn: isUpdate ? updateBudget : addBudget,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["currency"] });
       await queryClient.invalidateQueries({ queryKey: ["budget"] });
@@ -112,7 +121,9 @@ const Budget = () => {
 
   return (
     <div className="main-block">
-      <h2 className="title-h2">Budget Settings</h2>
+      <h2 className="title-h2">
+        {isUpdate ? "Update budget" : "Budget Settings"}
+      </h2>
       <p className="page-desc">
         Set the currency and spending limit you want to use each month.
       </p>
@@ -149,7 +160,7 @@ const Budget = () => {
           </div>
         </div>
         <button type="submit" className="btn btn-primary">
-          Save budget settings
+          {isUpdate ? "Update budget" : "Save budget settings"}
         </button>
       </form>
     </div>
