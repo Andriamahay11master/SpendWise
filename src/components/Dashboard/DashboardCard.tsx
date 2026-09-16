@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 interface DashboardCardProps {
   typeCard: number;
   title: string;
@@ -7,6 +9,7 @@ interface DashboardCardProps {
   icon?: React.ReactNode;
   color: string;
   limit?: number;
+  budgetId?: string;
 }
 
 const DashboardCard = ({
@@ -18,6 +21,7 @@ const DashboardCard = ({
   icon,
   color,
   limit,
+  budgetId,
 }: DashboardCardProps) => {
   const safeLimit = Number(limit ?? 0);
   const progress = safeLimit > 0 ? Math.min((value / safeLimit) * 100, 100) : 0;
@@ -53,6 +57,17 @@ const DashboardCard = ({
           <p className="dashboard-description-one">{desc}</p>
         )}
       </div>
+      {typeCard === 2 && budgetId && (
+        <div className="dashboard-update-budget">
+          <Link
+            to="/updateBudget/$id"
+            params={{ id: budgetId ?? "" }}
+            className="btn btn-primary"
+          >
+            Update budget
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
