@@ -54,4 +54,10 @@ budgetRouter.get("/api/budget/current", async (_request, response) => {
   response.json(budget);
 });
 
+//get budget by id
+budgetRouter.get("/api/budget/:id", async (request, response) => {
+  const budget = await Budget.findById(request.params.id);
+  response.json(budget);
+});
+
 export default budgetRouter;

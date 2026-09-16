@@ -10,8 +10,8 @@ interface BudgetSettings {
   monthlyBudget: number;
 }
 
-const fetchCurrentBudget = async (): Promise<BudgetSettings> => {
-  const response = await fetch("http://localhost:5000/api/budget/current");
+const fetchBudgetById = async (id: string): Promise<BudgetSettings> => {
+  const response = await fetch(`http://localhost:5000/api/budget/${id}`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch current budget");
@@ -80,7 +80,7 @@ const Budget = () => {
   const queryClient = useQueryClient();
   const { data: currentBudget } = useQuery({
     queryKey: ["budget"],
-    queryFn: fetchCurrentBudget,
+    queryFn: () => fetchBudgetById(params.id ?? ""),
     enabled: isUpdate,
   });
   const [settings, setSettings] = React.useState<BudgetSettings>({
