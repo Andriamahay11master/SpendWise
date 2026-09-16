@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 interface DashboardCardProps {
   typeCard: number;
   title: string;
@@ -53,6 +55,13 @@ const DashboardCard = ({
           <p className="dashboard-description-one">{desc}</p>
         )}
       </div>
+      {typeCard === 2 && (
+        <div className="dashboard-update-budget">
+          <Link to="/updateBudget" className="dashboard-update-budget-link">
+            Update budget
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
