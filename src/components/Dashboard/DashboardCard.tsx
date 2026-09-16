@@ -57,7 +57,7 @@ const DashboardCard = ({
       </div>
       {typeCard === 2 && (
         <div className="dashboard-update-budget">
-          <Link to="/updateBudget" className="dashboard-update-budget-link">
+          <Link to="/updateBudget" className="btn btn-primary">
             Update budget
           </Link>
         </div>
