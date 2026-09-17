@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import {
   createRootRoute,
@@ -22,6 +22,8 @@ import Report from "./components/Report/Report";
 import Budget from "./components/Budget/Budget";
 import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
+import Login from "./components/login/Login";
+import ForgotPassword from "./components/forgot/ForgotPassword";
 
 const rootRoute = createRootRoute({
   component: App,
@@ -63,14 +65,21 @@ const createPlaceholderRoute = <const TPath extends string>(
     component: () => <div>{label} coming soon</div>,
   });
 
+const createFormRoute = <const TPath extends string>(
+  path: TPath,
+  element: ReactElement,
+) =>
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path,
+    component: () => element,
+  });
+
 const indexRoute = createMainPageRoute("/", <Dashboard />);
 const analyticsRoute = createMainPageRoute("/analytics", <Analytics />);
 const reportRoute = createMainPageRoute("/report", <Report />);
 const budgetRoute = createMainPageRoute("/budget", <Budget />);
-const budgetRouteUpdate = createMainPageRoute(
-  "/updateBudget/$id",
-  <Budget />,
-);
+const budgetRouteUpdate = createMainPageRoute("/updateBudget/$id", <Budget />);
 const addExpenseRoute = createMainPageRoute("/addExpense", <ExpensesForm />);
 const categoriesRoute = createMainPageRoute(
   "/listCategories",
@@ -92,6 +101,11 @@ const transactionsRoute = createGabaritRoute(
   "Transactions",
   <GoArrowLeft size={30} />,
   <ExpensesList />,
+);
+const loginRoute = createFormRoute("/login", <Login />);
+const forgotPasswordRoute = createFormRoute(
+  "/forgot-password",
+  <ForgotPassword />,
 );
 
 const expenseDetailRoute = createRoute({
@@ -129,6 +143,8 @@ const routeTree = rootRoute.addChildren([
   predictionRoute,
   profileInfoRoute,
   profilePasswordRoute,
+  loginRoute,
+  forgotPasswordRoute,
 ]);
 
 const queryClient = new QueryClient();
