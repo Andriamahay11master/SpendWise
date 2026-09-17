@@ -20,14 +20,18 @@ expenseRouter.post("/api/user", async (request, response) => {
   }
 });
 
-// check user exist, used for login user on the app
-expenseRouter.get("/api/user/:email", async (request, response) => {
-  const email = request.params.email;
-  const user = await User.findOne({ email });
-  if (user) {
-    response.json(user);
-  } else {
-    response.status(404).json({ message: "User not found" });
+// login with username and password
+expenseRouter.post("/api/login", async (request, response) => {
+  try {
+    const { username, password } = request.body;
+    const user = await User.findOne({ username, password });
+    if (user) {
+      response.json(user);
+    } else {
+      response.status(404).json({ message: "User not found" });
+    }
+  } catch {
+    response.status(400).json({ message: "Invalid user data" });
   }
 });
 
