@@ -66,7 +66,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
+    <div className="form-page login">
       <form onSubmit={handleSubmitForm}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
