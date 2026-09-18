@@ -1,4 +1,4 @@
-import { Link, Navigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import React from "react";
 import { type UserType } from "../../type/UserType";
 import { useQuery } from "@tanstack/react-query";
@@ -105,7 +105,10 @@ const Login = () => {
             {isLoading ? "Loading..." : "Connect"}
           </button>
         </div>
-        <div className="forgot-password">
+        <div className="form-action">
+          <Link to="/signIn" className="btn btn-link">
+            Sign in
+          </Link>
           <Link to="/forgot-password" className="btn btn-link">
             Forgot password ?
           </Link>
