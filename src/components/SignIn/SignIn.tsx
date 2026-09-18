@@ -1,6 +1,35 @@
 import React, { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { type UserType } from "../../type/UserType";
+import { useMutation } from "@tanstack/react-query";
+
+interface UserProps {
+  user: UserType;
+}
+
+const createUser = async ({ user }: UserProps) => {
+  const response = await fetch("http://localhost:5000/api/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: user.email,
+      username: user.username,
+      password: user.password,
+      role: user.role,
+      active: user.active,
+    }),
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+  return await response.json();
+};
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -24,12 +53,19 @@ const SignIn = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
+      navigate({ to: "/" });
+      resetForm();
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTimeout(() => {
-      resetForm();
-    }, 2000);
+    mutate({ user: formData });
   };
+
   return (
     <div className="form-page signin">
       <form onSubmit={handleSubmit}>
@@ -74,7 +110,13 @@ const SignIn = () => {
           />
         </div>
         <div className="form-group form-button">
-          <button type="submit">Sign up</button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={isPending}
+          >
+            {isPending ? "Signing up..." : "Sign up"}
+          </button>
         </div>
       </form>
     </div>
