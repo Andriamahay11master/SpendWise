@@ -90,21 +90,11 @@ const SignUp = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="pwd">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
-            name="pwd"
-            id="pwd"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="confPwd">Confirmation password</label>
-          <input
-            type="password"
-            name="confPwd"
-            id="confPwd"
+            name="password"
+            id="password"
             value={formData.username}
             onChange={handleChange}
           />
