@@ -1,7 +1,24 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema({
+interface UserMethods {
+  comparePassword(userPassword: string): Promise<boolean>;
+}
+
+interface UserDocument {
+  username: string;
+  email: string;
+  password: string;
+  role: "user" | "admin";
+  active: boolean;
+  createdAt: Date;
+}
+
+const userSchema = new mongoose.Schema<
+  UserDocument,
+  mongoose.Model<UserDocument, {}, UserMethods>,
+  UserMethods
+>({
   username: {
     type: String,
     required: true,
@@ -40,7 +57,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Middleware: Hash password before saving to the database
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   // Only hash the password if it has been modified (or is new)
   if (!this.isModified("password")) return;
 
@@ -50,8 +67,8 @@ userSchema.pre("save", async function (next) {
 });
 
 // Verify plain text password against the hashed database password
-userSchema.methods.comparePassword = async function (userPassword) {
-  return await bcrypt.compare(userPassword, this.password);
+userSchema.methods.comparePassword = async function (userPassword: string) {
+  return bcrypt.compare(userPassword, this.password);
 };
 
 export const User = mongoose.model("User", userSchema);

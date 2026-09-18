@@ -6,12 +6,14 @@ const expenseRouter = Router();
 // create user
 expenseRouter.post("/api/user", async (request, response) => {
   try {
-    const { username, email, password } = request.body;
+    const { username, email, password, role, active } = request.body;
 
     const userData = await User.create({
       username,
       email,
       password,
+      role,
+      active,
     });
 
     response.status(201).json(userData);
@@ -24,12 +26,17 @@ expenseRouter.post("/api/user", async (request, response) => {
 expenseRouter.post("/api/login", async (request, response) => {
   try {
     const { username, password } = request.body;
-    const user = await User.findOne({ username, password });
-    if (user) {
-      response.json(user);
-    } else {
-      response.status(404).json({ message: "User not found" });
+    const user = await User.findOne({ username }).select("+password");
+    if (!user) {
+      response.status(401).json({ message: "Invalid username or password" });
+      return;
     }
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      response.status(401).json({ message: "Invalid username or password" });
+      return;
+    }
+    return response.json(user);
   } catch {
     response.status(400).json({ message: "Invalid user data" });
   }
