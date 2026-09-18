@@ -1,6 +1,8 @@
-import { Link } from "@tanstack/react-router";
+import { Link, Navigate } from "@tanstack/react-router";
 import React from "react";
 import { type UserType } from "../../type/UserType";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 
 interface userProps {
   user: UserType;
@@ -13,17 +15,29 @@ const fetchConnectUser = async ({ user }: userProps) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      email: user.email,
       username: user.username,
       password: user.password,
+      role: user.role,
+      active: user.active,
     }),
   });
   return response.json();
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
+    email: "",
     username: "",
     password: "",
+    role: "user",
+    active: true,
+  });
+
+  const { data: dataUser } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => fetchConnectUser({ user: formData }),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,13 +47,19 @@ const Login = () => {
 
   const resetForm = () => {
     setFormData({
+      email: "",
       username: "",
       password: "",
+      role: "user",
+      active: true,
     });
   };
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (dataUser) {
+      navigate({ to: "/" });
+    }
     resetForm();
   };
 
