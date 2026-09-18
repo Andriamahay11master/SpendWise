@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import React from "react";
 import { type UserType } from "../../type/UserType";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 
 interface userProps {
   user: UserType;
@@ -13,17 +15,29 @@ const fetchConnectUser = async ({ user }: userProps) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      email: user.email,
       username: user.username,
       password: user.password,
+      role: user.role,
+      active: user.active,
     }),
   });
   return response.json();
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
+    email: "",
     username: "",
     password: "",
+    role: "user",
+    active: true,
+  });
+
+  const { data: dataUser, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => fetchConnectUser({ user: formData }),
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,18 +47,26 @@ const Login = () => {
 
   const resetForm = () => {
     setFormData({
+      email: "",
       username: "",
       password: "",
+      role: "user",
+      active: true,
     });
   };
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    resetForm();
+    setTimeout(() => {
+      if (dataUser?.length > 0) {
+        navigate({ to: "/" });
+      }
+      resetForm();
+    }, 2000);
   };
 
   return (
-    <div className="login-page">
+    <div className="form-page login">
       <form onSubmit={handleSubmitForm}>
         <div className="form-group">
           <label htmlFor="username">Username</label>
@@ -75,11 +97,18 @@ const Login = () => {
           </div>
         </div>
         <div className="form-group form-button">
-          <button type="submit" className="btn btn-primary">
-            Connect
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Connect"}
           </button>
         </div>
-        <div className="forgot-password">
+        <div className="form-action">
+          <Link to="/signUp" className="btn btn-link">
+            Sign Up
+          </Link>
           <Link to="/forgot-password" className="btn btn-link">
             Forgot password ?
           </Link>

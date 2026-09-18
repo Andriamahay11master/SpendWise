@@ -1,6 +1,24 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
-const userSchema = new mongoose.Schema({
+interface UserMethods {
+  comparePassword(userPassword: string): Promise<boolean>;
+}
+
+interface UserDocument {
+  username: string;
+  email: string;
+  password: string;
+  role: "user" | "admin";
+  active: boolean;
+  createdAt: Date;
+}
+
+const userSchema = new mongoose.Schema<
+  UserDocument,
+  mongoose.Model<UserDocument, {}, UserMethods>,
+  UserMethods
+>({
   username: {
     type: String,
     required: true,
@@ -18,6 +36,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   role: {
     type: String,
@@ -36,5 +55,20 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+// Middleware: Hash password before saving to the database
+userSchema.pre("save", async function () {
+  // Only hash the password if it has been modified (or is new)
+  if (!this.isModified("password")) return;
+
+  // Generate a salt and hash the password (cost factor of 12 is highly secure)
+  const salt = await bcrypt.genSalt(12);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Verify plain text password against the hashed database password
+userSchema.methods.comparePassword = async function (userPassword: string) {
+  return bcrypt.compare(userPassword, this.password);
+};
 
 export const User = mongoose.model("User", userSchema);
