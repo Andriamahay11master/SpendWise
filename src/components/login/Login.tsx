@@ -35,7 +35,7 @@ const Login = () => {
     active: true,
   });
 
-  const { data: dataUser } = useQuery({
+  const { data: dataUser, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: () => fetchConnectUser({ user: formData }),
   });
@@ -57,10 +57,12 @@ const Login = () => {
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (dataUser) {
-      navigate({ to: "/" });
-    }
-    resetForm();
+    setTimeout(() => {
+      if (dataUser?.length > 0) {
+        navigate({ to: "/" });
+      }
+      resetForm();
+    }, 2000);
   };
 
   return (
@@ -95,8 +97,12 @@ const Login = () => {
           </div>
         </div>
         <div className="form-group form-button">
-          <button type="submit" className="btn btn-primary">
-            Connect
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Connect"}
           </button>
         </div>
         <div className="forgot-password">
