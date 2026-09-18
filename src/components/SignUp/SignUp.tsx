@@ -28,7 +28,7 @@ const createUser = async ({ user }: UserProps) => {
   return await response.json();
 };
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -67,7 +67,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="form-page signin">
+    <div className="form-page signup">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
@@ -123,4 +123,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

@@ -24,7 +24,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { FaAngleLeft } from "react-icons/fa6";
 import Login from "./components/login/Login";
 import ForgotPassword from "./components/forgot/ForgotPassword";
-import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
 
 const rootRoute = createRootRoute({
   component: App,
@@ -108,7 +108,7 @@ const forgotPasswordRoute = createFormRoute(
   "/forgot-password",
   <ForgotPassword />,
 );
-const signInRoute = createFormRoute("/signIn", <SignIn />);
+const signUpRoute = createFormRoute("/signUp", <SignUp />);
 
 const expenseDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -147,7 +147,7 @@ const routeTree = rootRoute.addChildren([
   profilePasswordRoute,
   loginRoute,
   forgotPasswordRoute,
-  signInRoute,
+  signUpRoute,
 ]);
 
 const queryClient = new QueryClient();
