@@ -63,4 +63,19 @@ expenseRouter.put("/api/user/:id", async (request, response) => {
   }
 });
 
+// forget password
+expenseRouter.post("/api/user/forget-password", async (request, response) => {
+  try {
+    const { email } = request.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      response.status(404).json({ message: "User not found" });
+      return;
+    }
+    response.json(user);
+  } catch {
+    response.status(400).json({ message: "Invalid user data" });
+  }
+});
+
 export default expenseRouter;
