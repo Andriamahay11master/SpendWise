@@ -152,9 +152,14 @@ The server exposes CRUD-style routes for expense and category management.
 - `GET /api/expenses/total/month` — get total spending for the current month
 - `GET /api/expenses/total/week` — get total spending for the current week
 - `GET /api/categories/:name/expenses/count` — get the number of expenses for one category
+- `GET /api/user/:id` — get user by id
 - `POST /api/expenses` — create a new expense
 - `POST /api/budget` — create a new budget
+- `POST /api/user` — create a new user
+- `POST /api/user/forget-password` — forget user password
+- `POST /api/login` — login user
 - `PUT /api/budget` — update budget
+- `PUT /api/user/:id` — update user by id
 - `DELETE /api/expenses/:id` — delete an expense
 
 ### Category endpoints
