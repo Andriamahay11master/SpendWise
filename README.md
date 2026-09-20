@@ -166,17 +166,20 @@ The server exposes CRUD-style routes for expense and category management.
 
 ## Main routes
 
-| Route             | View              |
-| ----------------- | ----------------- |
-| `/`               | Dashboard         |
-| `/report`         | Report            |
-| `/analytics`      | Analytics         |
-| `/addExpense`     | Add expense       |
-| `/transactions`   | Transactions      |
-| `/listCategories` | Category list     |
-| `/addCategory`    | Add category      |
-| `/profile`        | Profile           |
-| `/budget`         | Budget & Currency |
+| Route              | View                 |
+| ------------------ | -------------------- |
+| `/`                | Dashboard            |
+| `/report`          | Report               |
+| `/analytics`       | Analytics            |
+| `/addExpense`      | Add expense          |
+| `/transactions`    | Transactions         |
+| `/listCategories`  | Category list        |
+| `/addCategory`     | Add category         |
+| `/profile`         | Profile              |
+| `/budget`          | Budget & Currency    |
+| `/login`           | Login page           |
+| `/forgot-password` | Forgot password page |
+| `/signUp`          | Sign up page         |
 
 ## Unit Testing
 
