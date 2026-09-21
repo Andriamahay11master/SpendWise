@@ -10,4 +10,25 @@
     font-size: $font-size-sm;
     margin-bottom: 1rem;
   }
+  input[type="password"] {
+    padding-right: 1.6rem;
+  }
+  .form-pass {
+    position: relative;
+  }
+  .password-privacy {
+    position: absolute;
+    z-index: 2;
+    top: 2.7rem;
+    right: 0.5rem;
+    input {
+      display: none;
+    }
+    label {
+      display: inline-block;
+      cursor: pointer;
+      color: $gray;
+      font-size: $font-size-sm;
+    }
+  }
 }

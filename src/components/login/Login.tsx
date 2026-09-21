@@ -82,7 +82,7 @@ const Login = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="form-group">
+        <div className="form-group form-pass">
           <label htmlFor="password">Password</label>
           <input
             type={viewPass ? "text" : "password"}
