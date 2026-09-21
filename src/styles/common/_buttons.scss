@@ -45,4 +45,14 @@
       background: $white;
     }
   }
+  &-link {
+    padding: 0;
+    color: $gray;
+    font-size: $font-size-sm;
+    text-decoration: underline;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      color: $primary;
+    }
+  }
 }

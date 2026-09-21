@@ -48,7 +48,7 @@ const ForgotPassword = () => {
   return (
     <div className="form-page form-page-forgot">
       <form onSubmit={handleSubmit} noValidate={false}>
-        <h1>Forgot password?</h1>
+        <h1 className="h1-title">Forgot password?</h1>
         <p>Enter your email address to request password reset instructions.</p>
         <div className="form-group">
           <label htmlFor="email">Email</label>
