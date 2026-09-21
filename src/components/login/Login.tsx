@@ -3,6 +3,7 @@ import React from "react";
 import { type UserType } from "../../type/UserType";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 interface userProps {
   user: UserType;
@@ -27,6 +28,7 @@ const fetchConnectUser = async ({ user }: userProps) => {
 
 const Login = () => {
   const navigate = useNavigate();
+  const [viewPass, setViewPass] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: "",
     username: "",
@@ -83,7 +85,7 @@ const Login = () => {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+            type={viewPass ? "text" : "password"}
             name="password"
             className="form-control"
             id="password"
@@ -92,8 +94,14 @@ const Login = () => {
             onChange={handleChange}
           />
           <div className="password-privacy">
-            <input type="checkbox" id="show-password" />
-            <label htmlFor="show-password">Show password</label>
+            <input
+              type="checkbox"
+              id="show-password"
+              onChange={() => setViewPass(!viewPass)}
+            />
+            <label htmlFor="show-password">
+              {viewPass ? <FaEyeSlash /> : <FaEye />}
+            </label>
           </div>
         </div>
         <div className="form-group form-button">
