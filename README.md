@@ -20,7 +20,7 @@ SpendWise is a full-stack expense-tracking application built to help users monit
 
 - React 19 and TypeScript
 - Vite
-- React Router
+- TanStack Router
 - TanStack Query
 - Sass modules and shared Sass variables
 - React Icons
@@ -43,8 +43,8 @@ SpendWise/
 │   ├── services/        # API and business logic helpers
 │   ├── styles/          # Sass styles
 │   ├── utils/           # Helper utilities
-│   ├── App.tsx          # App routes
-│   ├── main.tsx         # Frontend bootstrap and QueryClientProvider
+│   ├── App.tsx          # Root layout
+│   ├── main.tsx         # Route definitions and frontend bootstrap
 │   └── ...
 ├── server/
 │   ├── models/          # Expense and Category schemas
@@ -140,6 +140,9 @@ This keeps the UI responsive and avoids manual fetch wiring across components.
 | ------------- | ------------------------------------- |
 | `npm run dev` | Start the Express API with hot reload |
 
+The backend package does not currently include automated tests. Its `npm test`
+script is the default placeholder and exits with an error.
+
 ## Backend API overview
 
 The server exposes CRUD-style routes for expense and category management.
@@ -147,7 +150,8 @@ The server exposes CRUD-style routes for expense and category management.
 ### Expense endpoints
 
 - `GET /api/expenses` — fetch all expenses ordered by date descending
-- `GET /api/budget/current` — fetch the curernt budget and current currency
+- `GET /api/budget/current` — fetch the current budget and currency
+- `GET /api/budget/:id` — fetch a budget by id
 - `GET /api/transactions/last` — fetch the last 3 expenses
 - `GET /api/expenses/total/month` — get total spending for the current month
 - `GET /api/expenses/total/week` — get total spending for the current week
@@ -155,19 +159,22 @@ The server exposes CRUD-style routes for expense and category management.
 - `GET /api/user/:id` — get user by id
 - `POST /api/expenses` — create a new expense
 - `POST /api/budget` — create a new budget
-- `POST /api/user` — create a new user
-- `POST /api/user/forget-password` — forget user password
-- `POST /api/login` — login user
-- `PUT /api/budget` — update budget
-- `PUT /api/user/:id` — update user by id
+- `PUT /api/budget/:id` — update a budget by id
 - `DELETE /api/expenses/:id` — delete an expense
 
 ### Category endpoints
 
 - `GET /api/categories` — fetch all categories
 - `GET /api/categories/:name/color` — get a category color by name
+- `GET /api/categories/:name/budgetCurrent` — get the current category budget
+- `GET /api/categories/:name/expenses/count` — count expenses in a category
 - `POST /api/categories` — create a new category
+- `PUT /api/categories/:name/budgetCurrent` — update the current category budget
 - `DELETE /api/categories/:id` — delete a category
+
+User and authentication routes are present in `server/routes/userRoutes.ts`, but
+they are not currently mounted by `server/index.ts` and are therefore not
+available through the running API yet.
 
 ## Main routes
 
@@ -185,6 +192,10 @@ The server exposes CRUD-style routes for expense and category management.
 | `/login`           | Login page           |
 | `/forgot-password` | Forgot password page |
 | `/signUp`          | Sign up page         |
+| `/updateBudget/:id`| Update budget        |
+| `/expenses/:id`    | Expense details placeholder |
+| `/categoryReport`  | Category report placeholder |
+| `/prediction`      | Prediction placeholder |
 
 ## Unit Testing
 
