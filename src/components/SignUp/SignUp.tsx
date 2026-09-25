@@ -56,8 +56,8 @@ const SignUp = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: createUser,
     onSuccess: () => {
-      navigate({ to: "/" });
       resetForm();
+      navigate({ to: "/" });
     },
   });
 
