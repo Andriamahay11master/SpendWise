@@ -95,13 +95,13 @@ const SignUp = () => {
             type="password"
             name="password"
             id="password"
-            value={formData.username}
+            value={formData.password}
             onChange={handleChange}
           />
         </div>
         <div className="form-group form-button">
           <button
-            type="button"
+            type="submit"
             className="btn btn-primary"
             disabled={isPending}
           >
