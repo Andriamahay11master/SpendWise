@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import React from "react";
 import { type UserType } from "../../type/UserType";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import useConnectUser from "../../context/useConnectUser";
 
 interface userProps {
   user: UserType;
@@ -23,11 +24,16 @@ const fetchConnectUser = async ({ user }: userProps) => {
       active: user.active,
     }),
   });
-  return response.json();
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+  return (await response.json()) as UserType;
 };
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useConnectUser();
   const [viewPass, setViewPass] = React.useState(false);
   const [formData, setFormData] = React.useState({
     email: "",
@@ -37,9 +43,13 @@ const Login = () => {
     active: true,
   });
 
-  const { data: dataUser, isLoading } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => fetchConnectUser({ user: formData }),
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: fetchConnectUser,
+    onSuccess: (connectedUser) => {
+      setUser(connectedUser);
+      resetForm();
+      navigate({ to: "/" });
+    },
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,12 +69,7 @@ const Login = () => {
 
   const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTimeout(() => {
-      if (dataUser?.length > 0) {
-        navigate({ to: "/" });
-      }
-      resetForm();
-    }, 2000);
+    mutate({ user: formData });
   };
 
   return (
@@ -108,11 +113,12 @@ const Login = () => {
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={isLoading}
+            disabled={isPending}
           >
-            {isLoading ? "Loading..." : "Connect"}
+            {isPending ? "Loading..." : "Connect"}
           </button>
         </div>
+        {error && <p role="alert">{error.message}</p>}
         <div className="form-action">
           <Link to="/signUp" className="btn btn-link">
             Sign Up

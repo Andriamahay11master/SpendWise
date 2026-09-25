@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import budgetRoutes from "./routes/budgetRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import expenseRoutes from "./routes/expenseRoutes";
+import userRoutes from "./routes/userRoutes";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(budgetRoutes);
 app.use(categoryRoutes);
 app.use(expenseRoutes);
+app.use(userRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI!)
