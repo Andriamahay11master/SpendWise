@@ -8,6 +8,7 @@ import type { CategoryType } from "../../type/CategoryType";
 import useCategoryIcon from "../../context/useCategoryIcon";
 import { useQuery } from "@tanstack/react-query";
 import useCurrency from "../../context/useCurrency";
+import useConnectUser from "../../context/useConnectUser";
 
 // Fetch last transactions from the API
 const fetchLastTransactions = async (): Promise<ExpenseType[]> => {
@@ -47,6 +48,7 @@ const fetchBudget = async () => {
 };
 
 const Dashboard = () => {
+  const { user } = useConnectUser();
   const iconMap = useCategoryIcon();
   const currency = useCurrency();
   const { data: lastTransactions = [], error: lastTransactionsError } =
@@ -101,6 +103,7 @@ const Dashboard = () => {
   }
   return (
     <div className="main-block">
+      <h1 className="title-h2">Welcome{user ? `, ${user.username}` : ""}</h1>
       {kpiData.map((data, index) => (
         <DashboardCard key={index} {...data} />
       ))}
