@@ -7,6 +7,7 @@ interface UserMethods {
 
 interface UserDocument {
   username: string;
+  avatar: string;
   email: string;
   password: string;
   role: "user" | "admin";
@@ -23,6 +24,11 @@ const userSchema = new mongoose.Schema<
     type: String,
     required: true,
     unique: true,
+    trim: true,
+    lowercase: true,
+  },
+  avatar: {
+    type: String,
     trim: true,
     lowercase: true,
   },
