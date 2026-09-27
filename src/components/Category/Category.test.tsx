@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import CategoryForm from "./CategoryForm";
 import CategoryList from "./CategoryList";
+import { ConnectUserProvider } from "../../context/useConnectUser";
 
 describe("Category Form", () => {
   /*const mockOnSubmit = vi.fn();
@@ -15,7 +16,11 @@ describe("Category Form", () => {
 
   // Test 1: Form renders with all input fields
   it("should render form with all required input fields", () => {
-    render(<CategoryForm />);
+    render(
+      <ConnectUserProvider>
+        <CategoryForm />
+      </ConnectUserProvider>,
+    );
 
     expect(
       screen.getByLabelText(/budget/i) ||
