@@ -9,6 +9,7 @@ import { CiMobile4 } from "react-icons/ci";
 import { CiPlane } from "react-icons/ci";
 import { useNavigate } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
+import useConnectUser from "../../context/useConnectUser";
 
 const createCategory = async (categoryData: {
   name: string;
@@ -39,6 +40,7 @@ const createCategory = async (categoryData: {
 };
 
 const CategoryForm = () => {
+  const { user } = useConnectUser();
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
     name: "",
@@ -124,6 +126,9 @@ const CategoryForm = () => {
 
   return (
     <div className="main-block">
+      <h1 className="title-h2">
+        New category{user ? ` for ${user.username}` : ""}
+      </h1>
       <form
         onSubmit={(event) => {
           event.preventDefault();
