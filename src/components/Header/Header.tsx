@@ -22,7 +22,12 @@ const Header = ({
       <div className="header-col">
         <Link to="/profile" className="header-link">
           {user && user.username}
-          <img src="src/assets/profile.png" alt="Profile" />
+          <img
+            src={
+              user?.avatar ? `src/assets/${user.avatar}` : "src/assets/user.png"
+            }
+            alt={`Profile ${user?.username}`}
+          />
         </Link>
       </div>
     </header>

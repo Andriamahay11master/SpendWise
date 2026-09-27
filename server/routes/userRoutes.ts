@@ -51,10 +51,10 @@ expenseRouter.get("/api/user/:id", async (request, response) => {
 // update user
 expenseRouter.put("/api/user/:id", async (request, response) => {
   try {
-    const { username, email, password } = request.body;
+    const { avatar, username, email, password } = request.body;
     const user = await User.findByIdAndUpdate(
       request.params.id,
-      { username, email, password },
+      { avatar, username, email, password },
       { new: true },
     );
     response.json(user);
