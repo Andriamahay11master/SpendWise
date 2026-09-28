@@ -5,6 +5,8 @@ import { MdOutlineLanguage } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
 import { CiLock } from "react-icons/ci";
 import { Link } from "@tanstack/react-router";
+import useConnectUser from "../../context/useConnectUser";
+
 interface ProfileProps {
   image: string;
   name: string;
@@ -13,6 +15,7 @@ interface ProfileProps {
 const Profile = ({ image, name, email }: ProfileProps) => {
   const dataLang = ["FR", "EN", "ES"];
   const [language, setLanguage] = useState("EN");
+  const { user } = useConnectUser();
 
   const handleChangeLanguage = (lang: string) => {
     setLanguage(lang);
@@ -21,11 +24,14 @@ const Profile = ({ image, name, email }: ProfileProps) => {
     <div className="main-block profile-block">
       <div className="profil-top">
         <div className="profil-img">
-          <img src={image} alt="Profile picture" />
+          <img
+            src={`src/assets/${user?.avatar}`}
+            alt={`Profile ${user?.username}`}
+          />
         </div>
         <div className="profil-info">
-          <p className="profil-name">{name}</p>
-          <p className="profil-email">{email}</p>
+          <p className="profil-name">{user?.username}</p>
+          <p className="profil-email">{user?.email}</p>
         </div>
       </div>
       <div className="profil-bottom">
