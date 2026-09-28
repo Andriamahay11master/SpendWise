@@ -25,6 +25,7 @@ import { FaAngleLeft } from "react-icons/fa6";
 import Login from "./components/login/Login";
 import ForgotPassword from "./components/forgot/ForgotPassword";
 import SignUp from "./components/SignUp/SignUp";
+import AuthGuard from "./components/AuthGuard";
 
 const rootRoute = createRootRoute({
   component: App,
@@ -37,7 +38,11 @@ const createMainPageRoute = <const TPath extends string>(
   createRoute({
     getParentRoute: () => rootRoute,
     path,
-    component: () => <MainPage>{page}</MainPage>,
+    component: () => (
+      <AuthGuard>
+        <MainPage>{page}</MainPage>
+      </AuthGuard>
+    ),
   });
 
 const createGabaritRoute = <const TPath extends string>(
@@ -50,9 +55,11 @@ const createGabaritRoute = <const TPath extends string>(
     getParentRoute: () => rootRoute,
     path,
     component: () => (
-      <MainPageGabarit icon={icon} title={title}>
-        {page}
-      </MainPageGabarit>
+      <AuthGuard>
+        <MainPageGabarit icon={icon} title={title}>
+          {page}
+        </MainPageGabarit>
+      </AuthGuard>
     ),
   });
 
@@ -63,7 +70,11 @@ const createPlaceholderRoute = <const TPath extends string>(
   createRoute({
     getParentRoute: () => rootRoute,
     path,
-    component: () => <div>{label} coming soon</div>,
+    component: () => (
+      <AuthGuard>
+        <div>{label} coming soon</div>
+      </AuthGuard>
+    ),
   });
 
 const createFormRoute = <const TPath extends string>(
@@ -113,7 +124,11 @@ const signUpRoute = createFormRoute("/signUp", <SignUp />);
 const expenseDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/expenses/$id",
-  component: () => <div>Expense detail coming soon</div>,
+  component: () => (
+    <AuthGuard>
+      <div>Expense detail coming soon</div>
+    </AuthGuard>
+  ),
 });
 const categoryReportRoute = createPlaceholderRoute(
   "/categoryReport",
