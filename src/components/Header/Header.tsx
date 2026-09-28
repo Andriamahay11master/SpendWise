@@ -1,6 +1,7 @@
 import { GiTakeMyMoney } from "react-icons/gi";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import useConnectUser from "../../context/useConnectUser";
+import { AiOutlineLogout } from "react-icons/ai";
 
 interface HeaderProps {
   icon?: React.ReactNode;
@@ -10,7 +11,14 @@ const Header = ({
   icon = <GiTakeMyMoney size={30} />,
   title = "SpendWise",
 }: HeaderProps) => {
-  const { user } = useConnectUser();
+  const { user, logout } = useConnectUser();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    void navigate({ to: "/login", replace: true });
+  };
+
   return (
     <header className="header-block">
       <div className="header-col">
@@ -29,6 +37,14 @@ const Header = ({
             alt={`Profile ${user?.username}`}
           />
         </Link>
+        <button
+          type="button"
+          className="btn btn-link"
+          aria-label="Log out"
+          onClick={handleLogout}
+        >
+          <AiOutlineLogout />
+        </button>
       </div>
     </header>
   );
