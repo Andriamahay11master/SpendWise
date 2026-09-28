@@ -21,7 +21,7 @@ const Header = ({
       </div>
       <div className="header-col">
         <Link to="/profile" className="header-link">
-          {user && user.username}
+          {user && <span className="header-profil-name">{user.username}</span>}
           <img
             src={
               user?.avatar ? `src/assets/${user.avatar}` : "src/assets/user.png"
