@@ -23,15 +23,26 @@
     }
   }
   .header-link {
-    display: inline-block;
-    width: 3rem;
+    @include flex-between;
+    gap: 1rem;
     height: 3rem;
+    text-decoration: none;
+    text-transform: capitalize;
+    span {
+      @include text-light-grey;
+      @include max(375px) {
+        display: none;
+      }
+    }
   }
   img {
-    width: 100%;
-    height: 100%;
+    width: 3rem;
+    height: 3rem;
     object-fit: cover;
     border-radius: 100%;
     border: 2px solid $primary;
+  }
+  .btn {
+    margin-left: 1rem;
   }
 }
