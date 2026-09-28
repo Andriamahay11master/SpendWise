@@ -103,7 +103,9 @@ const Dashboard = () => {
   }
   return (
     <div className="main-block">
-      <h1 className="title-h2">Welcome{user ? `, ${user.username}` : ""}</h1>
+      <h1 className="title-h2">
+        Welcome back{user ? `, ${user.username}` : ""}
+      </h1>
       {kpiData.map((data, index) => (
         <DashboardCard key={index} {...data} />
       ))}
