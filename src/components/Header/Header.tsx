@@ -2,6 +2,7 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { Link, useNavigate } from "@tanstack/react-router";
 import useConnectUser from "../../context/useConnectUser";
 import { AiOutlineLogout } from "react-icons/ai";
+import defaultUserImage from "../../assets/user.png";
 
 interface HeaderProps {
   icon?: React.ReactNode;
@@ -19,6 +20,10 @@ const Header = ({
     void navigate({ to: "/login", replace: true });
   };
 
+  const profileImage = user?.avatar
+    ? new URL(`../../assets/${user.avatar}`, import.meta.url).href
+    : defaultUserImage;
+
   return (
     <header className="header-block">
       <div className="header-col">
@@ -30,12 +35,7 @@ const Header = ({
       <div className="header-col">
         <Link to="/profile" className="header-link">
           {user && <span className="header-profil-name">{user.username}</span>}
-          <img
-            src={
-              user?.avatar ? `src/assets/${user.avatar}` : "src/assets/user.png"
-            }
-            alt={`Profile ${user?.username}`}
-          />
+          <img src={profileImage} alt={`Profile ${user?.username}`} />
         </Link>
         <button
           type="button"
