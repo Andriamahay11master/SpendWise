@@ -1,6 +1,16 @@
 # SpendWise
 
-SpendWise is a full-stack expense-tracking application built to help users monitor spending, manage categories, and review monthly financial activity. The project combines a Vite + React front end with an Express + MongoDB API for persistent expense and category data.
+SpendWise is a full-stack expense-tracking application for monitoring recurring spending, category budgets, and monthly financial health. The project combines a Vite + React frontend with an Express + MongoDB backend so budget and transaction data can be stored, queried, and updated from the UI.
+
+## Project at a glance
+
+- **Dashboard and overview**: total balance, monthly spending, category progress, and recent activity.
+- **Expense management**: add, review, filter, and manage financial transactions from the main workflow.
+- **Budget and category tracking**: monitor category budgets, current totals, and spending trends.
+- **Analytics views**: dedicated reporting and charting areas for category-level insights.
+- **Responsive UI**: shared layout, cards, forms, and Sass styling built for small-screen use.
+- **API-backed data layer**: Express routes for budgets, categories, expenses, and user-related access.
+- **Modern frontend tooling**: React, TypeScript, TanStack Router, TanStack Query, and Vite.
 
 ## What is included
 
@@ -67,22 +77,17 @@ SpendWise/
 - Node.js and npm
 - MongoDB running locally or a MongoDB connection string
 
-### 1) Install frontend dependencies
+### 1) Install dependencies
 
 ```bash
 git clone <repository-url>
 cd SpendWise
 npm install
-```
-
-### 2) Install backend dependencies
-
-```bash
 cd server
 npm install
 ```
 
-### 3) Configure the server environment
+### 2) Configure the server environment
 
 Create a `.env` file inside the `server` folder with the following values:
 
@@ -92,6 +97,10 @@ MONGODB_URI=mongodb://localhost:27017/spendwise
 ```
 
 If you use a different MongoDB host or database name, update the connection string accordingly.
+
+### 3) Start MongoDB
+
+Make sure MongoDB is running locally or update the `MONGODB_URI` to point at a reachable database instance.
 
 ### 4) Run the app
 
@@ -109,7 +118,7 @@ cd SpendWise
 npm run dev
 ```
 
-The frontend will usually run on `http://localhost:5173`, and the API will run on `http://localhost:5000`.
+The frontend typically runs at `http://localhost:5173`, and the API runs at `http://localhost:5000`.
 
 ### 5) TanStack Query usage
 
@@ -178,24 +187,24 @@ available through the running API yet.
 
 ## Main routes
 
-| Route              | View                 |
-| ------------------ | -------------------- |
-| `/`                | Dashboard            |
-| `/report`          | Report               |
-| `/analytics`       | Analytics            |
-| `/addExpense`      | Add expense          |
-| `/transactions`    | Transactions         |
-| `/listCategories`  | Category list        |
-| `/addCategory`     | Add category         |
-| `/profile`         | Profile              |
-| `/budget`          | Budget & Currency    |
-| `/login`           | Login page           |
-| `/forgot-password` | Forgot password page |
-| `/signUp`          | Sign up page         |
-| `/updateBudget/:id`| Update budget        |
-| `/expenses/:id`    | Expense details placeholder |
-| `/categoryReport`  | Category report placeholder |
-| `/prediction`      | Prediction placeholder |
+| Route               | View                        |
+| ------------------- | --------------------------- |
+| `/`                 | Dashboard                   |
+| `/report`           | Report                      |
+| `/analytics`        | Analytics                   |
+| `/addExpense`       | Add expense                 |
+| `/transactions`     | Transactions                |
+| `/listCategories`   | Category list               |
+| `/addCategory`      | Add category                |
+| `/profile`          | Profile                     |
+| `/budget`           | Budget & Currency           |
+| `/login`            | Login page                  |
+| `/forgot-password`  | Forgot password page        |
+| `/signUp`           | Sign up page                |
+| `/updateBudget/:id` | Update budget               |
+| `/expenses/:id`     | Expense details placeholder |
+| `/categoryReport`   | Category report placeholder |
+| `/prediction`       | Prediction placeholder      |
 
 ## Unit Testing
 
