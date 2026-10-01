@@ -19,27 +19,53 @@ const Info = () => {
     queryFn: () => fetchUser(params.name!),
   });
 
+  const handleUpdateData = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
   return (
     <div className="main-block info-block">
-      <div className="info-top">
-        <div className="info-img">
-          <img
-            src={`src/assets/${userInfo?.avatar}`}
-            alt={`Profile ${userInfo?.username}`}
+      <h1 className="title-h2">Change Personal Information</h1>
+      <form onSubmit={handleUpdateData}>
+        <div className="form-group">
+          <div className="img-preview">
+            <img
+              src={`src/assets/${userInfo?.avatar}`}
+              alt={`Profile ${userInfo?.username}`}
+            />
+          </div>
+          <label htmlFor="avatar">Avatar</label>
+          <input
+            type="text"
+            id="avatar"
+            name="avatar"
+            value={userInfo?.avatar}
+            readOnly
           />
         </div>
-        <div className="info-info">
-          <p className="info-name">{userInfo?.username}</p>
-          <p className="info-email">{userInfo?.email}</p>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={userInfo?.username}
+            readOnly
+          />
         </div>
-      </div>
-      <div className="info-bottom">
-        <div className="info-setting">
-          <h3 className="title-h3">personal information</h3>
-          <p className="info-setting-item">Username: {userInfo?.username}</p>
-          <p className="info-setting-item">Email: {userInfo?.email}</p>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={userInfo?.email}
+            readOnly
+          />
         </div>
-      </div>
+        <div className="form-group form-button">
+          <button type="submit">Save</button>
+        </div>
+      </form>
     </div>
   );
 };
