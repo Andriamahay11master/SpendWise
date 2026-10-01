@@ -49,7 +49,7 @@ expenseRouter.get("/api/user/:id", async (request, response) => {
 });
 
 //get user by username
-expenseRouter.get("/api/user/:username", async (request, response) => {
+expenseRouter.get("/api/user/username/:username", async (request, response) => {
   const user = await User.findOne({ username: request.params.username });
   response.json(user);
 });
