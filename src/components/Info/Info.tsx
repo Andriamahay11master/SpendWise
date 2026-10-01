@@ -1,5 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import React from "react";
 
 const fetchUser = async (username: string) => {
   const response = await fetch(
@@ -19,6 +20,17 @@ const Info = () => {
     queryFn: () => fetchUser(params.name!),
   });
 
+  const [formData, setFormData] = React.useState({
+    avatar: userInfo?.avatar,
+    username: userInfo?.username,
+    email: userInfo?.email,
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleUpdateData = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
@@ -29,8 +41,8 @@ const Info = () => {
         <div className="form-group">
           <div className="img-preview">
             <img
-              src={`src/assets/${userInfo?.avatar}`}
-              alt={`Profile ${userInfo?.username}`}
+              src={`src/assets/${formData.avatar}`}
+              alt={`Profile ${formData.username}`}
             />
           </div>
           <label htmlFor="avatar">Avatar</label>
@@ -38,7 +50,8 @@ const Info = () => {
             type="text"
             id="avatar"
             name="avatar"
-            value={userInfo?.avatar}
+            value={formData.avatar}
+            onChange={handleChange}
             readOnly
           />
         </div>
@@ -48,7 +61,8 @@ const Info = () => {
             type="text"
             id="username"
             name="username"
-            value={userInfo?.username}
+            value={formData.username}
+            onChange={handleChange}
             readOnly
           />
         </div>
@@ -58,7 +72,8 @@ const Info = () => {
             type="email"
             id="email"
             name="email"
-            value={userInfo?.email}
+            value={formData.email}
+            onChange={handleChange}
             readOnly
           />
         </div>
