@@ -1,6 +1,12 @@
-import { useParams } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useParams, useNavigate } from "@tanstack/react-router";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+
+interface UserInfo {
+  avatar: string;
+  username: string;
+  email: string;
+}
 
 const fetchUser = async (username: string) => {
   const response = await fetch(
@@ -12,9 +18,24 @@ const fetchUser = async (username: string) => {
   return response.json();
 };
 
+const updateUserById = async (id: string, data: UserInfo) => {
+  const response = await fetch(`http://localhost:5000/api/user/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to update user");
+  }
+  return response.json();
+};
+
 const Info = () => {
   const params = useParams({ strict: false });
-
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data: userInfo } = useQuery({
     queryKey: ["user", params.name],
     queryFn: () => fetchUser(params.name!),
@@ -31,8 +52,17 @@ const Info = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const { mutate } = useMutation({
+    mutationFn: (data: UserInfo) => updateUserById(userInfo?.id, data),
+    onSuccess: async () => {
+      console.log("User updated successfully");
+      await queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
   const handleUpdateData = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    mutate(formData);
+    navigate({ to: "/profile" });
   };
   return (
     <div className="main-block info-block">
