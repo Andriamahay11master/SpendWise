@@ -48,6 +48,12 @@ expenseRouter.get("/api/user/:id", async (request, response) => {
   response.json(user);
 });
 
+//get user by username
+expenseRouter.get("/api/user/username/:username", async (request, response) => {
+  const user = await User.findOne({ username: request.params.username });
+  response.json(user);
+});
+
 // update user
 expenseRouter.put("/api/user/:id", async (request, response) => {
   try {
