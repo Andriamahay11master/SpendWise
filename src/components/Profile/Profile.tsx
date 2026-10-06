@@ -6,6 +6,7 @@ import { FaRegUser } from "react-icons/fa";
 import { CiLock } from "react-icons/ci";
 import { Link } from "@tanstack/react-router";
 import useConnectUser from "../../context/useConnectUser";
+import defaultUserImage from "../../assets/user.png";
 
 const Profile = () => {
   const dataLang = ["FR", "EN", "ES"];
@@ -20,7 +21,11 @@ const Profile = () => {
       <div className="profil-top">
         <div className="profil-img">
           <img
-            src={`src/assets/${user?.avatar}`}
+            src={
+              user?.avatar
+                ? `http://localhost:5000/uploads/${user.avatar}`
+                : defaultUserImage
+            }
             alt={`Profile ${user?.username}`}
           />
         </div>
