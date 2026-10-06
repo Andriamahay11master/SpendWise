@@ -21,7 +21,7 @@ const Header = ({
   };
 
   const profileImage = user?.avatar
-    ? new URL(`../../assets/${user.avatar}`, import.meta.url).href
+    ? `http://localhost:5000/uploads/${user.avatar}`
     : defaultUserImage;
 
   return (

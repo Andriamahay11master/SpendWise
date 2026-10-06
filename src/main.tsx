@@ -26,6 +26,7 @@ import Login from "./components/login/Login";
 import ForgotPassword from "./components/forgot/ForgotPassword";
 import SignUp from "./components/SignUp/SignUp";
 import AuthGuard from "./components/AuthGuard";
+import Info from "./components/Info/Info";
 
 const rootRoute = createRootRoute({
   component: App,
@@ -97,10 +98,7 @@ const categoriesRoute = createMainPageRoute(
   "/listCategories",
   <CategoryList />,
 );
-const profileRoute = createMainPageRoute(
-  "/profile",
-  <Profile image="/user.png" name="Name user" email="user@email.com" />,
-);
+const profileRoute = createMainPageRoute("/profile", <Profile />);
 
 const addCategoryRoute = createGabaritRoute(
   "/addCategory",
@@ -120,6 +118,12 @@ const forgotPasswordRoute = createFormRoute(
   <ForgotPassword />,
 );
 const signUpRoute = createFormRoute("/signUp", <SignUp />);
+const profileInfoRoute = createGabaritRoute(
+  "/profil/info/$name",
+  "Profile info",
+  <FaAngleLeft size={30} />,
+  <Info />,
+);
 
 const expenseDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -135,10 +139,7 @@ const categoryReportRoute = createPlaceholderRoute(
   "Category report",
 );
 const predictionRoute = createPlaceholderRoute("/prediction", "Prediction");
-const profileInfoRoute = createPlaceholderRoute(
-  "/profil/info/$name",
-  "Profile info",
-);
+
 const profilePasswordRoute = createPlaceholderRoute(
   "/profil/password/$name",
   "Profile password",
