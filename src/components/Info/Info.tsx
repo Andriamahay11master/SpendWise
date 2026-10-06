@@ -52,6 +52,17 @@ const Info = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData((prev) => ({ ...prev, avatar: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const { mutate } = useMutation({
     mutationFn: (data: UserInfo) => updateUserById(userInfo?.id, data),
     onSuccess: async () => {
@@ -77,12 +88,11 @@ const Info = () => {
           </div>
           <label htmlFor="avatar">Avatar</label>
           <input
-            type="text"
+            type="file"
             id="avatar"
             name="avatar"
-            value={formData.avatar}
-            onChange={handleChange}
-            readOnly
+            onChange={handleChangeImg}
+            accept="image/*"
           />
         </div>
         <div className="form-group">
