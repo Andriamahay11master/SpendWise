@@ -108,7 +108,9 @@ const Info = () => {
           />
         </div>
         <div className="form-group form-button">
-          <button type="submit">Save</button>
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
         </div>
       </form>
     </div>
