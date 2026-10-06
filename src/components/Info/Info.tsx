@@ -71,7 +71,7 @@ const Info = () => {
         <div className="form-group">
           <div className="img-preview">
             <img
-              src={`src/assets/${formData.avatar}`}
+              src={`/src/assets/${formData.avatar}`}
               alt={`Profile ${formData.username}`}
             />
           </div>
