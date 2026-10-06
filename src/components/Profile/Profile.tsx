@@ -7,12 +7,7 @@ import { CiLock } from "react-icons/ci";
 import { Link } from "@tanstack/react-router";
 import useConnectUser from "../../context/useConnectUser";
 
-interface ProfileProps {
-  image: string;
-  name: string;
-  email: string;
-}
-const Profile = ({ image, name, email }: ProfileProps) => {
+const Profile = () => {
   const dataLang = ["FR", "EN", "ES"];
   const [language, setLanguage] = useState("EN");
   const { user } = useConnectUser();
@@ -39,7 +34,7 @@ const Profile = ({ image, name, email }: ProfileProps) => {
           <h3 className="title-h3">personal information</h3>
           <Link
             to="/profil/info/$name"
-            params={{ name }}
+            params={{ name: user?.username as string }}
             className="profil-setting-item"
           >
             <div className="profil-col">
@@ -57,7 +52,7 @@ const Profile = ({ image, name, email }: ProfileProps) => {
           <h3 className="title-h3">security</h3>
           <Link
             to="/profil/password/$name"
-            params={{ name }}
+            params={{ name: user?.username as string }}
             className="profil-setting-item"
           >
             <div className="profil-col">
