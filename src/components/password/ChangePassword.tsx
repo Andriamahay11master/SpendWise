@@ -59,7 +59,6 @@ const ChangePassword = () => {
   const params = useParams({ strict: false });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { user } = useConnectUser();
   const [formData, setFormData] = useState(initialFormData);
   const [submitError, setSubmitError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -105,7 +104,10 @@ const ChangePassword = () => {
     setIsSaving(true);
 
     try {
-      await validateCurrentPassword(userInfo.username, formData.currentPassword);
+      await validateCurrentPassword(
+        userInfo.username,
+        formData.currentPassword,
+      );
 
       const userId = userInfo?._id ?? userInfo?.id;
       if (!userId) {
@@ -129,15 +131,9 @@ const ChangePassword = () => {
 
   return (
     <div className="main-block password-block">
-      <div className="profil-top">
-        <div className="profil-info">
-          <p className="profil-name">{user?.username}</p>
-          <p className="profil-email">{user?.email}</p>
-        </div>
-      </div>
       <div className="profil-bottom">
         <div className="profil-setting">
-          <h3 className="title-h3">Change Password</h3>
+          <h1 className="title-h1">Change Password</h1>
           <form onSubmit={handleChangePassword}>
             <div className="form-group">
               <label htmlFor="currentPassword">Current Password</label>
