@@ -58,11 +58,19 @@ expenseRouter.get("/api/user/username/:username", async (request, response) => {
 expenseRouter.put("/api/user/:id", async (request, response) => {
   try {
     const { avatar, username, email, password } = request.body;
-    const user = await User.findByIdAndUpdate(
-      request.params.id,
-      { avatar, username, email, password },
-      { new: true },
-    );
+    const user = await User.findById(request.params.id);
+
+    if (!user) {
+      response.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    if (avatar !== undefined) user.avatar = avatar;
+    if (username !== undefined) user.username = username;
+    if (email !== undefined) user.email = email;
+    if (password !== undefined) user.password = password;
+
+    await user.save();
     response.json(user);
   } catch {
     response.status(400).json({ message: "Invalid user data" });

@@ -27,6 +27,7 @@ import ForgotPassword from "./components/forgot/ForgotPassword";
 import SignUp from "./components/SignUp/SignUp";
 import AuthGuard from "./components/AuthGuard";
 import Info from "./components/Info/Info";
+import ChangePassword from "./components/password/ChangePassword";
 
 const rootRoute = createRootRoute({
   component: App,
@@ -125,6 +126,13 @@ const profileInfoRoute = createGabaritRoute(
   <Info />,
 );
 
+const profilePasswordRoute = createGabaritRoute(
+  "/profil/password/$name",
+  "Profile password",
+  <FaAngleLeft size={30} />,
+  <ChangePassword />,
+);
+
 const expenseDetailRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/expenses/$id",
@@ -139,11 +147,6 @@ const categoryReportRoute = createPlaceholderRoute(
   "Category report",
 );
 const predictionRoute = createPlaceholderRoute("/prediction", "Prediction");
-
-const profilePasswordRoute = createPlaceholderRoute(
-  "/profil/password/$name",
-  "Profile password",
-);
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
