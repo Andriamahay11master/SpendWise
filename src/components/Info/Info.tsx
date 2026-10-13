@@ -161,7 +161,6 @@ const Info = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            readOnly
           />
         </div>
         <div className="form-group">
@@ -172,7 +171,6 @@ const Info = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            readOnly
           />
         </div>
         <div className="form-group form-button">
