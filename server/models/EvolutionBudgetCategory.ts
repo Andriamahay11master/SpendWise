@@ -20,7 +20,7 @@ const evolutionBudgetCategorySchema = new mongoose.Schema(
       min: 0,
       max: 10000,
     },
-    userId: {
+    username: {
       type: String,
       required: true,
     },
