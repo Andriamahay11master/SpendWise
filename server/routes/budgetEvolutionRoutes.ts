@@ -1,10 +1,10 @@
 import { Router } from "express";
 import EvolutionBudgetCategory from "../models/EvolutionBudgetCategory";
 
-const budgetEvolutionRouter = Router();
+const budgetEvolutionRoutes = Router();
 
 //create budget evolution category
-budgetEvolutionRouter.post(
+budgetEvolutionRoutes.post(
   "/api/budget-evolution",
   async (request, response) => {
     try {
@@ -27,14 +27,11 @@ budgetEvolutionRouter.post(
 );
 
 // Get budget evolution by username for a specific month using dateBudget.
-budgetEvolutionRouter.get(
+budgetEvolutionRoutes.get(
   "/api/budget-evolution/:username",
   async (request, response) => {
     const month = request.query.month;
-    if (
-      typeof month !== "string" ||
-      !/^\d{4}-(0[1-9]|1[0-2])$/.test(month)
-    ) {
+    if (typeof month !== "string" || !/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) {
       response
         .status(400)
         .json({ message: "A valid month (YYYY-MM) is required" });
@@ -54,4 +51,4 @@ budgetEvolutionRouter.get(
   },
 );
 
-export default budgetEvolutionRouter;
+export default budgetEvolutionRoutes;
