@@ -6,6 +6,7 @@ export type ExpenseFormData = {
   dateE: string;
   notes: string;
   currency: string;
+  username: string;
 };
 
 const API_URL = "http://localhost:5000/api";
@@ -30,11 +31,12 @@ export const getLastBudgetForCategory = async (categoryName: string) => {
 
 export const updateBudgetForCategory = async (
   categoryName: string,
+  username: string,
   newBudgetCurrent: number,
 ) => {
   try {
     const response = await fetch(
-      `${API_URL}/categories/${categoryName}/budgetCurrent`,
+      `${API_URL}/budget-evolution/${username}/${categoryName}`,
       {
         method: "PUT",
         headers: {
@@ -57,7 +59,11 @@ export const saveExpense = async (formData: ExpenseFormData) => {
 
   if (lastBudget !== null) {
     const newBudgetCurrent = lastBudget + Number(formData.amount);
-    await updateBudgetForCategory(formData.category, newBudgetCurrent);
+    await updateBudgetForCategory(
+      formData.category,
+      formData.username,
+      newBudgetCurrent,
+    );
   }
 
   const response = await fetch(`${API_URL}/expenses`, {
@@ -73,6 +79,7 @@ export const saveExpense = async (formData: ExpenseFormData) => {
       icon: formData.iconCategory,
       colorCategory: formData.colorCategory,
       currency: formData.currency,
+      username: formData.username,
     }),
   });
 

@@ -51,4 +51,30 @@ budgetEvolutionRoutes.get(
   },
 );
 
+//update Budgetcurrent for specific category
+budgetEvolutionRoutes.put(
+  "/api/budget-evolution/:username/:category",
+  async (request, response) => {
+    try {
+      const { username, category } = request.params;
+      const { budgetCurrent, dateBudget } = request.body;
+
+      const budgetEvolution = await EvolutionBudgetCategory.findOneAndUpdate(
+        { username, category, dateBudget },
+        { budgetCurrent },
+        { new: true },
+      );
+
+      if (budgetEvolution) {
+        response.json(budgetEvolution);
+        return;
+      }
+
+      response.status(404).json({ message: "Budget evolution not found" });
+    } catch {
+      response.status(400).json({ message: "Invalid budget evolution data" });
+    }
+  },
+);
+
 export default budgetEvolutionRoutes;

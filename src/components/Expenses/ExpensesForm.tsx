@@ -9,6 +9,7 @@ import type { ExpenseFormData } from "../../services/expenseService";
 import { saveExpense } from "../../services/expenseService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useCurrency from "../../context/useCurrency";
+import useConnectUser from "../../context/useConnectUser";
 
 const fetchCategories = async (): Promise<CategoryType[]> => {
   const response = await fetch("http://localhost:5000/api/categories");
@@ -21,6 +22,7 @@ const fetchCategories = async (): Promise<CategoryType[]> => {
 };
 
 const ExpensesForm = () => {
+  const { user } = useConnectUser();
   const currency = useCurrency();
   const iconMap = useCategoryIcon();
   const navigate = useNavigate();
@@ -33,6 +35,7 @@ const ExpensesForm = () => {
     dateE: "",
     notes: "",
     currency: currency,
+    username: user?.username || "",
   });
 
   const { data: dataCategory = [] } = useQuery({
@@ -79,6 +82,7 @@ const ExpensesForm = () => {
       dateE: "",
       notes: "",
       currency: currency,
+      username: "",
     });
   };
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
