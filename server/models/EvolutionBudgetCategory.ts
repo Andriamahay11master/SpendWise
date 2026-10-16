@@ -8,6 +8,14 @@ const evolutionBudgetCategorySchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    icon: {
+      type: String,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: true,
+    },
     budgetCurrent: {
       type: Number,
       required: true,
