@@ -54,11 +54,45 @@ export const updateBudgetForCategory = async (
   }
 };
 
+export const addBudgetForCategory = async (
+  categoryName: string,
+  iconCategory: string,
+  colorCategory: string,
+  username: string,
+  budgetMax: number,
+  dateBudget: string,
+) => {
+  try {
+    const response = await fetch(`${API_URL}/budget-evolution`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        category: categoryName,
+        icon: iconCategory,
+        color: colorCategory,
+        budgetMax: budgetMax,
+        dateBudget: dateBudget,
+        username: username,
+        budgetCurrent: 0,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add budgetCurrent");
+    }
+  } catch (error) {
+    console.error("Error adding budgetCurrent:", error);
+  }
+};
+
 export const saveExpense = async (formData: ExpenseFormData) => {
   const lastBudget = await getLastBudgetForCategory(formData.category);
 
   if (lastBudget !== null) {
     const newBudgetCurrent = lastBudget + Number(formData.amount);
+
     await updateBudgetForCategory(
       formData.category,
       formData.username,
