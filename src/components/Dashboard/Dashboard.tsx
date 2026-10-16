@@ -47,6 +47,14 @@ const fetchBudget = async () => {
   return await response.json();
 };
 
+// Fetch BudgetEvolution
+const fetchBudgetEvolution = async (username: string, month: string) => {
+  const response = await fetch(
+    `http://localhost:5000/api/budget-evolution/${username}?month=${month}`,
+  );
+  return await response.json();
+};
+
 const Dashboard = () => {
   const { user } = useConnectUser();
   const iconMap = useCategoryIcon();
@@ -71,6 +79,15 @@ const Dashboard = () => {
   const { data: budgetMonthly } = useQuery({
     queryKey: ["budget"],
     queryFn: fetchBudget,
+  });
+  const { data: budgetEvolutionData } = useQuery({
+    queryKey: ["budgetEvolution", user?.username],
+    queryFn: () => {
+      const currentMonth = new Date().toLocaleString("default", {
+        month: "long",
+      });
+      return fetchBudgetEvolution(user?.username ?? "", currentMonth);
+    },
   });
 
   const totalWeekSpending = totalWeekSpendingData?.totalExpenses || 0;
