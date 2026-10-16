@@ -8,11 +8,20 @@ budgetEvolutionRoutes.post(
   "/api/budget-evolution",
   async (request, response) => {
     try {
-      const { category, budgetCurrent, budgetMax, username, dateBudget } =
-        request.body;
+      const {
+        category,
+        icon,
+        color,
+        budgetCurrent,
+        budgetMax,
+        username,
+        dateBudget,
+      } = request.body;
 
       const budgetEvolution = await EvolutionBudgetCategory.create({
         category,
+        icon,
+        color,
         budgetCurrent,
         budgetMax,
         username,
